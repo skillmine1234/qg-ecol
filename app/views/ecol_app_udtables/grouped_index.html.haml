@@ -1,0 +1,40 @@
+%br
+= link_to "New E-Collect App UDTable", new_ecol_app_udtable_path(app_code: params[:app_code])
+%br
+%br
+%h1 Listing E-Collect App UDTable
+%br
+= will_paginate @records, :page_links => false
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      = @ecol_app.udf1_name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      = @ecol_app.udf2_name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      = @ecol_app.udf3_name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      = @ecol_app.udf4_name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      = @ecol_app.udf5_name
+
+  .tbody
+    - @records.each do |ecol_app_udtable|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecol_app_udtable
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecol_app_udtable_path(ecol_app_udtable)
+        %td{:style=>'text-align:left;'}
+          = ecol_app_udtable.udf1
+        %td{:style=>'text-align:left;'}
+          = ecol_app_udtable.udf2
+        %td{:style=>'text-align:left;'}
+          = ecol_app_udtable.udf3
+        %td{:style=>'text-align:left;'}
+          = ecol_app_udtable.udf4
+        %td{:style=>'text-align:left;'}
+          = ecol_app_udtable.udf5

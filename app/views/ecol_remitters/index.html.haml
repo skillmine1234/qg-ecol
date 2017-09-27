@@ -1,0 +1,70 @@
+%br
+= link_to 'New E-Collect Remitter', new_ecol_remitter_path
+%br
+%br
+%h1 Listing E-Collect Remitter
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecol_remitters_count}"
+%br
+= will_paginate @ecol_remitters
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer Sub Code
+    %th{:style=>'text-align:left; background-color: lightblue;'} 
+      Remitter Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Credit Accout No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Remitter Name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Remitter Account No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Invoice No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Invoice Amount
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Invoice Due Date
+
+  .tbody
+    - @ecol_remitters.each do |ecol_remitter|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecol_remitter
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecol_remitter_path(ecol_remitter)
+        %td{:style=>'text-align:left;'}
+          - if ecol_remitter.approval_status == 'U'
+            = link_to 'Cancel', ecol_remitter, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - else
+            = ""
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.customer_code
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.customer_subcode
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.remitter_code
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.credit_acct_no
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.rmtr_name
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.rmtr_acct_no
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.invoice_no
+        %td{:style=>'text-align:left;'}
+          = number_with_precision(ecol_remitter.invoice_amt, :precision => 2) || 0
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.due_date
+

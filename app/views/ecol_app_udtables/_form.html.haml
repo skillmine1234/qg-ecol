@@ -1,0 +1,21 @@
+= simple_form_for @ecol_app_udtable, :html => {:class=>'form-horizontal', :autocomplete=>"off", :id => "ecol_app_udtable_form"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecol_app_udtable, :base, :prepend_text => "")
+  .form-main
+    = f.hidden_field :lock_version
+    = f.hidden_field :approved_id
+    = f.hidden_field :approved_version
+    .control-group
+      = f.label :app_code, "*App Code", :class => 'control-label'
+      = f.select :app_code, EcolApp.all.map { |key, value| [key.app_code, key.app_code] }
+      #msg-error
+        = error_message_for(@ecol_app_udtable, :app_code, :prepend_text => "")
+    .udfs
+      = render :partial => 'udfs', locals: {udf: @ecol_app_udtable.ecol_app, ecol_app_udtable: @ecol_app_udtable}
+
+  .form-actions
+    - (f.object.new_record? and f.object.id.nil?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_code', :value => label_name + ' Ecol App Udtable'
+    = link_to :Cancel,"/ecol_apps", :name => 'cancel', :class=>"cancel btn"

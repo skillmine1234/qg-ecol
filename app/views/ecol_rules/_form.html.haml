@@ -1,0 +1,50 @@
+= simple_form_for @ecol_rule, :html => {:class=>'form-horizontal', :autocomplete=>"off", :id => "ecol_rule_form"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecol_rule, :base, :prepend_text => "")
+  .form-main{:style => 'width:100%'}
+    = f.hidden_field :lock_version
+    = f.hidden_field :approved_id
+    = f.hidden_field :approved_version
+    .control-group
+      = f.label :ifsc, "*IFSC Code", :class => 'control-label'
+      = f.text_field :ifsc, :maxlength => 11
+      #msg-error
+        = error_message_for(@ecol_rule, :ifsc, :prepend_text => "")
+    .control-group
+      = f.label :cod_acct_no, "*Pool Account No", :class => 'control-label'
+      = f.text_field :cod_acct_no, :maxlength => 15
+      #msg-error
+        = error_message_for(@ecol_rule, :cod_acct_no, :prepend_text => "")
+    .control-group
+      = f.label :stl_gl_inward, "*Settlement GL (Inward)", :class => 'control-label'
+      = f.text_field :stl_gl_inward, :maxlength => 15
+      #msg-error
+        = error_message_for(@ecol_rule, :stl_gl_inward, :prepend_text => "")
+    .control-group
+      = f.label :neft_sender_ifsc, "*NEFT Sender IFSC", :class => 'control-label'
+      = f.text_field :neft_sender_ifsc, :maxlength => 11
+      #msg-error
+        = error_message_for(@ecol_rule, :neft_sender_ifsc, :prepend_text => "")
+    .control-group
+      = f.label :customer_id, "*Customer ID", :class => 'control-label'
+      = f.text_field :customer_id, :maxlength => 50
+      #msg-error
+        = error_message_for(@ecol_rule, :customer_id, :prepend_text => "")
+    .control-group
+      = f.label :return_account_no, "Return Account No (IMPS)", :class => 'control-label'
+      = f.text_field :return_account_no, :maxlength => 20
+      #msg-error
+        = error_message_for(@ecol_rule, :return_account_no, :prepend_text => "")
+    .control-group
+      = f.label :allow_return_by_rtgs, "Allow Return by RTGS?", class: 'control-label'
+      = f.check_box :allow_return_by_rtgs, {}, 'Y','N'
+      #msg-error
+        = error_message_for(@ecol_rule, :allow_return_by_rtgs, :prepend_text => "")
+
+  .form-actions
+    - (f.object.new_record? and f.object.ifsc.nil?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_rule', :value => label_name + ' E-Collect Rules'
+    = link_to :Cancel,root_path, :name => 'cancel', :class=>"cancel btn"
+

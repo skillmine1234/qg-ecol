@@ -1,0 +1,76 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 E-Collect Rule Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecol_rule
+        %a.btn{:href => "#{!(can) ? '#' : '/ecol_rules/' + @ecol_rule.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'ecol_customers/approve', :@record => @ecol_rule
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+        - if !@ecol_rule.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@ecol_rule)}", :controller => :ecol_rules, :action => :audit_logs, :version_id => audit_count(@ecol_rule), :id => @ecol_rule.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@ecol_rule, :base, :prepend_text => "")
+          %tr
+            %td.label IFSC Code
+            %td.value
+              = @ecol_rule.ifsc
+            %td#msg-error
+              = error_message_for(@ecol_rule, :ifsc, :prepend_text => "")
+          %tr
+            %td.label Pool Account No
+            %td.value
+              = @ecol_rule.cod_acct_no
+            %td#msg-error
+              = error_message_for(@ecol_rule, :cod_acct_no, :prepend_text => "")
+          %tr
+            %td.label Settlement GL (Inward)
+            %td.value
+              = @ecol_rule.stl_gl_inward
+            %td#msg-error
+              = error_message_for(@ecol_rule, :stl_gl_inward, :prepend_text => "")
+          %tr
+            %td.label NEFT Sender IFSC
+            %td.value
+              = @ecol_rule.neft_sender_ifsc
+            %td#msg-error
+              = error_message_for(@ecol_rule, :neft_sender_ifsc, :prepend_text => "")
+          %tr
+            %td.label Customer ID
+            %td.value
+              = @ecol_rule.customer_id
+            %td#msg-error
+              = error_message_for(@ecol_rule, :customer_id, :prepend_text => "")
+          %tr
+            %td.label Return Account No (IMPS)
+            %td.value
+              = @ecol_rule.return_account_no
+            %td#msg-error
+              = error_message_for(@ecol_rule, :return_account_no, :prepend_text => "")
+          %tr
+            %td.label Allow Return by RTGS?
+            %td.value
+              = @ecol_rule.allow_return_by_rtgs
+            %td#msg-error
+              = error_message_for(@ecol_rule, :allow_return_by_rtgs, :prepend_text => "")
+          %tr
+            %td.label Updated By
+            %td.value
+              = @ecol_rule.updated_user.try(:username)
+            %td#msg-error
+              = error_message_for(@ecol_rule, :updated_by, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_rule.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_rule, :updated_at, :prepend_text => "")
+      = link_to 'Back to Dashboard', root_path              

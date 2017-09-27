@@ -1,0 +1,73 @@
+%br
+= link_to 'New E-Collect Customer', new_ecol_customer_path
+%br
+%br
+%h1 Listing E-Collect Customers
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecol_customers_count}"
+%br
+= will_paginate @ecol_customers
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer Name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Enabled?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Identity User ID
+    %th{:style=>'text-align:left; background-color: lightblue;'} 
+      Validation Method
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Account Token 1
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Account Token 2
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Account Token 3
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Credit Account No (Validation Passed)
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Credit Account No (Validation Failed)
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Pool Account No
+
+  .tbody
+    - @ecol_customers.each do |ecol_customer|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecol_customer
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecol_customer_path(ecol_customer)
+        %td{:style=>'text-align:left;'}
+          - if ecol_customer.approval_status == 'U'
+            = link_to 'Cancel', ecol_customer, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - else
+            = ""
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.name
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.is_enabled
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.identity_user_id
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.val_method
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.token_1_type
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.token_2_type
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.token_3_type
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.credit_acct_val_pass
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.credit_acct_val_fail
+        %td{:style=>'text-align:left;'}
+          = ecol_customer.pool_acct_no

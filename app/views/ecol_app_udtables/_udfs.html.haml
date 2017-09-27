@@ -1,0 +1,6 @@
+.control-group
+  - (1..5).each do |i|
+    - if udf.present? && udf.send("udf#{i}").present?
+      .control-group
+        = label_tag "ecol_app_udtable[udf#{i}]", udf.try("udf#{i}_name").try(:humanize), class: 'control-label'
+        = send("#{udf["udf#{i}"]["udf#{i}_type"] || 'text'}_field_tag", "ecol_app_udtable[udf#{i}]", ecol_app_udtable.try("udf#{i}"))

@@ -1,0 +1,28 @@
+- if type == 'validation'
+  .modal.hide.fade{"id" => "myModalOverrideValidation", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel Override Validation
+    .modal-body
+      = simple_form_for :ecol_transaction, :url => url_for(:action => 'override_transaction', :controller => 'ecol_transactions'), :method=>:put, :html=>{} do |ef|
+        = label_tag "Status", "Status", :class => 'control-label'
+        = select_tag :status, options_for_select([['VALIDATED: OK','VALIDATED: OK'],['VALIDATED: REJECTED','VALIDATED: REJECTED']],params[:status]),:prompt => 'ANY'
+        %br
+        = label_tag "Remarks", "Remarks", :class => 'control-label'
+        = text_area_tag :remarks
+        %br
+        = submit_tag "Submit", :class=>"btn btn-primary override_button", :id => "override_button"
+- elsif type == 'notification'
+  .modal.hide.fade{"id" => "myModalOverrideNotification", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel Override Notification
+    .modal-body
+      = simple_form_for :ecol_transaction, :url => url_for(:action => 'override_transaction', :controller => 'ecol_transactions'), :method=>:put, :html=>{} do |ef|
+        = label_tag "Status", "Status", :class => 'control-label'
+        = select_tag :status, options_for_select([['NOTIFIED: OK','NOTIFIED: OK'],['NOTIFIED: REJECTED','NOTIFIED: REJECTED']],params[:status]),:prompt => 'ANY'
+        %br
+        = label_tag "Remarks", "Remarks", :class => 'control-label'
+        = text_area_tag :remarks
+        %br
+        = submit_tag "Submit", :class=>"btn btn-primary override_button", :id => "override_button"

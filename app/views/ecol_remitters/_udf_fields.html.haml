@@ -1,0 +1,26 @@
+- if c.type == "date"
+  - if c.is_mandatory == 'Y'
+    = f.label c.label_text, :required => c.is_mandatory
+    = f.date_select c.attribute_name, {:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, :class => 'date-select'
+  - else
+    = f.label c.label_text
+    = f.date_select c.attribute_name, {:prompt => { :day => 'Select day', :month => 'Select month', :year => 'Select year' }}, :class => 'date-select'
+- elsif c.type == "boolean"
+  = f.label c.label_text
+  = f.check_box c.attribute_name
+- elsif c.type == "select"
+  - if c.is_mandatory == 'Y'
+    = f.label c.label_text, :required => c.is_mandatory
+    = f.select c.attribute_name, c.select_options_list.to_a, :include_blank => "Select", :style => "display: inline;", :class => 'control-group'
+  - else
+    = f.label c.label_text
+    = f.select c.attribute_name, c.select_options_list.to_a, :include_blank => "Select", :style => "display: inline;", :class => 'control-group'
+- else
+  - if c.is_mandatory == 'Y'
+    = f.label c.label_text, :required => c.is_mandatory
+    = f.text_field c.attribute_name, :style => "display: inline;", :class => 'control-group'
+  - else
+    = f.label c.label_text
+    = f.text_field c.attribute_name, :style => "display: inline;", :class => 'control-group'
+#msg-error
+  = error_message_for(entity,c.attribute_name.to_sym, :prepend_text => "")

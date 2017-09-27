@@ -1,0 +1,314 @@
+.show_ticket
+  .header-form-main{:style=>'background-color: #ecf5fa; width: 50%; height: 150px; display: inline-block;'}
+    %h3
+      Customer:
+      = @ecol_transaction.try(:customer_code) 
+      = link_to @ecol_transaction.ecol_customer.name , @ecol_transaction.ecol_customer  rescue "No Customer for Code #{@ecol_transaction.try(:customer_code)}" 
+    %h3
+      Transfer Unique No:
+      = @ecol_transaction.try(:transfer_unique_no)
+    %h3
+      Transfer Type:
+      = @ecol_transaction.transfer_type
+    %h3
+      Transfer Status:
+      = @ecol_transaction.transfer_status
+    %h3
+      Transfer Date:
+      = @ecol_transaction.transfer_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+  .header-form-extended{:style=>'background-color: #ecf5fa; width: 50%; height: 150px; display: inline-block;'}
+    %h3
+      Status:
+      = @ecol_transaction.status
+      %tr
+        - if @ecol_transaction.status == "FAILED"
+          = link_to "Fault Text", "#", :class => 'fault-link', :href => "#faultText", :style => "font-weight:100"
+    %h3 
+      Remitter Reference No:
+      = @ecol_transaction.rmtr_ref
+    %h3
+      Settled At:
+      = @ecol_transaction.settled_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+    %h3
+      Received At:
+      = @ecol_transaction.received_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+    %h3
+      Audit Logs:
+      = link_to 'Show', {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'ALL'}
+  - if can? :update, @ecol_transaction
+    .toolbar
+      = render :partial => 'action_toolbar'
+  .header-form-main{:style=>'background-color: #F1F2F8; width: 100%; display: inline-block;'}
+    %h3 
+      Validation Result:
+      - if !@ecol_transaction.validation_result.nil?
+        = link_to "#{@ecol_transaction.validation_status} (#{desc_for_decision_by(@ecol_transaction.decision_by)})", "#", :class => 'result-link', :href => "#resultText", :style => "font-weight:100"
+      - else
+        = "#{@ecol_transaction.validation_status} (#{desc_for_decision_by(@ecol_transaction.decision_by)})"
+    %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:left;'}  
+      %tr
+        %td.label Validation Attempt
+        %td
+          - if !@ecol_transaction.validate_attempt_no.nil? 
+            - if !@ecol_transaction.try(:ecol_customer).try(:val_method) == 'W'
+              = link_to @ecol_transaction.validate_attempt_no, {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'VALIDATE'}
+            - else
+              = @ecol_transaction.validate_attempt_no
+          - else
+            = "-"
+      %tr
+        %td.label Validation Attempted At
+        %td= @ecol_transaction.validate_attempt_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+      %tr
+        %td.label Customer Code 
+        %td
+          - if !@ecol_transaction.ecol_customer.nil?
+            = link_to @ecol_transaction.customer_code , @ecol_transaction.ecol_customer
+          - else
+            = @ecol_transaction.customer_code
+      %tr
+        %td.label 
+          Token 1 : 
+          = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_1_type) rescue ""
+        %td
+          .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_1 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+            = ecol_transaction_token_show(@ecol_transaction, 0)
+        %tr
+          %td.label 
+            Token 2 : 
+            = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_2_type) rescue ""
+          %td
+            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_2 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+              = ecol_transaction_token_show(@ecol_transaction, 1)
+        %tr
+          %td.label 
+            Token 3 : 
+            = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_3_type) rescue ""
+          %td
+            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_3 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+              = ecol_transaction_token_show(@ecol_transaction, 2)
+    %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}  
+      %tr
+        %td.label Transfer Amount
+        %td
+          - if @ecol_transaction.try(:ecol_customer).try(:val_method) == 'D'
+            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(Expected Value: #{@ecol_transaction.expected_transfer_amt rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+              = @ecol_transaction.transfer_amt
+          - else
+            = @ecol_transaction.transfer_amt
+      %tr
+        %td.label Transfer Date
+        %td
+          - if @ecol_transaction.try(:ecol_customer).try(:val_method) == 'D'
+            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(Expected Value: #{@ecol_transaction.expected_transfer_timestamp rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+              = @ecol_transaction.transfer_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+          - else
+            = @ecol_transaction.transfer_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+      %tr
+        %td.label Credit Account Number
+        %td= @ecol_transaction.credit_acct_no
+      %tr
+        %td.label Remitter Account Number
+        %td
+          .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_rem_acct rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+            = @ecol_transaction.rmtr_account_no
+      %tr
+        %td.label Remitter Name
+        %td
+          .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_rmtr_name rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+            = @ecol_transaction.rmtr_full_name
+      %tr
+        %td.label Beneficiary Account Number
+        %td= @ecol_transaction.bene_account_no
+      %tr
+        %td.label Beneficiary Name
+        %td
+          .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_ben_name rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+            = @ecol_transaction.bene_full_name
+    %hr{:style=>'background-color: #F1F2F8; width: 100%'}
+    - if @ecol_transaction.status == 'CREDITED' or @ecol_transaction.status == 'PENDING CREDIT' or @ecol_transaction.status == 'CREDIT FAILED'
+      %h3 Credit Result
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:left;'}  
+        %tr
+          %td.label Credit Attempt
+          %td
+            - if !@ecol_transaction.credit_attempt_no.nil?
+              = link_to @ecol_transaction.credit_attempt_no, {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'CREDIT'}
+            - else
+              = "-"
+        - if @ecol_transaction.status == 'CREDITED'
+          %tr
+            %td.label Credited At
+            %td= @ecol_transaction.credited_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+          %tr
+            %td.label Credit Reference
+            %td= @ecol_transaction.credit_ref
+        - elsif @ecol_transaction.status == 'PENDING CREDIT'
+          %tr
+            %td.label Credit Attempted At
+            %td= @ecol_transaction.credit_attempt_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+        - elsif @ecol_transaction.status == 'CREDIT FAILED'
+          %tr
+            %td.label Fault Text
+            %td
+              = link_to "Fault Text", "#", :class => 'fault-link', :href => "#faultText", :style => "font-weight:100"
+      %hr{:style=>'background-color: #F1F2F8; width: 100%'}
+    - elsif @ecol_transaction.status == 'RETURNED' or @ecol_transaction.status == 'PENDING RETURN' or @ecol_transaction.status == 'RETURN FAILED'
+      %h3 Return Result
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:left;'} 
+        %tr
+          %td.label Return Attempt
+          %td
+            - if !@ecol_transaction.return_attempt_no.nil?
+              = link_to @ecol_transaction.return_attempt_no, {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'RETURN'}
+            - else
+              = "-"
+        %tr
+          %td.label Return Transfer Type
+          %td= @ecol_transaction.return_transfer_type
+        - if @ecol_transaction.status == 'RETURNED'
+          %tr
+            %td.label Returned At
+            %td= @ecol_transaction.returned_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+          %tr
+            %td.label Return Reference
+            %td= @ecol_transaction.return_ref
+        - elsif @ecol_transaction.status == 'PENDING RETURN'
+          %tr
+            %td.label Return Attempted At
+            %td= @ecol_transaction.return_attempt_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+        - elsif @ecol_transaction.status == 'RETURN FAILED'
+          %tr
+            %td.label Fault Text
+            %td
+              = link_to "Fault Text", "#", :class => 'fault-link', :href => "#faultText", :style => "font-weight:100"
+      %hr{:style=>'background-color: #F1F2F8; width: 100%'}
+    %h3 Settlement Status
+    %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:left;'}  
+      %tr
+        %td.label Settle Attempt
+        %td
+          - if !@ecol_transaction.settle_attempt_no.nil?
+            = link_to @ecol_transaction.settle_attempt_no, {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'SETTLE'}
+          - else
+            = "-"
+      %tr
+        %td.label Settle Attempt At
+        %td= @ecol_transaction.settle_attempt_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+      %tr
+        %td.label Settle Status
+        %td= @ecol_transaction.settle_status
+    - if @ecol_transaction.settle_status == 'SETTLED'
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}
+        %tr
+          %td.label Settled At
+          %td= @ecol_transaction.settled_at 
+        %tr
+          %td.label Settle Reference
+          %td= @ecol_transaction.settle_ref
+        
+    - elsif @ecol_transaction.settle_status == 'FAILED'
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}
+        %tr
+          %td.label Settle Result
+          %td
+            = link_to "Show Result", "#", :class => 'settle-result', :href => "#settleResult", :style => "font-weight:100"
+    %hr{:style=>'background-color: #F1F2F8; width: 100%'}
+    %h3 Notification Status
+    %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:left;'}
+      %tr
+        %td.label Notify Attempt
+        %td
+          - if !@ecol_transaction.notify_attempt_no.nil?
+            = link_to @ecol_transaction.notify_attempt_no, {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'NOTIFY'}
+          - else
+            = "-"
+      %tr
+        %td.label Customer Alert At
+        %td= @ecol_transaction.try(:ecol_customer).try(:cust_alert_on)
+      %tr
+        %td.label Notify Attempt At
+        %td= @ecol_transaction.notify_attempt_at.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+      %tr
+        %td.label Notify Status
+        %td= @ecol_transaction.notify_status
+    - if @ecol_transaction.notify_status == 'NOTIFIED'
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}
+        %tr
+          %td.label Notified At
+          %td= @ecol_transaction.notified_at
+        
+    - elsif @ecol_transaction.notify_status == 'FAILED'
+      %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}
+        %tr
+          %td.label Notify Result
+          %td
+            = link_to "Show Result", "#", :class => 'notify-result', :href => "#notifyResult", :style => "font-weight:100"
+  .header-form-main{:style=>'background-color: #ecf5fa; width: 50%; height: 180px;display: inline-block;'}
+    %table.table.no-border
+      %tr
+        %td.label Remitter Address 
+        %td= @ecol_transaction.rmtr_address
+      %tr
+        %td.label Remitter Account Type 
+        %td= @ecol_transaction.rmtr_account_type
+      %tr
+        %td.label Remitter Account IFSC 
+        %td= @ecol_transaction.rmtr_account_ifsc
+      %tr
+        %td.label Remitter To Beneficiary Note
+        %td= @ecol_transaction.rmtr_to_bene_note
+  .header-form-main{:style=>'background-color: #ecf5fa; width: 50%; height: 180px;display: inline-block;'}
+    %table.table.no-border
+      %tr
+        %td.label Beneficiary Address 
+        %td= @ecol_transaction.bene_full_address
+      %tr
+        %td.label Beneficiary Account Type 
+        %td= @ecol_transaction.bene_account_type
+      %tr
+        %td.label Beneficiary Account IFSC 
+        %td= @ecol_transaction.bene_account_ifsc
+#faultText.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Fault Text
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    .demo-area
+    %pre#fault_text{:style => 'word-wrap: break-word'}
+    %table.table.no-border
+      %tr
+        %td.label Fault Code: 
+        %td= @ecol_transaction.fault_code
+      %tr
+        %td.label Fault Reason:
+        %td= @ecol_transaction.fault_reason
+#resultText.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Validation Result
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    %pre#result_text{:style => 'word-wrap: break-word'}
+      = @ecol_transaction.validation_result
+#settleResult.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Settle Result
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    %pre#result_text{:style => 'word-wrap: break-word'}
+      = @ecol_transaction.settle_result
+#notifyResult.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Notification Result
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    %pre#result_text{:style => 'word-wrap: break-word'}
+      = @ecol_transaction.notify_result
+
+
+
+

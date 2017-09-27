@@ -1,0 +1,317 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 E-Collect Customer Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecol_customer
+        %a.btn{:href => "#{!(can) ? '#' : '/ecol_customers/' + @ecol_customer.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'approve', :@record => @ecol_customer
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@ecol_customer.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@ecol_customer)}", :controller => :ecol_customers, :action => :audit_logs, :version_id => audit_count(@ecol_customer), :id => @ecol_customer.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@ecol_customer, :base, :prepend_text => "")
+          %tr
+            %td.label Customer Code
+            %td.value
+              = @ecol_customer.code
+            %td#msg-error
+              = error_message_for(@ecol_customer, :code, :prepend_text => "")
+          %tr
+            %td.label Application Code
+            %td.value
+              = @ecol_customer.app_code
+            %td#msg-error
+              = error_message_for(@ecol_customer, :app_code, :prepend_text => "")
+          %tr
+            %td.label Identity User ID
+            %td.value
+              = @ecol_customer.identity_user_id
+            %td#msg-error
+              = error_message_for(@ecol_customer, :identity_user_id, :prepend_text => "")
+          %tr
+            %td.label Customer Name
+            %td.value
+              = @ecol_customer.name
+            %td#msg-error
+              = error_message_for(@ecol_customer, :name, :prepend_text => "")
+          %tr
+            %td.label Is Enabled
+            %td.value
+              = @ecol_customer.is_enabled
+            %td#msg-error
+              = error_message_for(@ecol_customer, :is_enabled, :prepend_text => "")
+          %tr
+            %td.label Validation Method
+            %td.value
+              = show_page_value_for_val_method(@ecol_customer.val_method)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_method, :prepend_text => "")
+          %tr
+            %td.label Should Prevalidate
+            %td.value
+              = @ecol_customer.should_prevalidate
+            %td#msg-error
+              = error_message_for(@ecol_customer, :should_prevalidate, :prepend_text => "")
+          %tr
+            %td.label Account Token 1
+            %td.value
+              = show_page_value_for_account_tokens(@ecol_customer.token_1_type)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_1_type, :prepend_text => "")
+          %tr
+            %td.label Account Token 1 Length
+            %td.value
+              = @ecol_customer.token_1_length
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_1_length, :prepend_text => "")
+          %tr
+            %td.label Account Token 1 Pattern
+            %td.label Starts With:
+            %td.value
+              = @ecol_customer.token_1_starts_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_1_starts_with, :prepend_text => "")
+            %td.label Contains:
+            %td.value
+              = @ecol_customer.token_1_contains
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_1_contains, :prepend_text => "")
+            %td.label Ends With:
+            %td.value
+              = @ecol_customer.token_1_ends_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_1_ends_with, :prepend_text => "")
+          %tr
+            %td.label Validate Account Token 1
+            %td.value
+              = @ecol_customer.val_token_1
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_token_1, :prepend_text => "")
+          %tr
+            %td.label Account Token 2
+            %td.value
+              = show_page_value_for_account_tokens(@ecol_customer.token_2_type)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_2_type, :prepend_text => "")
+          %tr
+            %td.label Account Token 2 Length
+            %td.value
+              = @ecol_customer.token_2_length
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_2_length, :prepend_text => "")
+          %tr
+            %td.label Account Token 2 Pattern
+            %td.label Starts With:
+            %td.value
+              = @ecol_customer.token_2_starts_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_2_starts_with, :prepend_text => "")
+            %td.label Contains:
+            %td.value
+              = @ecol_customer.token_2_contains
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_2_contains, :prepend_text => "")
+            %td.label Ends With:
+            %td.value
+              = @ecol_customer.token_2_ends_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_2_ends_with, :prepend_text => "")
+          %tr
+            %td.label Validate Account Token 2
+            %td.value
+              = @ecol_customer.val_token_2
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_token_2, :prepend_text => "")
+          %tr
+            %td.label Account Token 3
+            %td.value
+              = show_page_value_for_account_tokens(@ecol_customer.token_3_type)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_3_type, :prepend_text => "")
+          %tr
+            %td.label Account Token 3 Length
+            %td.value
+              = @ecol_customer.token_3_length
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_3_length, :prepend_text => "")
+          %tr
+            %td.label Account Token 3 Pattern
+            %td.label Starts With:
+            %td.value
+              = @ecol_customer.token_3_starts_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_3_starts_with, :prepend_text => "")
+            %td.label Contains:
+            %td.value
+              = @ecol_customer.token_3_contains
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_3_contains, :prepend_text => "")
+            %td.label Ends With:
+            %td.value
+              = @ecol_customer.token_3_ends_with
+            %td#msg-error
+              = error_message_for(@ecol_customer, :token_3_ends_with, :prepend_text => "")
+          %tr
+            %td.label Validate Account Token 3
+            %td.value
+              = @ecol_customer.val_token_3
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_token_3, :prepend_text => "")
+          %tr
+            %td.label Validate Last Token Length
+            %td.value
+              = @ecol_customer.val_token_3
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_token_3, :prepend_text => "")
+          %tr
+            %td.label Validate Transaction Amount
+            %td.value
+              = @ecol_customer.val_txn_amt
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_txn_amt, :prepend_text => "")
+          %tr
+            %td.label Validate Transaction Date
+            %td.value
+              = @ecol_customer.val_txn_date
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_txn_date, :prepend_text => "")
+          %tr
+            %td.label Validate Beneficiary Name
+            %td.value
+              = @ecol_customer.val_ben_name
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_ben_name, :prepend_text => "")
+          %tr
+            %td.label Validate Remitter Name
+            %td.value
+              = @ecol_customer.val_rmtr_name
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_rmtr_name, :prepend_text => "")
+          %tr
+            %td.label Validate Remitter Account
+            %td.value
+              = @ecol_customer.val_rem_acct
+            %td#msg-error
+              = error_message_for(@ecol_customer, :val_rem_acct, :prepend_text => "")
+          %tr
+            %td.label Return If Validation Fails
+            %td.value
+              = @ecol_customer.return_if_val_reject
+            %td#msg-error
+              = error_message_for(@ecol_customer, :return_if_val_reject, :prepend_text => "")
+          %tr
+            %td.label Pool Account No
+            %td.value
+              = @ecol_customer.pool_acct_no
+            %td#msg-error
+              = error_message_for(@ecol_customer, :pool_acct_no, :prepend_text => "")
+          %tr
+            %td.label Customer Alert On
+            %td.value
+              = @ecol_customer.cust_alert_on
+            %td#msg-error
+              = error_message_for(@ecol_customer, :cust_alert_on, :prepend_text => "")
+          %tr
+            %td.label LookUp File Upload Treatment
+            %td.value
+              = @ecol_customer.file_upld_mthd
+            %td#msg-error
+              = error_message_for(@ecol_customer, :file_upld_mthd, :prepend_text => "")
+          %tr
+            %td.label Credit Account No (Validation Pass)
+            %td.value
+              = @ecol_customer.credit_acct_val_pass
+            %td#msg-error
+              = error_message_for(@ecol_customer, :credit_acct_val_pass, :prepend_text => "")
+          %tr
+            %td.label Credit Account No (Validation Fail)
+            %td.value
+              = @ecol_customer.credit_acct_val_fail
+            %td#msg-error
+              = error_message_for(@ecol_customer, :credit_acct_val_fail, :prepend_text => "")
+          %tr
+            %td.label Allowed Operations
+            %td.value
+              = get_allowed_operations(@ecol_customer.allowed_operations)
+            %td
+          %tr
+            %td.label Narration Suffix 1
+            %td.value
+              = show_page_value_for_nrtv_sufx(@ecol_customer.nrtv_sufx_1)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :nrtv_sufx_1, :prepend_text => "")
+          %tr
+            %td.label Narration Suffix 2
+            %td.value
+              = show_page_value_for_nrtv_sufx(@ecol_customer.nrtv_sufx_2)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :nrtv_sufx_2, :prepend_text => "")
+          %tr
+            %td.label Narration Suffix 3
+            %td.value
+              = show_page_value_for_nrtv_sufx(@ecol_customer.nrtv_sufx_3)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :nrtv_sufx_3, :prepend_text => "")
+          %tr
+            %td.label Send Alerts To Remitter On
+            %td.value
+              = @ecol_customer.rmtr_alert_on
+            %td#msg-error
+              = error_message_for(@ecol_customer, :rmtr_alert_on, :prepend_text => "")
+          %tr
+            %td.labelSMS SMS Text for Passed Payment
+            %td.value
+              = @ecol_customer.rmtr_pass_txt
+            %td#msg-error
+              = error_message_for(@ecol_customer, :rmtr_pass_txt, :prepend_text => "")
+          %tr
+            %td.label SMS Text for Returned Payment
+            %td.value
+              = @ecol_customer.rmtr_return_txt
+            %td#msg-error
+              = error_message_for(@ecol_customer, :rmtr_return_txt, :prepend_text => "")
+          %tr
+            %td.label Auto Credit
+            %td.value
+              = @ecol_customer.auto_credit
+            %td#msg-error
+              = error_message_for(@ecol_customer, :auto_credit, :prepend_text => "")
+          %tr
+            %td.label Auto Return
+            %td.value
+              = @ecol_customer.auto_return
+            %td#msg-error
+              = error_message_for(@ecol_customer, :auto_return, :prepend_text => "") 
+          %tr
+            %td.label Created By
+            %td.value
+              = @ecol_customer.created_user.try(:username)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :created_by, :prepend_text => "")
+          %tr
+            %td.label Updated By
+            %td.value
+              = @ecol_customer.updated_user.try(:username)
+            %td#msg-error
+              = error_message_for(@ecol_customer, :updated_by, :prepend_text => "")
+          %tr
+            %td.label Created At
+            %td.value
+              = @ecol_customer.try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_customer, :created_at, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_customer.try(:updated_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_customer, :updated_at, :prepend_text => "")

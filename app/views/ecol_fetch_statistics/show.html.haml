@@ -1,0 +1,55 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 Ecollect Fetch Statistics Details 
+      %br
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+        - if !@ecol_fetch_statistic.nil?
+          %tr
+            %td.label Last NEFT At
+            %td.value
+              = @ecol_fetch_statistic.last_neft_at.strftime("%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_neft_at, :prepend_text => "")
+          %tr
+            %td.label Last NEFT ID
+            %td.value
+              = @ecol_fetch_statistic.last_neft_id
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_neft_id, :prepend_text => "")
+          %tr
+            %td.label Last NEFT Count
+            %td.value
+              = @ecol_fetch_statistic.last_neft_cnt
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_neft_cnt, :prepend_text => "")
+          %tr
+            %td.label Total NEFT Count
+            %td
+              = @ecol_fetch_statistic.tot_neft_cnt
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :tot_neft_cnt, :prepend_text => "")
+          %tr
+            %td.label Last RTGS At
+            %td.value
+              = @ecol_fetch_statistic.last_rtgs_at.strftime("%d/%m/%Y %I:%M%p") rescue " "
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_rtgs_at, :prepend_text => "")
+          %tr
+            %td.label Last RTGS ID
+            %td.value
+              = @ecol_fetch_statistic.last_rtgs_id
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_rtgs_id, :prepend_text => "")
+          %tr
+            %td.label Last RTGS Count
+            %td.value
+              = @ecol_fetch_statistic.last_rtgs_cnt
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :last_rtgs_cnt, :prepend_text => "")
+          %tr
+            %td.label Total RTGS Count
+            %td
+              = @ecol_fetch_statistic.tot_rtgs_cnt
+            %td#msg-error
+              = error_message_for(@ecol_fetch_statistic, :tot_rtgs_cnt, :prepend_text => "")          

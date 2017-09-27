@@ -1,0 +1,10 @@
+%a.btn{"data-toggle" => "modal", :href => "#{'#myModal'+state.to_s}", :role => "button", :class => "btn btn-primary"} RETRY #{state}
+.modal.hide.fade{"id" => "myModal#{state}", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#myModalLabel  RETRY #{state}
+    #error_message{:style => 'color:red'}
+  .modal-body
+    = simple_form_for @ecol_transaction, :method=>:put, :html=>{} do |ef|
+      = hidden_field_tag(:state, state)
+      = submit_tag "RETRY #{state}", :class=>"btn btn-primary transition_button", :id => "transition_button"

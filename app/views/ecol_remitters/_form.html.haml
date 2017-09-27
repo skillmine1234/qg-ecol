@@ -1,0 +1,109 @@
+= simple_form_for @ecol_remitter, :html => {:class=>'form-horizontal', :autocomplete=>"off", :id => "ecol_remitter_form"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecol_remitter, :base, :prepend_text => "")
+  .form-main
+    = f.hidden_field :lock_version 
+    = f.hidden_field :approved_id
+    = f.hidden_field :approved_version
+    .control-group
+      = f.label :customer_code, "*Customer Code", :class => 'control-label'
+      = f.text_field :customer_code
+      #msg-error
+        = error_message_for(@ecol_remitter, :customer_code, :prepend_text => "")
+    .control-group
+      = f.label :customer_subcode, "Customer Sub Code", :class => 'control-label'
+      = f.text_field :customer_subcode, :maxlength => 28
+      #msg-error
+        = error_message_for(@ecol_remitter, :customer_subcode, :prepend_text => "")
+    .control-group
+      = f.label :remitter_code, "*Remitter Code", :class => 'control-label'
+      = f.text_field :remitter_code, :maxlength => 28
+      #msg-error
+        = error_message_for(@ecol_remitter, :remitter_code, :prepend_text => "")
+    .control-group
+      = f.label :credit_acct_no, "Credit Account No", :class => 'control-label'
+      = f.text_field :credit_acct_no, :maxlength => 25
+      #msg-error
+        = error_message_for(@ecol_remitter, :credit_acct_no, :prepend_text => "")
+    .control-group
+      = f.label :customer_subcode_email, "Customer Sub Code Email", :class => 'control-label'
+      = f.text_field :customer_subcode_email
+      #msg-error
+        = error_message_for(@ecol_remitter, :customer_subcode_email, :prepend_text => "")
+    .control-group
+      = f.label :customer_subcode_mobile, "Customer Sub Code Mobile", :class => 'control-label'
+      = f.text_field :customer_subcode_mobile
+      #msg-error
+        = error_message_for(@ecol_remitter, :customer_subcode_mobile, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_name, "*Remitter Name", :class => 'control-label'
+      = f.text_field :rmtr_name
+      #msg-error
+        = error_message_for(@ecol_remitter, :rmtr_name, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_address, "Remitter Address", :class => 'control-label'
+      = f.text_area :rmtr_address
+      #msg-error
+        = error_message_for(@ecol_remitter, :rmtr_address, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_acct_no, "Remitter Account No", :class => 'control-label'
+      = f.text_field :rmtr_acct_no, :maxlength => 25
+      #msg-error
+        = error_message_for(@ecol_remitter, :rmtr_acct_no, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_email, "Remitter Email", :class => 'control-label'
+      = f.text_field :rmtr_email
+      #msg-error
+        = error_message_for(@ecol_remitter, :rmtr_email, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_mobile, "Remitter Mobile", :class => 'control-label'
+      = f.text_field :rmtr_mobile
+      #msg-error
+        = error_message_for(@ecol_remitter, :rmtr_mobile, :prepend_text => "")
+    .control-group
+      = f.label :invoice_no, "Invoice No", :class => 'control-label'
+      = f.text_field :invoice_no, :maxlength => 28
+      #msg-error
+        = error_message_for(@ecol_remitter, :invoice_no, :prepend_text => "")
+    .control-group
+      = f.label :invoice_amt, "*Invoice Amount", :class => 'control-label'
+      = f.text_field :invoice_amt, :maxlength => 15, :value => (number_with_precision(f.object.invoice_amt, :precision => 2) || 0)
+      #msg-error
+        = error_message_for(@ecol_remitter, :invoice_amt, :prepend_text => "")
+    .control-group
+      = f.label :invoice_amt_tol_pct, "Invoice Amount Tolerance (%)", :class => 'control-label'
+      = f.number_field :invoice_amt_tol_pct, :min => 0, :max => 100
+      #msg-error
+        = error_message_for(@ecol_remitter, :invoice_amt_tol_pct, :prepend_text => "")
+    .control-group
+      = f.label :min_credit_amt, "Minimum Credit Amount", :class => 'control-label'
+      = f.text_field :min_credit_amt, :maxlength => 15, :value => (number_with_precision(f.object.min_credit_amt, :precision => 2) || 0)
+      #msg-error
+        = error_message_for(@ecol_remitter, :min_credit_amt, :prepend_text => "")
+    .control-group
+      = f.label :max_credit_amt, "Maximum Credit Amount", :class => 'control-label'
+      = f.text_field :max_credit_amt, :maxlength => 15, :value => (number_with_precision(f.object.max_credit_amt, :precision => 2) || 0)
+      #msg-error
+        = error_message_for(@ecol_remitter, :max_credit_amt, :prepend_text => "")
+    .control-group
+      = f.label :due_date, "*Invoice Due Date", :class => 'control-label'
+      = f.text_field :due_date
+      #msg-error
+        = error_message_for(@ecol_remitter, :due_date, :prepend_text => "")
+    .control-group
+      = f.label :due_date_tol_days, "Invoice Due Date Tolerance (Days)", :class => 'control-label'
+      = f.number_field :due_date_tol_days, :min => 0, :max => 28
+      #msg-error
+        = error_message_for(@ecol_remitter, :due_date_tol_days, :prepend_text => "")
+  .form-extended
+    - @ecol_remitter.udfs.each do |c|
+      .control-group
+        = render :partial => 'ecol_remitters/udf_fields', :locals => {:f => f , :c => c, :entity => @ecol_remitter}
+
+  .form-actions
+    - (f.object.new_record? and f.object.customer_code.nil?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_remitter', :value => label_name + ' Remitter'
+    = link_to :Cancel,'/ecol_remitters', :name => 'cancel', :class=>"cancel btn"
+
