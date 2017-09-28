@@ -1,0 +1,25 @@
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = form_tag ecol_incoming_records_path, :method => :post, :class => 'form-horizontal', :autocomplete=>"off" do
+    .control-group
+      = label_tag "Customer Code", "Customer Code", :class => 'control-label'
+      = text_field_tag :customer_code, params[:customer_code]
+
+    .control-group
+      = label_tag "Remitter Code", "Remitter Code", :class => 'control-label'
+      = text_field_tag :remitter_code, params[:remitter_code]
+
+    .control-group
+      = label_tag "Invoice No.", "Invoice No.", :class => 'control-label'
+      = text_field_tag :invoice_no, params[:invoice_no]
+
+    = hidden_field_tag :file_name, params[:file_name]
+    = hidden_field_tag :status, params[:status]
+    = hidden_field_tag :page, params[:page] || 1
+    .form-actions
+      = submit_tag "Search", :name => nil, :class => 'btn btn-primary', :id => "adv_search_button",onclick: "$('#page').val(1)"
+      = button_tag "Reset", :type => 'button', :value=>'Reset', :class => 'btn', :id => 'adv_search_reset_button'
+
+= advanced_search_page_links
