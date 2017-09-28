@@ -166,7 +166,7 @@ describe EcolCustomer do
       %w( D I )
     ].each do |val_method, file_upld_mthd|
         it "allows the combination val_method=#{val_method} and file_upld_mthd=#{file_upld_mthd}" do
-          ecol_customer = Factory.build(:ecol_customer, :file_upld_mthd => file_upld_mthd, :val_method => val_method)
+          ecol_customer = Factory.build(:ecol_customer, :file_upld_mthd => file_upld_mthd, :val_method => val_method, :app_code => nil, :should_prevalidate => 'N')
           ecol_customer.save.should == true
         end
       end
@@ -185,7 +185,7 @@ describe EcolCustomer do
         
     it "should check if val_tokens are N if val_method is N" do 
       ecol_customer = Factory.build(:ecol_customer, :val_method => "N", :val_token_1 => "Y", :val_token_2 => "Y", 
-      :val_token_3 => "N", :val_txn_date => "N", :val_txn_amt => "P")
+      :val_token_3 => "N", :val_txn_date => "N", :val_txn_amt => "P", :app_code => nil, :should_prevalidate => 'N')
       ecol_customer.save.should == false
       ecol_customer.errors[:base].should == ["If Validation Method is None, then all the Validation Account Tokens should also be N"]
     end
@@ -540,6 +540,22 @@ describe EcolCustomer do
     end
   end
 
+  context "val_method is equal D" do
+    it "should not validate  if app_code is present " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => "D" )
+      ecol_customer.save.should == false
+    end
+    
+    it "should not validate  if should_prevalidate is not Y" do 
+      ecol_customer = Factory.build(:ecol_customer, :val_method => "D", :should_prevalidate => 'Y' )
+      ecol_customer.save.should == false
+    end
+    
+    it "should not validate  if app_code is not present and should_validate is 'N' " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'W', :app_code => nil)
+      ecol_customer.save.should == false
+    end
+  end
   # context "presence_of_iam_cust_user" do
   #   it "should validate existence of iam_cust_user" do
   #     ecol_customer = Factory.build(:ecol_customer, identity_user_id: '1234')
