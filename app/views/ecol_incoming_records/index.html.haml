@@ -75,7 +75,7 @@
       - can_skip = (can? :skip_records, IncomingFile)
       - can_retry = (can? :approve_restart, IncomingFile)
       - can_reset = (can? :reset, IncomingFile)
-      = render :partial => "su_incoming_records/api_buttons", :locals => {:status => params[:status], :can_override => can_override, :can_skip => can_skip, :can_retry => can_retry, :can_reset => can_reset, :file_can_override => @incoming_file.incoming_file_type.try(:can_override), :file_can_skip => @incoming_file.incoming_file_type.try(:can_skip), :file_can_retry => @incoming_file.incoming_file_type.try(:can_retry)}
+      = render :partial => "incoming_file_records/api_buttons", :locals => {:status => params[:status], :can_override => can_override, :can_skip => can_skip, :can_retry => can_retry, :can_reset => can_reset, :file_can_override => @incoming_file.incoming_file_type.try(:can_override), :file_can_skip => @incoming_file.incoming_file_type.try(:can_skip), :file_can_retry => @incoming_file.incoming_file_type.try(:can_retry)}
 
 #faultText.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
   .modal-header
