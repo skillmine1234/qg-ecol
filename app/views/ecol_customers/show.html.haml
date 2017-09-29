@@ -28,9 +28,8 @@
           %tr
             %td.label Customer ID
             %td.value
-              = @ecol_customer.id
-            %td#msg-error
-              = error_message_for(@ecol_customer, :id, :prepend_text => "")
+              = @ecol_customer.customer_id
+            %td
           %tr
             %td.label Application Code
             %td.value
