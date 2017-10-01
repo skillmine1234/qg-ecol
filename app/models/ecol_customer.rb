@@ -56,7 +56,12 @@ class EcolCustomer < ActiveRecord::Base
   def code_uniqueness_for_6_4_char
     if code.present? && code.length < 7
       first_four_chr_code = code.first(4).upcase
-      if EcolCustomer.where("length(code) < ? and  upper(code) like ? and approval_status = ?",7, "#{first_four_chr_code}%", approval_status).present?
+      if code.length == 4
+        matching_customer = EcolCustomer.unscoped.where("length(code) = ? and  upper(code) like ? and approval_status = ? and (id is not null or id != ?)", 6, "#{first_four_chr_code}%", approval_status, id)
+      else
+        matching_customer = EcolCustomer.unscoped.where("length(code) = ? and  upper(code) = ? and approval_status = ? and (id is not null or id != ?)", 4, first_four_chr_code, approval_status, id)
+      end
+      if matching_customer.present?
         errors.add(:code, "starting with #{first_four_chr_code} is already taken")
       end
     end
