@@ -356,18 +356,18 @@ describe EcolCustomer do
   
   context "customer_code_format" do
     it "should validate customer code format" do
-      ecol_customer1 = Factory(:ecol_customer, :code => '4876', :approval_status => 'A')
-      ecol_customer2 = Factory.build(:ecol_customer, :code => '487678', :approval_status => 'A')
-      ecol_customer2.save.should == false
-      ecol_customer2.errors_on(:code).should == ["starting with 4876 is already taken"]
+      ecol_customer = Factory(:ecol_customer, :code => '4876', :approval_status => 'A')
+      ecol_customer = Factory.build(:ecol_customer, :code => '487678', :approval_status => 'A')
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:code).should == ["starting with 4876 is already taken"]
       
-      ecol_customer3 = Factory.build(:ecol_customer, :code => '487678rt', :approval_status => 'A')
-      ecol_customer3.save.should == true
+      ecol_customer = Factory(:ecol_customer, :code => '5876AS', :approval_status => 'A')
+      ecol_customer = Factory.build(:ecol_customer, :code => '5876', :approval_status => 'A')
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:code).should == ["starting with 5876 is already taken"]
       
-      ecol_customer4 = Factory(:ecol_customer, :code => '5876AS', :approval_status => 'A')
-      ecol_customer5 = Factory.build(:ecol_customer, :code => '5876', :approval_status => 'A')
-      ecol_customer5.save.should == false
-      ecol_customer5.errors_on(:code).should == ["starting with 5876 is already taken"]
+      ecol_customer = Factory.build(:ecol_customer, :code => '5876OP', :approval_status => 'A')
+      ecol_customer.save.should == true
 
       ecol_customer = Factory.build(:ecol_customer, :code => '8ABC')
       ecol_customer.save.should == true
