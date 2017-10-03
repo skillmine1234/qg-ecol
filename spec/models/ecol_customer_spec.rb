@@ -369,6 +369,10 @@ describe EcolCustomer do
       ecol_customer = Factory.build(:ecol_customer, :code => '5876OP', :approval_status => 'A')
       ecol_customer.save.should == true
 
+      ecol_customer = Factory(:ecol_customer, :code => 'QWER89', :approval_status => 'A')
+      ecol_customer.code = 'QWER'
+      ecol_customer.save.should == true
+
       ecol_customer = Factory.build(:ecol_customer, :code => '8ABC')
       ecol_customer.save.should == true
       
