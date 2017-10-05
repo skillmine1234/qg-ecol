@@ -555,6 +555,11 @@ describe EcolCustomer do
       ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'D', :should_prevalidate => 'N')
       ecol_customer.save.should == false
     end
+  
+    it "should validate  if app_code is not present and should_prevalidate is 'N' " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => nil, :val_method => 'D', :should_prevalidate => 'N',:file_upld_mthd => 'I')
+      ecol_customer.save.should == true
+    end
   end
   # context "presence_of_iam_cust_user" do
   #   it "should validate existence of iam_cust_user" do
