@@ -37,4 +37,6 @@ Rails.application.routes.draw do
   put '/ecol_app_udtables/:id/approve' => "ecol_app_udtables#approve"
   get '/ecol_apps/:id/audit_logs' => 'ecol_apps#audit_logs'
   put '/ecol_apps/:id/approve' => "ecol_apps#approve"
+  get '/udf_attribute/:id/audit_logs' => 'udf_attributes#audit_logs'
+  put '/udf_attribute/:id/approve' => "udf_attributes#approve"
 end
