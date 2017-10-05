@@ -7,7 +7,7 @@ class EcolCustomersController < ApplicationController
   include EcolCustomersHelper
   include Approval2::ControllerAdditions
 
-  rescue_from OCIError do |e|
+  rescue_from 'OCIError' do |e|
     flash[:alert] = "#{e.message}"
     redirect_to ecol_customers_path
   end
