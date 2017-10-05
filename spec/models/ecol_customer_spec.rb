@@ -265,7 +265,7 @@ describe EcolCustomer do
     it "should check if should_prevalidate is enabled when val_method != W and cust_alert is off" do
       ecol_customer = Factory.build(:ecol_customer, val_method: 'D', cust_alert_on: 'N', should_prevalidate: 'Y')
       ecol_customer.save.should == false
-      ecol_customer.errors_on(:should_prevalidate).should == ['should not be enabled when Validation Method is not Web Service and Customer Alert is off']
+      ecol_customer.errors_on(:should_prevalidate).should == ['should not be enabled when Validation Method is not Web Service and Customer Alert is off', "should be disabled when Validation Method is Database Lookup"]
 
       ecol_customer1 = Factory.build(:ecol_customer, val_method: 'W', cust_alert_on: 'N', should_prevalidate: 'Y')
       ecol_customer1.save.should == true
@@ -546,13 +546,13 @@ describe EcolCustomer do
       ecol_customer.save.should == false
     end
     
-    it "should not validate  if should_prevalidate is not Y" do 
+    it "should not validate  if should_prevalidate is Y" do 
       ecol_customer = Factory.build(:ecol_customer, :val_method => "D", :should_prevalidate => 'Y' )
       ecol_customer.save.should == false
     end
     
-    it "should not validate  if app_code is not present and should_validate is 'N' " do 
-      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'W', :app_code => nil)
+    it "should not validate  if app_code is present and should_prevalidate is 'N' " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'D', :should_prevalidate => 'N')
       ecol_customer.save.should == false
     end
   end
