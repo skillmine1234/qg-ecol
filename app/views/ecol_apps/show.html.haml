@@ -73,4 +73,7 @@
                       %td
                         = @ecol_app.send("setting#{i}_name")
                       %td
-                        = @ecol_app.send("setting#{i}_value")
+                        - if @ecol_app.send("setting#{i}_type") == 'password' && @ecol_app.approval_status == 'A'
+                          = '*****'
+                        - else
+                          = @ecol_app.send("setting#{i}_value")

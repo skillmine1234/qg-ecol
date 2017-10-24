@@ -2,7 +2,7 @@ class EcolApp < ActiveRecord::Base
   include Approval2::ModelAdditions
   
   STD_APP_CODES = ['ECSTDX01','ECSTDJ01']
-  SETTING_TYPES = ['text','number','date']
+  SETTING_TYPES = ['text','number','date','password']
 
   belongs_to :created_user, :foreign_key =>'created_by', :class_name => 'User'
   belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
@@ -89,10 +89,24 @@ class EcolApp < ActiveRecord::Base
   
   def decrypt_password
     self.http_password = DecPassGenerator.new(http_password,ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']).generate_decrypted_data if http_password.present?
+    unless settings_cnt == 0
+      i = 1
+      while i <= settings_cnt
+        self.send("setting#{i}_value=", DecPassGenerator.new(send("setting#{i}_value"),ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']).generate_decrypted_data) if send("setting#{i}_type") == 'password'
+        i = i + 1
+      end
+    end
   end
   
   def encrypt_password
     self.http_password = EncPassGenerator.new(self.http_password, ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']).generate_encrypted_password unless http_password.to_s.empty?
+    unless settings_cnt == 0
+      i = 1
+      while i <= settings_cnt
+        self.send("setting#{i}_value=", EncPassGenerator.new(send("setting#{i}_value"),ENV['CONSUMER_KEY'], ENV['CONSUMER_SECRET']).generate_encrypted_password) if send("setting#{i}_type") == 'password'
+        i = i + 1
+      end
+    end
   end
 
   def password_should_be_present
