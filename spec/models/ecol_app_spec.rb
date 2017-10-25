@@ -13,12 +13,22 @@ describe EcolApp do
       ecol_app.reload
       ecol_app.http_password.should == "password"
     end
+    it "should encrypt the settings with type password" do 
+      ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'value1', setting2_name: 'name2', setting2_type: 'password', setting2_value: 'password123')
+      ecol_app.save.should be_true
+      ecol_app.reload
+      ecol_app.setting2_value.should == "password123"
+    end
   end
   
   context "decrypt_password" do 
     it "should decrypt the http_password" do 
       ecol_app = Factory(:ecol_app, http_username: 'username', http_password: 'password')
       ecol_app.http_password.should == "password"
+    end
+    it "should decrypt the settings with type password" do 
+      ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'value1', setting2_name: 'name2', setting2_type: 'password', setting2_value: 'password123')
+      ecol_app.setting2_value.should == "password123"
     end
   end
 
