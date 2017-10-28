@@ -17,7 +17,6 @@ Rails.application.routes.draw do
   resources :udf_attributes
   resources :ecol_rules
   resources :ecol_fetch_statistics
-  resources :ecol_unapproved_records
   resources :ecol_app_udtables
   resources :ecol_apps
   resources :ecol_summaries, only: [:index]
