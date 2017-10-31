@@ -138,14 +138,6 @@ $(document).ready(function(){
 			}
 		}
   }
-  
-  else if ($('#ecol_customer_val_method').val() === 'D'){
-      $('#ecol_customer_should_prevalidate').prop('disabled', true)
-      $('#ecol_customer_should_prevalidate').attr('checked', false);
-      
-      $('#ecol_customer_app_code').prop('disabled', true)
-      $('#ecol_customer_app_code').val('')
-    }
     
   else{
     $('#ecol_customer_val_txn_date').prop('disabled',false);
@@ -167,6 +159,13 @@ $(document).ready(function(){
 				$('#ecol_customer_val_token_' + i).prop('disabled',false);
 			}
 		}
+    if ($('#ecol_customer_val_method').val() === 'D'){
+      $('#ecol_customer_should_prevalidate').prop('disabled', true)
+      $('#ecol_customer_should_prevalidate').attr('checked', false);
+  
+      $('#ecol_customer_app_code').prop('disabled', true)
+      $('#ecol_customer_app_code').val('')
+    }
   } 
 
   $("#ecol_customer_token_1_type").on("change",function(){
