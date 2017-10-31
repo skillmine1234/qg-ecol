@@ -37,7 +37,7 @@
       .control-group
         - (1..@ecol_app.settings_cnt).each do |i|
           = f.label @ecol_app.send("setting#{i}_name")
-          = f.send("#{@ecol_app["setting#{i}"]["setting#{i}_type"] || 'text'}_field", "setting#{i}_value")
+          = f.send("#{@ecol_app["setting#{i}"]["setting#{i}_type"] || 'text'}_field", "setting#{i}_value", value:  @ecol_app.send("setting#{i}_value"))
           = f.hidden_field "setting#{i}_name", value: @ecol_app.send("setting#{i}_name")
           = f.hidden_field "setting#{i}_type", value: @ecol_app.send("setting#{i}_type")
           %br
@@ -60,7 +60,10 @@
                 %td
                   = f.select "setting#{i}_type", options_for_select(EcolApp::SETTING_TYPES, @ecol_app.send("setting#{i}_type"))
                 %td
-                  = f.text_field "setting#{i}_value"
+                  - if @ecol_app.send("setting#{i}_type") == 'password'
+                    = f.password_field "setting#{i}_value", value: @ecol_app.send("setting#{i}_value")
+                  - else
+                    = f.text_field "setting#{i}_value"
     .control-group
       - if !@ecol_app.udfs_cnt.nil? && @ecol_app.udfs_cnt > 0
         - (1..@ecol_app.udfs_cnt).each do |i|

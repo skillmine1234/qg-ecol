@@ -13,12 +13,22 @@ describe EcolApp do
       ecol_app.reload
       ecol_app.http_password.should == "password"
     end
+    it "should encrypt the settings with type password" do 
+      ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'value1', setting2_name: 'name2', setting2_type: 'password', setting2_value: 'password123')
+      ecol_app.save.should be_true
+      ecol_app.reload
+      ecol_app.setting2_value.should == "password123"
+    end
   end
   
   context "decrypt_password" do 
     it "should decrypt the http_password" do 
       ecol_app = Factory(:ecol_app, http_username: 'username', http_password: 'password')
       ecol_app.http_password.should == "password"
+    end
+    it "should decrypt the settings with type password" do 
+      ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'value1', setting2_name: 'name2', setting2_type: 'password', setting2_value: 'password123')
+      ecol_app.setting2_value.should == "password123"
     end
   end
 
@@ -70,31 +80,31 @@ describe EcolApp do
     it "should validate the setting values" do
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: nil)
       ecol_app.save.should == false
-      ecol_app.errors_on(:setting1_value).should == ["can't be blank"]
+      ecol_app.errors_on('name1').should == ["can't be blank"]
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'text')
       ecol_app.save.should == true
-      ecol_app.errors_on(:setting1_value).should == []
+      ecol_app.errors_on('name1').should == []
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'number', setting1_value: 'TEXT')
       ecol_app.save.should == false
-      ecol_app.errors_on(:setting1_value).should == ["should include only digits"]
+      ecol_app.errors_on('name1').should == ["should include only digits"]
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'number', setting1_value: '1234')
       ecol_app.save.should == true
-      ecol_app.errors_on(:setting1_value).should == []
+      ecol_app.errors_on('name1').should == []
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'text', setting1_value: 'yterqweytweuyqtweyqteyqtwerqwyertqweuryqwieuryqwerehquqwkjhequeuqeyuqjwhegruqywerqwjkeqjwehqjweqjhwegqhwe')
       ecol_app.save.should == false
-      ecol_app.errors_on(:setting1_value).should == ["is longer than maximum (100)"]
+      ecol_app.errors_on('name1').should == ["is longer than maximum (100)"]
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'date', setting1_value: '2014:12:12')
       ecol_app.save.should == false
-      ecol_app.errors_on(:setting1_value).should == ["invalid format, the correct format is yyyy-mm-dd", "is not a date"]
+      ecol_app.errors_on('name1').should == ["invalid format, the correct format is yyyy-mm-dd", "is not a date"]
 
       ecol_app = Factory.build(:ecol_app, setting1_name: 'name1', setting1_type: 'date', setting1_value: '2016-12-12')
       ecol_app.save.should == true
-      ecol_app.errors_on(:setting1_value).should == []
+      ecol_app.errors_on('name1').should == []
     end
     it "should match customer" do
       ecol_customer = Factory(:ecol_customer, code: 'CUST01QW', val_method: 'N', cust_alert_on: 'N', approval_status: 'A')

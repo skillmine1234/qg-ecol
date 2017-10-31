@@ -17,20 +17,9 @@ Rails.application.routes.draw do
   resources :udf_attributes
   resources :ecol_rules
   resources :ecol_fetch_statistics
-  resources :ecol_unapproved_records
   resources :ecol_app_udtables
   resources :ecol_apps
   resources :ecol_summaries, only: [:index]
-  
-  resources :ecol_incoming_records, except: :index do
-    collection do
-      get :index
-      post :index
-    end
-    member do
-      get :audit_logs
-    end
-  end
   
   get '/ecol_rule/:id/audit_logs' => 'ecol_rules#audit_logs'
   get '/ecol_customer/:id/audit_logs' => 'ecol_customers#audit_logs'
@@ -47,5 +36,6 @@ Rails.application.routes.draw do
   put '/ecol_app_udtables/:id/approve' => "ecol_app_udtables#approve"
   get '/ecol_apps/:id/audit_logs' => 'ecol_apps#audit_logs'
   put '/ecol_apps/:id/approve' => "ecol_apps#approve"
-  get 'ecol_incoming_file_summary' => 'ecol_incoming_records#incoming_file_summary'
+  get '/udf_attribute/:id/audit_logs' => 'udf_attributes#audit_logs'
+  put '/udf_attribute/:id/approve' => "udf_attributes#approve"
 end
