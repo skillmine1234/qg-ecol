@@ -27,6 +27,8 @@ $(document).ready(function(){
       $('#ecol_customer_file_upld_mthd').prop('disabled',true);
 			$("#ecol_customer_credit_acct_val_fail").val('');
 			$('#ecol_customer_credit_acct_val_fail').prop('disabled',true);
+      $('#ecol_customer_should_prevalidate').prop('disabled', false)
+      $('#ecol_customer_app_code').prop('disabled', false)
     }
     else if (val_method === 'W'){
       $('#ecol_customer_file_upld_mthd').val('N');
@@ -38,6 +40,8 @@ $(document).ready(function(){
       $('#ecol_customer_val_rmtr_name').prop('disabled',false);
       $('#ecol_customer_val_last_token_length').prop('disabled',false);
       $('#ecol_customer_return_if_val_reject').prop('disabled',false);
+      $('#ecol_customer_should_prevalidate').prop('disabled', false)
+      $('#ecol_customer_app_code').prop('disabled', false)
 			if ($("#ecol_customer_return_if_val_reject").attr('checked')) {
 				$('#ecol_customer_credit_acct_val_fail').prop('disabled',true);
 			}
@@ -62,6 +66,7 @@ $(document).ready(function(){
       $('#ecol_customer_val_last_token_length').prop('disabled',false);
       $('#ecol_customer_return_if_val_reject').prop('disabled',false);
       $('#ecol_customer_file_upld_mthd').prop('disabled',false);
+
 			if ($("#ecol_customer_return_if_val_reject").attr('checked')) {
 				$('#ecol_customer_credit_acct_val_fail').prop('disabled',true);
 			}
@@ -73,6 +78,13 @@ $(document).ready(function(){
 					$('#ecol_customer_val_token_' + i).prop('disabled',false);
 				}
 			}
+      if (val_method === 'D'){
+        $('#ecol_customer_should_prevalidate').prop('disabled', true)
+        $('#ecol_customer_should_prevalidate').attr('checked', false);
+        
+        $('#ecol_customer_app_code').prop('disabled', true)
+        $('#ecol_customer_app_code').val('')
+      }
     }
 
   });
@@ -126,6 +138,7 @@ $(document).ready(function(){
 			}
 		}
   }
+    
   else{
     $('#ecol_customer_val_txn_date').prop('disabled',false);
     $('#ecol_customer_val_txn_amt').prop('disabled',false);
@@ -146,6 +159,13 @@ $(document).ready(function(){
 				$('#ecol_customer_val_token_' + i).prop('disabled',false);
 			}
 		}
+    if ($('#ecol_customer_val_method').val() === 'D'){
+      $('#ecol_customer_should_prevalidate').prop('disabled', true)
+      $('#ecol_customer_should_prevalidate').attr('checked', false);
+  
+      $('#ecol_customer_app_code').prop('disabled', true)
+      $('#ecol_customer_app_code').val('')
+    }
   } 
 
   $("#ecol_customer_token_1_type").on("change",function(){

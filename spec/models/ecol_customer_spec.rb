@@ -166,7 +166,7 @@ describe EcolCustomer do
       %w( D I )
     ].each do |val_method, file_upld_mthd|
         it "allows the combination val_method=#{val_method} and file_upld_mthd=#{file_upld_mthd}" do
-          ecol_customer = Factory.build(:ecol_customer, :file_upld_mthd => file_upld_mthd, :val_method => val_method)
+          ecol_customer = Factory.build(:ecol_customer, :file_upld_mthd => file_upld_mthd, :val_method => val_method, :app_code => nil, :should_prevalidate => 'N')
           ecol_customer.save.should == true
         end
       end
@@ -185,7 +185,7 @@ describe EcolCustomer do
         
     it "should check if val_tokens are N if val_method is N" do 
       ecol_customer = Factory.build(:ecol_customer, :val_method => "N", :val_token_1 => "Y", :val_token_2 => "Y", 
-      :val_token_3 => "N", :val_txn_date => "N", :val_txn_amt => "P")
+      :val_token_3 => "N", :val_txn_date => "N", :val_txn_amt => "P", :app_code => nil, :should_prevalidate => 'N')
       ecol_customer.save.should == false
       ecol_customer.errors[:base].should == ["If Validation Method is None, then all the Validation Account Tokens should also be N"]
     end
@@ -265,7 +265,7 @@ describe EcolCustomer do
     it "should check if should_prevalidate is enabled when val_method != W and cust_alert is off" do
       ecol_customer = Factory.build(:ecol_customer, val_method: 'D', cust_alert_on: 'N', should_prevalidate: 'Y')
       ecol_customer.save.should == false
-      ecol_customer.errors_on(:should_prevalidate).should == ['should not be enabled when Validation Method is not Web Service and Customer Alert is off']
+      ecol_customer.errors_on(:should_prevalidate).should == ['should not be enabled when Validation Method is not Web Service and Customer Alert is off', "should be disabled when Validation Method is Database Lookup"]
 
       ecol_customer1 = Factory.build(:ecol_customer, val_method: 'W', cust_alert_on: 'N', should_prevalidate: 'Y')
       ecol_customer1.save.should == true
@@ -544,6 +544,30 @@ describe EcolCustomer do
     end
   end
 
+  context "val_method is equal D" do
+    it "should not validate  if app_code is present " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => "D" )
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:app_code).should include("should be blank when Validation Method is Database Lookup")
+    end
+    
+    it "should not validate  if should_prevalidate is Y" do 
+      ecol_customer = Factory.build(:ecol_customer, :val_method => "D", :should_prevalidate => 'Y' )
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:should_prevalidate).should include("should be disabled when Validation Method is Database Lookup")
+    end
+    
+    it "should not validate  if app_code is present and should_prevalidate is 'N' " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'D', :should_prevalidate => 'N')
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:app_code).should include("should be blank when Validation Method is Database Lookup")
+    end
+  
+    it "should validate  if app_code is not present and should_prevalidate is 'N' " do 
+      ecol_customer = Factory.build(:ecol_customer, :app_code => nil, :val_method => 'D', :should_prevalidate => 'N',:file_upld_mthd => 'I')
+      ecol_customer.save.should == true
+    end
+  end
   # context "presence_of_iam_cust_user" do
   #   it "should validate existence of iam_cust_user" do
   #     ecol_customer = Factory.build(:ecol_customer, identity_user_id: '1234')

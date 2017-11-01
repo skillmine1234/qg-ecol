@@ -26,6 +26,11 @@
             %td#msg-error
               = error_message_for(@ecol_customer, :code, :prepend_text => "")
           %tr
+            %td.label Customer ID
+            %td.value
+              = @ecol_customer.customer_id
+            %td
+          %tr
             %td.label Application Code
             %td.value
               = @ecol_customer.app_code
