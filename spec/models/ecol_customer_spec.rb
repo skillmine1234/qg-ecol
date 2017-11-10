@@ -275,7 +275,7 @@ describe EcolCustomer do
     end
     
     it "should validate app_code" do
-      ecol_customer = Factory.build(:ecol_customer, app_code: 'ECSTDX01', return_if_val_reject: 'N')
+      ecol_customer = Factory.build(:ecol_customer, val_method: 'W', app_code: 'ECSTDX01', return_if_val_reject: 'N')
       ecol_customer.save.should == false
       ecol_customer.errors_on(:return_if_val_reject).should == ["Should be enabled when App Code is Standard"]
       
