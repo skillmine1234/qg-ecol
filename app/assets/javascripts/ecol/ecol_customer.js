@@ -421,7 +421,7 @@ $(document).ready(function(){
     $("#ecol_customer_rmtr_pass_txt").prop("disabled",false);
   }
   
-  if ($('#ecol_customer_return_if_val_reject').attr('checked')) {
+  if ($('#ecol_customer_return_if_val_reject').is(":checked")) {
     $("#ecol_customer_credit_acct_val_fail").val('');
     $("#ecol_customer_credit_acct_val_fail").prop("disabled",true);
     $("#ecol_customer_debit_acct_val_fail").prop("disabled",false);
@@ -433,7 +433,7 @@ $(document).ready(function(){
   }
   
   $("#ecol_customer_return_if_val_reject").on("click",function(){
-    if ($(this).attr('checked')) {
+    if ($(this).is(":checked")) {
       $("#ecol_customer_credit_acct_val_fail").val('');
       $("#ecol_customer_credit_acct_val_fail").prop("disabled",true);
       $("#ecol_customer_debit_acct_val_fail").prop("disabled",false);
