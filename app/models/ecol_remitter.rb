@@ -8,6 +8,8 @@ class EcolRemitter < ActiveRecord::Base
   belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
   
   belongs_to :ecol_customer
+
+  validates_presence_of :is_enabled
   
   before_save :to_upcase
   

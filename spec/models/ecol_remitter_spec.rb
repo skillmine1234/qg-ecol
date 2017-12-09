@@ -15,7 +15,7 @@ describe EcolRemitter do
   end
   
   context 'validation' do
-    [:customer_code, :remitter_code, :rmtr_name, :due_date, :invoice_amt].each do |att|
+    [:customer_code, :remitter_code, :rmtr_name, :due_date, :invoice_amt, :is_enabled].each do |att|
       it { should validate_presence_of(att) }
     end
     
