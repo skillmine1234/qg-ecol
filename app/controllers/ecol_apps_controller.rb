@@ -44,9 +44,12 @@ class EcolAppsController < ApplicationController
   end
 
   def index
-    ecol_apps = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcolApp.unscoped.where("approval_status =?",'U').order("id desc") : EcolApp.order("id desc")
-    @ecol_apps_count = ecol_apps.count
-    @ecol_apps = ecol_apps.paginate(:per_page => 10, :page => params[:page]) rescue []
+    if request.get?
+      @searcher = EcolAppSearcher.new(params.permit(:page, :approval_status))
+    else
+      @searcher = EcolAppSearcher.new(search_params)
+    end
+    @records = @searcher.paginate
   end
   
   def audit_logs
@@ -66,6 +69,11 @@ class EcolAppsController < ApplicationController
   end
 
   private
+
+  def search_params
+    params.require(:ecol_app_searcher).permit(:page, :app_code, :customer_code, :approval_status)
+  end
+
 
   def ecol_app_params
     params.require(:ecol_app).permit(:lock_version, :last_action, :updated_by, :notify_url, :validate_url, :http_username, :http_password, 
