@@ -20,6 +20,11 @@
             %td#msg-error
               = error_message_for(@ecol_remitter, :base, :prepend_text => "")
           %tr
+            %td.label Enabled?
+            %td
+              = @ecol_remitter.is_enabled
+            %td
+          %tr
             %td.label Customer Code
             %td.value
               = @ecol_remitter.customer_code

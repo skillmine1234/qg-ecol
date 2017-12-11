@@ -43,5 +43,6 @@ FactoryGirl.define do
     udf20 "Mystring"
     approval_status 'U'
     last_action 'C'
+    is_enabled 'Y'
   end
 end
