@@ -3,10 +3,8 @@
 %br
 %br
 %h1 Listing E-Collect Apps
+= render :partial => 'advanced_search'
 %br
-= "Total Count: #{@ecol_apps_count}"
-%br
-= will_paginate @ecol_apps
 %br
 %table.table.table-bordered.table-striped.table-hover
   .thead
@@ -22,7 +20,7 @@
       Notify URL
 			
   .tbody
-    - @ecol_apps.each do |ecol_app|
+    - @records.each do |ecol_app|
       %tr
         %td{:style=>'text-align:left;'}
           = link_to 'Show', ecol_app

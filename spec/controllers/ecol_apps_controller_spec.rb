@@ -29,13 +29,13 @@ describe EcolAppsController do
     it "assigns all ecol_apps as @ecol_apps" do
       ecol_app = Factory(:ecol_app, :approval_status => 'A')
       get :index
-      assigns(:ecol_apps).should eq([ecol_app])
+      assigns(:records).should eq([ecol_app])
     end
     
     it "assigns all unapproved ecol_apps as @ecol_apps when approval_status is passed" do
       ecol_app = Factory(:ecol_app, :approval_status => 'U')
       get :index, :approval_status => 'U'
-      assigns(:ecol_apps).should eq([ecol_app])
+      assigns(:records).should eq([ecol_app])
     end
   end
   
