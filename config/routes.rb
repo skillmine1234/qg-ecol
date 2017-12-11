@@ -18,8 +18,13 @@ Rails.application.routes.draw do
   resources :ecol_rules
   resources :ecol_fetch_statistics
   resources :ecol_app_udtables
-  resources :ecol_apps
   resources :ecol_summaries, only: [:index]
+
+  resources :ecol_apps do
+    collection do
+      put :index
+    end
+  end
   
   get '/ecol_rule/:id/audit_logs' => 'ecol_rules#audit_logs'
   get '/ecol_customer/:id/audit_logs' => 'ecol_customers#audit_logs'

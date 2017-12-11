@@ -1,0 +1,6 @@
+= search_form_for @searcher do |f|
+  = f.standard_fields
+  = f.input :app_code
+  = f.input :customer_code
+  = f.action_buttons
+= pagination_links(@records)
