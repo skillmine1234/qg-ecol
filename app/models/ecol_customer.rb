@@ -110,9 +110,6 @@ class EcolCustomer < ActiveRecord::Base
   end
 
   def conditions_for_val_method
-    if self.val_method == 'D' && (self.app_code.present?)
-      errors.add(:app_code, 'should be blank when Validation Method is Database Lookup')
-    end
     if self.val_method == 'D' && (self.should_prevalidate != 'N')
       errors.add(:should_prevalidate, 'should be disabled when Validation Method is Database Lookup')
     end
