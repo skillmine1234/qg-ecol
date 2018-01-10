@@ -28,7 +28,6 @@ $(document).ready(function(){
 			$("#ecol_customer_credit_acct_val_fail").val('');
 			$('#ecol_customer_credit_acct_val_fail').prop('disabled',true);
       $('#ecol_customer_should_prevalidate').prop('disabled', false)
-      $('#ecol_customer_app_code').prop('disabled', false)
     }
     else if (val_method === 'W'){
       $('#ecol_customer_file_upld_mthd').val('N');
@@ -41,7 +40,6 @@ $(document).ready(function(){
       $('#ecol_customer_val_last_token_length').prop('disabled',false);
       $('#ecol_customer_return_if_val_reject').prop('disabled',false);
       $('#ecol_customer_should_prevalidate').prop('disabled', false)
-      $('#ecol_customer_app_code').prop('disabled', false)
 			if ($("#ecol_customer_return_if_val_reject").is(":checked")) {
 				$('#ecol_customer_credit_acct_val_fail').prop('disabled',true);
 			}
@@ -81,9 +79,6 @@ $(document).ready(function(){
       if (val_method === 'D'){
         $('#ecol_customer_should_prevalidate').prop('disabled', true)
         $('#ecol_customer_should_prevalidate').attr('checked', false);
-        
-        $('#ecol_customer_app_code').prop('disabled', true)
-        $('#ecol_customer_app_code').val('')
       }
     }
 
@@ -161,10 +156,7 @@ $(document).ready(function(){
 		}
     if ($('#ecol_customer_val_method').val() === 'D'){
       $('#ecol_customer_should_prevalidate').prop('disabled', true)
-      $('#ecol_customer_should_prevalidate').attr('checked', false);
-  
-      $('#ecol_customer_app_code').prop('disabled', true)
-      $('#ecol_customer_app_code').val('')
+      $('#ecol_customer_should_prevalidate').attr('checked', false);  
     }
   } 
 

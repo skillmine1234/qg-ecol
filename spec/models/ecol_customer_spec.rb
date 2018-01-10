@@ -544,23 +544,11 @@ describe EcolCustomer do
     end
   end
 
-  context "val_method is equal D" do
-    it "should not validate  if app_code is present " do 
-      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => "D" )
-      ecol_customer.save.should == false
-      ecol_customer.errors_on(:app_code).should include("should be blank when Validation Method is Database Lookup")
-    end
-    
+  context "val_method is equal D" do    
     it "should not validate  if should_prevalidate is Y" do 
       ecol_customer = Factory.build(:ecol_customer, :val_method => "D", :should_prevalidate => 'Y' )
       ecol_customer.save.should == false
       ecol_customer.errors_on(:should_prevalidate).should include("should be disabled when Validation Method is Database Lookup")
-    end
-    
-    it "should not validate  if app_code is present and should_prevalidate is 'N' " do 
-      ecol_customer = Factory.build(:ecol_customer, :app_code => "TATAMM", :val_method => 'D', :should_prevalidate => 'N')
-      ecol_customer.save.should == false
-      ecol_customer.errors_on(:app_code).should include("should be blank when Validation Method is Database Lookup")
     end
   
     it "should validate  if app_code is not present and should_prevalidate is 'N' " do 
