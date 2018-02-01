@@ -19,6 +19,6 @@ class CreateTableEcolVaTransfers < ActiveRecord::Migration
       t.datetime :confirmed_at, :comment => "the timestamp at which the transfer is confirmed"
       t.datetime :returned_at, :comment => "the timestamp at which the payment is returned incase of failure of transfer "
     end
-    add_index :ecol_va_transfers, [:external_req_no], :unique => true, :name => :external_req_no_unique_index
+    add_index :ecol_va_transfers, [:external_req_no], :unique => true, :name => :ecol_va_transfers_01
   end
 end
