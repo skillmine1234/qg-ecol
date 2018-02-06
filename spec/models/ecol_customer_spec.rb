@@ -71,7 +71,7 @@ describe EcolCustomer do
     
     it do
       ecol_customer = Factory(:ecol_customer)
-      should validate_inclusion_of(:val_method).in_array(['N', 'W', 'D'])
+      should validate_inclusion_of(:val_method).in_array(['N', 'W', 'D', 'V'])
       should validate_inclusion_of(:rmtr_alert_on).in_array(['N', 'P', 'R', 'A'])
     end
     [:token_1_type, :token_2_type, :token_3_type].each do |att|
@@ -318,11 +318,20 @@ describe EcolCustomer do
       ecol_customer = Factory.build(:ecol_customer, allowed_operations: ['returnPayment'], return_if_val_reject: "Y")
       ecol_customer.save.should == true
     end
+    
+    it "should allow only one token if val_method is V" do
+      ecol_customer = Factory.build(:ecol_customer, val_method: 'V', :token_1_type => "SC", :token_1_length => 1, :token_2_type => "IN", :token_2_length => 1)
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:base).should == ["Only one token is allowed when the Validation Method is Virtual Account"]
+      
+      ecol_customer = Factory.build(:ecol_customer, val_method: 'V', :token_1_type => "SC", :token_1_length => 1, :token_2_type => 'N')
+      ecol_customer.save.should == true
+    end
   end
   
   context "options_for_select_boxes" do
     it "should return options for val method" do
-      EcolCustomer.options_for_val_method.should == [['None','N'],['Web Service','W'],['Database Lookup','D']]
+      EcolCustomer.options_for_val_method.should == [['None','N'],['Web Service','W'],['Database Lookup','D'],['Virtual Account','V']]
     end
     
     it "should return options for acct tokens" do

@@ -18,7 +18,8 @@ module EcolCustomerValidation
     :value_of_ntrv_sufx_if_val_method_is_N,
     :validate_app_code, 
     :validate_should_prevalidate,
-    :check_options_of_allowed_operations
+    :check_options_of_allowed_operations,
+    :check_token_for_val_method_V
   end
   
   def val_tokens_should_be_N_if_val_method_is_N
@@ -113,5 +114,11 @@ module EcolCustomerValidation
   def check_options_of_allowed_operations
     errors.add(:allowed_operations, "returnPayment is not allowed if Return If Validation Fails is 'N'") if allowed_operations.include?('returnPayment') && return_if_val_reject == 'N'
     errors.add(:allowed_operations, "both 'acceptPayment' and 'acceptPaymentWithCreditAcctNo' cannot be selected, choose any one of the two") if allowed_operations.include?('acceptPayment') &&  allowed_operations.include?('acceptPaymentWithCreditAcctNo')
+  end
+  
+  def check_token_for_val_method_V
+    if val_method == 'V' && (token_2_type != 'N' || token_3_type != 'N')
+      errors[:base] << "Only one token is allowed when the Validation Method is Virtual Account"
+    end
   end
 end

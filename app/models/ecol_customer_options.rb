@@ -2,7 +2,7 @@ module EcolCustomerOptions
   extend ActiveSupport::Concern
   included do
     def self.options_for_val_method
-      [['None','N'],['Web Service','W'],['Database Lookup','D']]
+      [['None','N'],['Web Service','W'],['Database Lookup','D'],['Virtual Account','V']]
     end
   
     def self.options_for_acct_tokens

@@ -19,7 +19,7 @@ class EcolCustomer < ActiveRecord::Base
   validates :token_1_length, :token_2_length, :token_3_length, :numericality => { :greater_than_or_equal_to => 0, :less_than_or_equal_to => 29}
   validates :identity_user_id, format: {with: /\A[a-z|A-Z|0-9]+\z/, :message => 'Invalid format, expected format is : {[a-z|A-Z|0-9]}'}, length: { maximum: 20 }, :allow_blank => true
   
-  validates_inclusion_of :val_method, :in => %w( N W D )
+  validates_inclusion_of :val_method, :in => %w( N W D V)
   validates_inclusion_of :token_1_type, :token_2_type, :token_3_type, :in => %w( N SC RC IN )
   validates_inclusion_of :file_upld_mthd, :in => %w( N F I ), :allow_blank => true
   validates_inclusion_of :nrtv_sufx_1, :nrtv_sufx_2, :nrtv_sufx_3, :in => %w( N SC RC IN RN ORN ORA TUN UDF1 UDF2 )
