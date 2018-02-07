@@ -1,0 +1,2 @@
+class EcolVaTxnPolicy < EcolOperationPolicy
+end
