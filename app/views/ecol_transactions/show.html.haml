@@ -66,27 +66,39 @@
             = link_to @ecol_transaction.customer_code , @ecol_transaction.ecol_customer
           - else
             = @ecol_transaction.customer_code
-      %tr
-        %td.label 
-          Token 1 : 
-          = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_1_type) rescue ""
-        %td
-          .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_1 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
-            = ecol_transaction_token_show(@ecol_transaction, 0)
+      - if @ecol_transaction.try(:ecol_customer).try(:val_method) != 'V'
         %tr
           %td.label 
-            Token 2 : 
-            = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_2_type) rescue ""
+            Token 1 : 
+            = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_1_type) rescue ""
           %td
-            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_2 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
-              = ecol_transaction_token_show(@ecol_transaction, 1)
+            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_1 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+              = ecol_transaction_token_show(@ecol_transaction, 0)
+          %tr
+            %td.label 
+              Token 2 : 
+              = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_2_type) rescue ""
+            %td
+              .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_2 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+                = ecol_transaction_token_show(@ecol_transaction, 1)
+          %tr
+            %td.label 
+              Token 3 : 
+              = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_3_type) rescue ""
+            %td
+              .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_3 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
+                = ecol_transaction_token_show(@ecol_transaction, 2)
+      - else
         %tr
-          %td.label 
-            Token 3 : 
-            = show_page_value_for_account_tokens(@ecol_transaction.ecol_customer.token_3_type) rescue ""
+          %td.label Virtual Account No :
           %td
-            .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "(should be validated? #{@ecol_transaction.ecol_customer.val_token_3 rescue "-"})" , "data-placement" => 'bottom', "data-html" => true}
-              = ecol_transaction_token_show(@ecol_transaction, 2)
+            = @ecol_transaction.customer_subcode
+        %tr
+          %td.label Virtual Account Transaction :
+          %td
+            / = link_to @ecol_transaction.va_txn_status, @ecol_transaction.ecol_va_txn
+            = @ecol_transaction.va_txn_status
+
     %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}  
       %tr
         %td.label Transfer Amount

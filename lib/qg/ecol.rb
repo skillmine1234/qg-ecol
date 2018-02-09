@@ -9,6 +9,6 @@ module Qg
     TEST_MENU_ITEMS = [:qg_ecol_todays_neft_txn, :qg_ecol_todays_rtgs_txn, :qg_ecol_todays_imps_txn, :qg_ecol_todays_upi_txn]
     COMMON_MENU_ITEMS = [:incoming_file, :outgoing_file]
     RULE = :ecol_rule
-    OPERATIONS = [:ecol_va_txns]
+    # OPERATIONS = [:ecol_va_txns]
   end
 end
