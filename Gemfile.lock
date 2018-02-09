@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qg-ecol (1.4.4)
+    qg-ecol (1.4.5)
       rails (= 4.2.2)
 
 GEM
