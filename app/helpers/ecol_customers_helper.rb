@@ -19,6 +19,8 @@ module EcolCustomersHelper
       "Web Service"
     elsif (value == "D")
       "Database Lookup"
+    elsif (value == 'V')
+      "Virtual Account"
     end
   end
   
