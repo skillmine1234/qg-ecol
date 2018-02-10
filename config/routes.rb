@@ -44,5 +44,41 @@ Rails.application.routes.draw do
   get '/udf_attribute/:id/audit_logs' => 'udf_attributes#audit_logs'
   put '/udf_attribute/:id/approve' => "udf_attributes#approve"
   
-  operation_routes_for 'ecol_va_txns'
+#  operation_routes_for 'ecol_va_txns'
+#  operation_routes_for 'ecol_va_earmarks'
+
+  resources :ecol_va_txns do
+    collection do
+      put :index
+    end
+  end
+  
+  resources :ecol_va_earmarks do
+    collection do
+      put :index
+    end
+  end
+
+  
+  resources :ecol_va_accounts do
+    member do
+      get :show
+      get :acct_txns
+    end
+    resources :ecol_va_txns do
+      collection do
+        put :index
+      end
+    end
+    resources :ecol_va_earmarks do
+      collection do
+        put :index
+      end
+      resources :ecol_va_txns do
+        collection do
+          put :index
+        end        
+      end
+    end
+  end
 end

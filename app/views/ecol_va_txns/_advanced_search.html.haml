@@ -1,7 +1,10 @@
-= search_form_for @searcher, {defaults: local_assigns[:defaults]} do |f|
+- form_url = ecol_va_account_ecol_va_txns_path(@va_account) unless @va_account.nil?
+= search_form_for @searcher, {defaults: local_assigns[:defaults], url: form_url} do |f|
   = f.standard_fields
-  = f.input :account_no
-  = f.input :hold_no
+  - if @va_account.nil?
+    = f.input :account_no
+  - if @va_earmark.nil?
+    = f.input :hold_no
   = f.input :account_balance
   = f.input :hold_amount
   = f.input :txn_amount, as: :between

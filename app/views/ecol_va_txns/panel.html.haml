@@ -1,0 +1,42 @@
+.show_ticket
+  = render partial: 'ecol_va_accounts/panel'
+  .header-form-main{:style=>'background-color: #ecf5fa; width: 100%; height: 500px;'}
+    - if @va_earmark.present?
+      %h3 Earmark Details
+      %h2 Hold No : #{@va_earmark.hold_no}
+      %h2 Hold Amount : #{@va_earmark.hold_amount} 
+      %br
+    %h3 Transactions
+    - unless @searcher.nil?
+      = render partial: 'advanced_search'
+    %br
+    %table.table.table-bordered.table-striped.table-hover
+      .thead
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Date
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Narration
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Type
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Txn Amount
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Closing Balance
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Hold Balance
+
+      .tbody
+        - @records.each do |txn|
+          %tr
+            %td{:style=>'text-align:left;'}
+              = txn.txn_timestamp
+            %td{:style=>'text-align:left;'}
+              = txn.txn_desc
+            %td{:style=>'text-align:left;'}
+              = txn.txn_type              
+            %td{:style=>'text-align:left;'}
+              = txn.txn_amount
+            %td{:style=>'text-align:left;'}
+              = txn.account_balance
+            %td{:style=>'text-align:left;'}
+              = txn.hold_amount              
