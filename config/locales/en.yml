@@ -1,5 +1,5 @@
 en:
-  menu:
+  menu: &models
     ecol_app: 'ECollect Apps'
     ecol_customer: 'ECollect Customers'
     ecol_rule: 'ECollect Rules'
@@ -11,3 +11,10 @@ en:
     qg_ecol_todays_imps_txn: 'IMPS Transactions'
     qg_ecol_todays_upi_txn: 'UPI Transactions'
     udf_attribute: 'UDF Attributes'
+  attributes:
+    account_no: 'Account No.'
+    hold_no: 'Hold No.'
+    txn_type: 'Transaction Type'
+  activerecord:
+    models:
+      <<: *models
