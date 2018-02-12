@@ -9,7 +9,7 @@ class EcolVaTxnDecorator < EcolOperationDecorator
   end
       
   def txn_type
-    h.link_to object.txn_type, h.url_for(:controller => "#{object.auditable_type.constantize.table_name}", :action => "show", :id => object.auditable_id)
+    h.link_to object.txn_type, h.url_for(:controller => "#{object.auditable_type.constantize.table_name}", :action => "show", :id => object.auditable_id) rescue object.txn_type
   end
   
   def txn_timestamp

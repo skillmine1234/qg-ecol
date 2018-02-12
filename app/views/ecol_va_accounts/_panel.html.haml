@@ -16,4 +16,4 @@
     = @va_account.try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
   %h3
     Created By:
-    = @va_account.created_by.try(:username)
+    = @va_account.try(:created_by).try(:username)
