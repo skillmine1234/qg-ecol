@@ -33,6 +33,6 @@ class EcolVacdIncomingRecordsController < ApplicationController
   end
 
   def search_params
-    params.permit(:page, :account_no, :txn_type, :hold_no, :file_name, :status, :overrided_flag)
+    params.require(:ecol_vacd_incoming_record_searcher).permit(:page, :account_no, :txn_type, :hold_no, :file_name, :status, :overrided_flag)
   end
 end
