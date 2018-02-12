@@ -27,6 +27,14 @@ class EcolOperationDecorator < ApplicationDecorator
     h.number_to_currency(object.hold_amount, unit: 'Rs ')
   end
 
+  def hold_balance
+    h.number_to_currency(object.hold_balance, unit: 'Rs ')
+  end
+
+  def account_balance
+    h.number_to_currency(object.account_balance, unit: 'Rs ')
+  end
+
   def status_code
     h.render partial: 'shared/status', locals: {id: "#{object.class.name.demodulize}_status_code_#{object.id}", object: object}
   end

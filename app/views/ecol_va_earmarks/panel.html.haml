@@ -1,0 +1,32 @@
+.show_ticket
+  = render partial: 'ecol_va_accounts/panel'
+  .header-form-main{:style=>'background-color: #ecf5fa; width: 100%; height: 500px;'}
+    %h3 Earmarks
+    = render partial: 'advanced_search'
+    %br
+    %table.table.table-bordered.table-striped.table-hover
+      .thead
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Hold No
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Hold Amount
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Hold Description
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Created At
+        %th{:style=>'text-align:left; background-color: lightblue;'}
+          Updated At
+
+      .tbody
+        - @records.each do |earmark|
+          %tr
+            %td{:style=>'text-align:left;'}
+              = link_to earmark.hold_no, ecol_va_account_ecol_va_earmark_ecol_va_txns_path(@va_account, earmark)
+            %td{:style=>'text-align:left;'}
+              = earmark.hold_amount
+            %td{:style=>'text-align:left;'}
+              = earmark.hold_desc
+            %td{:style=>'text-align:left;'}
+              = earmark.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td{:style=>'text-align:left;'}
+              = earmark.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")

@@ -1,0 +1,19 @@
+%h2
+  VA Account Details
+.header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 90px;'}
+  %h3 
+    Account No:
+    = @va_account.account_no
+  %h3
+    Account Balance:
+    = link_to @va_account.account_balance, ecol_va_account_ecol_va_txns_path(@va_account)
+  %h3
+    Hold Amount:
+    = link_to @va_account.hold_amount, ecol_va_account_ecol_va_earmarks_path(@va_account)
+.header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 90px; display: inline-block;'}
+  %h3
+    Created At:
+    = @va_account.try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+  %h3
+    Created By:
+    = @va_account.try(:created_by).try(:username)

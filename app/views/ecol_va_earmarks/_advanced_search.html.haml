@@ -1,0 +1,9 @@
+- @va_account.present? ? (form_url = ecol_va_account_ecol_va_earmarks_path(@va_account)) : (form_url = nil)
+= search_form_for @searcher, {defaults: local_assigns[:defaults], url: form_url} do |f|
+  = f.standard_fields
+  - if @va_account.nil?
+    = f.input :account_no
+  = f.input :hold_no
+  = f.input :hold_amount, as: :between
+  = f.action_buttons
+= pagination_links(@records)

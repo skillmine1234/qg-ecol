@@ -1,0 +1,3 @@
+class EcolVaAccountDecorator < EcolOperationDecorator
+
+end

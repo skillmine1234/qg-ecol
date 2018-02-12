@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    qg-ecol (1.4.7)
+    qg-ecol (1.4.8)
       rails (= 4.2.2)
 
 GEM
@@ -61,7 +61,7 @@ GEM
     i18n (0.9.4)
       concurrent-ruby (~> 1.0)
     json (1.8.6)
-    loofah (2.1.1)
+    loofah (2.2.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     mail (2.7.0)
