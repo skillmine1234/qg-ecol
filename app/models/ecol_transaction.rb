@@ -10,7 +10,7 @@ class EcolTransaction < ActiveRecord::Base
   
   validates :transfer_amt, :numericality => { :greater_than => 0 }
   
-  belongs_to :va_txn, foreign_key: 'va_txn_id', class: 'EcolVaTxn'
+  belongs_to :va_txn, foreign_key: 'ecol_va_txn_id', class: 'EcolVaTxn'
   
   def expected_transfer_amt
     if ecol_customer.try(:val_method) == 'D'
