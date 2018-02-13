@@ -1,0 +1,47 @@
+%br
+= link_to 'New E-Collect VA Memo Transaction', new_ecol_va_memo_txn_path
+%br
+%br
+%h1 Listing E-Collect VA Memo Transactions
+= render :partial => 'advanced_search'
+%br
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Reference No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Account No.
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      E-Collect Customer Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Txn Type
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Txn Amount
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Hold Amount
+			
+  .tbody
+    - @records.each do |ecol_va_memo_txn|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecol_va_memo_txn
+        %td{:style=>'text-align:left;'}
+          - if ecol_va_memo_txn.approval_status == 'U'
+            = link_to 'Cancel', ecol_va_memo_txn, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - else
+            = ""
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.reference_no
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.account_no
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.customer_code
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.txn_type
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.txn_amount
+        %td{:style=>'text-align:left;'}
+          = ecol_va_memo_txn.hold_amount

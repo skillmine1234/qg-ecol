@@ -1,0 +1,79 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 E-Collect VA Memo Transaction Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        = render 'unapproved_records/approve', :@record => @ecol_va_memo_txn
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@ecol_va_memo_txn.nil?
+          %tr
+            %td.label Reference No
+            %td
+              = @ecol_va_memo_txn.reference_no
+            %td
+          %tr
+            %td.label Account No.
+            %td.value
+              = @ecol_va_memo_txn.account_no
+            %td
+          %tr
+            %td.label E-Collect Customer Code
+            %td.value
+              = link_to @ecol_va_memo_txn.customer_code, @ecol_va_memo_txn.ecol_customer
+            %td
+          %tr
+            %td.label Txn Type
+            %td.value
+              = @ecol_va_memo_txn.txn_type
+            %td
+          %tr
+            %td.label Txn Amount
+            %td.value
+              = number_to_currency(@ecol_va_memo_txn.txn_amount, unit: 'Rs ')
+            %td
+          %tr
+            %td.label Txn Description
+            %td.value
+              = @ecol_va_memo_txn.txn_desc
+            %td
+          %tr
+            %td.label Hold No
+            %td.value
+              = @ecol_va_memo_txn.hold_no
+            %td
+          %tr
+            %td.label Hold Amount
+            %td.value
+              = number_to_currency(@ecol_va_memo_txn.hold_amount, unit: 'Rs ')
+            %td
+          %tr
+            %td.label E-Collect VA Txn
+            %td.value
+              = @ecol_va_memo_txn.ecol_va_txn_id
+            %td
+          %tr
+            %td.label E-Collect VA Earmark
+            %td.value
+              = @ecol_va_memo_txn.ecol_va_earmark_id
+            %td
+          %tr
+            %td.label Created By
+            %td.value
+              = @ecol_va_memo_txn.created_user.try(:username)
+            %td
+          %tr
+            %td.label Updated By
+            %td.value
+              = @ecol_va_memo_txn.updated_user.try(:username)
+            %td
+          %tr
+            %td.label Created At
+            %td.value
+              = @ecol_va_memo_txn.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_va_memo_txn.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td
