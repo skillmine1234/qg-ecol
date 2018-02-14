@@ -1,5 +1,7 @@
 class EcolVaTransfer < ActiveRecord::Base
   include SearchAbility
+  
+  has_many :audit_steps, class_name: 'EcolVaAuditStep', :as => :ecol_auditable
 
   attr_searchable :account_no, :transfer_type, {transfer_amount: :range}, :status_code, {req_timestamp: :range}
 

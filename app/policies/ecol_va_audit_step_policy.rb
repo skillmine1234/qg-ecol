@@ -1,0 +1,2 @@
+class EcolVaAuditStepPolicy < GmOperationPolicy
+end

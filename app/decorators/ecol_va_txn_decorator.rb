@@ -1,11 +1,11 @@
 class EcolVaTxnDecorator < EcolOperationDecorator
   def account_no
-    h.link_to object.account_no, h.ecol_va_account_path(object.ecol_va_account)
+    h.link_to object.account_no, h.ecol_va_account_path(object.ecol_va_account) rescue object.account_no
   end
   
   def hold_no
     return '-' if object.hold_no.nil?
-    h.link_to object.hold_no, h.ecol_va_earmark_path(object.ecol_va_account)
+    h.link_to object.hold_no, h.ecol_va_earmark_path(object.ecol_va_account) rescue object.hold_no
   end
       
   def txn_type
