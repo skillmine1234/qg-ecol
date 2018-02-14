@@ -88,6 +88,15 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :ecol_va_memo_txns do
+    collection do
+      put :index
+    end
+    member do
+      put :approve
+    end
+  end
+  
   get 'ecol_vacd_incoming_file_summary' => 'ecol_vacd_incoming_records#incoming_file_summary'
   get '/ecol_vacd_incoming_records/:id/audit_logs' => 'ecol_vacd_incoming_records#audit_logs'
 end
