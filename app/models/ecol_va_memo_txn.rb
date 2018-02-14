@@ -39,7 +39,7 @@ class EcolVaMemoTxn < ActiveRecord::Base
                                                     pi_txn_desc: self.txn_desc,
                                                     pi_allow_modify: 'N',
                                                     pi_auditable_type: 'EcolVaMemoTxn',
-                                                    pi_auditable_id: self.id,
+                                                    pi_auditable_id: self.id.to_s,
                                                     pi_created_by: self.created_by,
                                                     pi_approved_by: self.updated_by,
                                                     po_ecol_va_txn_id_cd: nil,
@@ -48,6 +48,6 @@ class EcolVaMemoTxn < ActiveRecord::Base
                                                     po_fault_subcode: nil,
                                                     po_fault_reason: nil)
     raise Fault::ProcedureFault.new(OpenStruct.new(code: result[1][:po_fault_code], subCode: result[1][:po_fault_subcode], reasonText: "#{result[1][:po_fault_reason]}")) if result.present? && result[1][:po_fault_code].present?
-    self.update(ecol_va_txn_id: result[1][:po_ecol_va_txn_id_cd], ecol_va_txn_id_earmark: result[1][:po_ecol_va_txn_id_earmark])
+    self.update_columns(ecol_va_txn_id: result[1][:po_ecol_va_txn_id_cd], ecol_va_earmark_id: result[1][:po_ecol_va_txn_id_earmark])
   end
 end
