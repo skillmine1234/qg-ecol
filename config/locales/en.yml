@@ -15,6 +15,7 @@ en:
     ecol_va_transfer: 'ECollect VA Transfers'
     ecol_va_account: 'ECollect VA Accounts'
     ecol_va_earmark: 'ECollect VA Earmarks'
+    ecol_va_memo_txn: 'E-Collect VA Memo Transactions'
   attributes:
     account_no: 'Account No.'
     hold_no: 'Hold No.'
@@ -49,6 +50,10 @@ en:
     updated_at: 'Updated At'
     lock_version: 'Lock Version'
     hold_desc: 'Hold Description'
+  enums:
+    txn_type:
+      CREDIT: 'CREDIT'
+      DEBIT: 'DEBIT'
   activerecord:
     models:
       <<: *models
