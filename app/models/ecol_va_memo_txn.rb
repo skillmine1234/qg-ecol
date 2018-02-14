@@ -6,6 +6,8 @@ class EcolVaMemoTxn < ActiveRecord::Base
   belongs_to :created_user, :foreign_key =>'created_by', :class_name => 'User'
   belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
   belongs_to :ecol_customer, class_name: 'EcolCustomer', foreign_key: 'customer_code', primary_key: 'code'
+  belongs_to :ecol_va_txn
+  belongs_to :ecol_va_earmark
 
   before_validation :get_reference_no, if: "approval_status=='U'"
 

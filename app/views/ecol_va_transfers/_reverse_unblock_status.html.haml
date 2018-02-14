@@ -1,0 +1,25 @@
+- btn_class = case object.rev_unblock_status; when :COMPLETED, :Y; 'btn-success'; when :FAILED, :RETURNED_FROM_BENEFICIARY, :F; 'btn-danger'; when nil , "";  else 'btn-info'; end
+%button.btn.btn-xs{"data-target": "##{id}", "data-toggle": "modal", type: "button", class: btn_class} #{object.rev_unblock_status || "NA"}
+- if [:FAILED, :RETURNED_FROM_BENEFICIARY, :F].include?(object.rev_unblock_status)
+  .modal.fade{role: "dialog", id: "#{id}"}
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %button.close{"data-dismiss": "modal", type: "button"} ×
+          %h4.modal-title #{object.rev_unblock_status}
+        .modal-body
+          %table.table.no-border
+            %tr
+              %td.label Reverse Fault Code:
+              %td
+                #{object.rev_unblock_fault_code}
+            %tr
+              %td.label Reverse Fault Reason:
+              %td
+                #{object.rev_unblock_fault_reason}
+            %tr
+              %td.label Reverse Fault Subcode:
+              %td
+                #{object.rev_unblock_fault_subcode}
+        .modal-footer
+          %button.btn.btn-default{"data-dismiss": "modal", type: "button"} Close

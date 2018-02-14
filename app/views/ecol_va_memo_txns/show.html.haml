@@ -50,12 +50,12 @@
           %tr
             %td.label E-Collect VA Txn
             %td.value
-              = @ecol_va_memo_txn.ecol_va_txn_id
+              = link_to @ecol_va_memo_txn.ecol_va_txn_id, @ecol_va_memo_txn.ecol_va_txn if @ecol_va_memo_txn.ecol_va_txn.present?
             %td
           %tr
             %td.label E-Collect VA Earmark
             %td.value
-              = @ecol_va_memo_txn.ecol_va_earmark_id
+              = link_to @ecol_va_memo_txn.ecol_va_earmark_id, @ecol_va_memo_txn.ecol_va_earmark if @ecol_va_memo_txn.ecol_va_earmark.present?
             %td
           %tr
             %td.label Created By

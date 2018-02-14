@@ -1,0 +1,2 @@
+class EcolVaTransferPolicy < EcolOperationPolicy
+end
