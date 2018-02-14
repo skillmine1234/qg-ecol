@@ -96,8 +96,7 @@
         %tr
           %td.label Virtual Account Transaction :
           %td
-            / = link_to @ecol_transaction.va_txn_status, @ecol_transaction.ecol_va_txn
-            = @ecol_transaction.va_txn_status
+            = link_to @ecol_transaction.va_transfer_status, @ecol_transaction.va_txn
 
     %table.table.no-border{:style => 'word-wrap:break-word; table-layout: fixed; width: 50%; float:right;'}  
       %tr
