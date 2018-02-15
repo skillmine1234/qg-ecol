@@ -8,7 +8,7 @@ class EcolVaMemoTxnsController < ApplicationController
   
   rescue_from 'Fault::ProcedureFault','OCIError' do |e|
    flash[:alert] = "#{e.message}"
-   redirect_to :back
+   redirect_to unapproved_records_path(group_name: 'e-collect')
   end
   
   def new
