@@ -3,7 +3,7 @@
   = f.input :account_no
   = f.input :transfer_type, as: :enum
   = f.input :transfer_amount, as: :between
-  = f.input :status_code
+  = f.input :status_code, as: :enum
   = f.input :req_timestamp, as: :between
   = f.action_buttons
 = pagination_links(@records)
