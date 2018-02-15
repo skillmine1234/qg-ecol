@@ -37,7 +37,7 @@ class EcolVaTxnsController < ApplicationController
   
   def show
     @records = [EcolVaTxn.find(params[:id]).decorate]
-    @va_account = @records.first.ecol_va_account
+    @va_account = @records.first.ecol_va_account.decorate
     render 'panel'
   end
 
@@ -70,7 +70,7 @@ class EcolVaTxnsController < ApplicationController
   end
   
   def search_params
-    params.require(:ecol_va_txn).permit(:page, :approval_status, :account_no, :hold_no, :from_txn_timestamp, :to_txn_timestamp, :from_txn_amount, :to_txn_amount)
+    params.require(:ecol_va_txn).permit(:page, :approval_status, :account_no, :hold_no, :account_balance, :hold_amount, :from_txn_timestamp, :to_txn_timestamp, :from_txn_amount, :to_txn_amount)
   end
   
 end
