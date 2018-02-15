@@ -5,3 +5,4 @@
 //= require ecol/qg_ecol_todays_neft_txn.js
 //= require ecol/qg_ecol_todays_rtgs_txn.js
 //= require ecol/qg_ecol_todays_upi_txn.js
+//= require ecol/ecol_va_memo_txn.js

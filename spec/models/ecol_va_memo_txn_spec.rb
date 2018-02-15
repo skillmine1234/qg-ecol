@@ -141,4 +141,19 @@ describe EcolVaMemoTxn do
       ecol_va_memo_txn3.get_reference_no.should == 'REF3'
     end
   end
+  
+  context "absence_of_fields" do
+    it 'should validate absence of hold_no and hold_amount if txn_type is DEBIT' do
+      ecol_va_memo_txn1 = Factory.build(:ecol_va_memo_txn, txn_type: 'DEBIT', hold_no: 1, hold_amount: 100, :approval_status => 'A')
+      ecol_va_memo_txn1.save.should == false
+      ecol_va_memo_txn1.errors_on(:hold_no).should == ['must be blank']
+      ecol_va_memo_txn1.errors_on(:hold_amount).should == ['must be blank']
+      
+      ecol_va_memo_txn1 = Factory.build(:ecol_va_memo_txn, txn_type: 'DEBIT', hold_no: nil, hold_amount: nil, :approval_status => 'A')
+      ecol_va_memo_txn1.save.should == true
+      
+      ecol_va_memo_txn1 = Factory.build(:ecol_va_memo_txn, txn_type: 'CREDIT', hold_no: 1, hold_amount: 100, :approval_status => 'A')
+      ecol_va_memo_txn1.save.should == true
+    end
+  end
 end

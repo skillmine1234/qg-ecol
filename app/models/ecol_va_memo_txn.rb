@@ -18,6 +18,7 @@ class EcolVaMemoTxn < ActiveRecord::Base
   validates_numericality_of :hold_no, :hold_amount, allow_blank: true
   validates :txn_desc, length: { maximum: 255 }, :allow_blank => true
   validate :presence_of_ecol_customer
+  validates_absence_of :hold_no, :hold_amount, if: "txn_type == 'DEBIT'"
   
   after_save :create_transaction, if: "approval_status=='A' && !Rails.env.test?"
 
