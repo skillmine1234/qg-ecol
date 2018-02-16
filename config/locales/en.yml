@@ -19,12 +19,11 @@ en:
   attributes:
     account_no: 'Account No.'
     hold_no: 'Hold No.'
-    txn_type: 'Transaction Type'
+    txn_type: 'Txn Type'
     txn_timestamp: 'Date'
     txn_amount: 'Txn Amount'
     account_balance: 'Closing Balance'
     hold_amount: 'Hold Balance'
-    txn_type: 'Transaction Type'
     txn_desc: 'Transaction Description'
     auditable_type: 'Auditable Type'
     created_by: 'Created By'
