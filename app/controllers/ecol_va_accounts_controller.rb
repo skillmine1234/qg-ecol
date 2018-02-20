@@ -5,6 +5,6 @@ class EcolVaAccountsController < ApplicationController
   respond_to :json
 
   def show
-    @va_account = EcolVaAccount.find(params[:id])
+    @va_account = EcolVaAccount.find(params[:id]).decorate
   end
 end
