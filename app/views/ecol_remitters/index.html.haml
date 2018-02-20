@@ -19,6 +19,8 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
+      Is Enabled
+    %th{:style=>'text-align:left; background-color: lightblue;'}
       Customer Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Customer Sub Code
@@ -49,6 +51,8 @@
             = link_to 'Cancel', ecol_remitter, :method => :delete, :data => { :confirm => 'Are you sure?' }
           - else
             = ""
+        %td{:style=>'text-align:left;'}
+          = ecol_remitter.is_enabled
         %td{:style=>'text-align:left;'}
           = ecol_remitter.customer_code
         %td{:style=>'text-align:left;'}
