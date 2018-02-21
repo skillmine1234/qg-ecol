@@ -1,8 +1,8 @@
 class CreateEcolIncomingRecords < ActiveRecord::Migration
   def change
     create_table :ecol_incoming_records, {:sequence_start_value => '1 cache 20 order increment by 1'} do |t|
-      t.integer :incoming_file_record_id, :comment => "the foreign key to the incoming_files table" 
-      t.string  :file_name, :limit => 100, :comment => "the name of the incoming_file"      
+      t.integer :incoming_file_record_id, :null => false, :comment => "the foreign key to the incoming_files table"
+      t.string  :file_name, :null => false, :limit => 100, :comment => "the name of the incoming_file"
       t.string  :customer_code, :limit => 20, :comment => "the unique code for the customer"
       t.string  :remitter_code, :limit => 20, :comment => "the unique code for remitter"
       t.string  :customer_subcode, :limit => 20, :comment => "the subcode for the customer"
