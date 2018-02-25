@@ -1,5 +1,5 @@
 .form-horizontal.show_form
-  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+  .form-main-with-color{:style=>'background-color: #F1F2F8; height: 1600px'}
     #form-details
       %h3 E-Collect Customer Details 
       %br
@@ -299,12 +299,12 @@
           %tr
             %td.label Template for Credit Pass
             %td.value
-              = @ecol_customer.credit_pass_template.try(:display_text)
+              = link_to @ecol_customer.credit_pass_template.try(:display_text), @ecol_customer.credit_pass_template if @ecol_customer.credit_pass_template.present?
             %td
           %tr
             %td.label Template for Credit Return
             %td.value
-              = @ecol_customer.credit_return_template.try(:display_text)
+              = link_to @ecol_customer.credit_return_template.try(:display_text), @ecol_customer.credit_return_template if @ecol_customer.credit_return_template.present?
             %td
           %tr
             %td.label Created By
