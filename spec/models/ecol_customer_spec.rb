@@ -577,4 +577,24 @@ describe EcolCustomer do
   #     ecol_customer.errors_on(:identity_user_id).should == []
   #   end
   # end
+  
+  context "templates_for_credit_pass" do
+    it "should return the templates for credit pass" do
+      event1 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'CREDIT')
+      event2 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'RETURN')
+      template1 = Factory(:ns_template, sc_event_id: event1.id, approval_status: 'A')
+      template2 = Factory(:ns_template, sc_event_id: event2.id, approval_status: 'A')
+      EcolCustomer.templates_for_credit_pass.should == [template1]
+    end
+  end
+  
+  context "templates_for_credit_return" do
+    it "should return the templates for credit return" do
+      event1 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'CREDIT')
+      event2 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'RETURN')
+      template1 = Factory(:ns_template, sc_event_id: event1.id, approval_status: 'A')
+      template2 = Factory(:ns_template, sc_event_id: event2.id, approval_status: 'A')
+      EcolCustomer.templates_for_credit_return.should == [template2]
+    end
+  end
 end

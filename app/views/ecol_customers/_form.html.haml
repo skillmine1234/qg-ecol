@@ -247,6 +247,16 @@
       = f.check_box :auto_return, {},"Y","N"
       #msg-error
         = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_pass_template_id, "Template for Credit Pass", :class => 'control-label'
+      = f.select :rmtr_pass_template_id, options_for_select(EcolCustomer.templates_for_credit_pass.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_pass_template_id) ,:prompt => 'SELECT'
+      #msg-error
+        = error_message_for(@ecol_customer, :rmtr_pass_template_id, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_return_template_id, "Template for Credit Return", :class => 'control-label'
+      = f.select :rmtr_return_template_id, options_for_select(EcolCustomer.templates_for_credit_return.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_return_template_id) ,:prompt => 'SELECT'
+      #msg-error
+        = error_message_for(@ecol_customer, :rmtr_return_template_id, :prepend_text => "")
 
 
   .form-actions

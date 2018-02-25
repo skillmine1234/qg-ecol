@@ -295,7 +295,17 @@
             %td.value
               = @ecol_customer.auto_return
             %td#msg-error
-              = error_message_for(@ecol_customer, :auto_return, :prepend_text => "") 
+              = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
+          %tr
+            %td.label Template for Credit Pass
+            %td.value
+              = @ecol_customer.credit_pass_template.try(:display_text)
+            %td
+          %tr
+            %td.label Template for Credit Return
+            %td.value
+              = @ecol_customer.credit_return_template.try(:display_text)
+            %td
           %tr
             %td.label Created By
             %td.value
