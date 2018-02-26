@@ -98,4 +98,14 @@ Rails.application.routes.draw do
   
   get 'ecol_vacd_incoming_file_summary' => 'ecol_vacd_incoming_records#incoming_file_summary'
   get '/ecol_vacd_incoming_records/:id/audit_logs' => 'ecol_vacd_incoming_records#audit_logs'
+  
+  resources :ecol_incoming_records do
+    collection do
+      put :index
+    end
+    member do
+      get :audit_logs
+    end
+  end
+  get 'ecol_incoming_file_summary' => 'ecol_incoming_records#incoming_file_summary'
 end
