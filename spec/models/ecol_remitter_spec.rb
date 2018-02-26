@@ -28,6 +28,9 @@ describe EcolRemitter do
       it { should allow_value(1.2).for(att) }
       it { should_not allow_value(1.234).for(att) }
     end
+    
+    it { should validate_length_of(:additional_email_ids).is_at_most(2000) }
+    it { should validate_length_of(:additional_mobile_nos).is_at_most(500) }
 
     context "uniqueness" do
       it do 

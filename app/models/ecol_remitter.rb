@@ -11,6 +11,8 @@ class EcolRemitter < ActiveRecord::Base
 
   validates_presence_of :is_enabled
   validate :check_email_ids, :check_mobile_nos
+  validates_length_of :additional_email_ids, maximum: 2000, allow_blank: true
+  validates_length_of :additional_mobile_nos, maximum: 500, allow_blank: true
   
   before_save :to_upcase
   
