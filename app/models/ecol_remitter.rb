@@ -10,6 +10,9 @@ class EcolRemitter < ActiveRecord::Base
   belongs_to :ecol_customer
 
   validates_presence_of :is_enabled
+  validate :check_email_ids, :check_mobile_nos
+  validates_length_of :additional_email_ids, maximum: 2000, allow_blank: true
+  validates_length_of :additional_mobile_nos, maximum: 500, allow_blank: true
   
   before_save :to_upcase
   
@@ -23,5 +26,31 @@ class EcolRemitter < ActiveRecord::Base
       self.remitter_code = self.remitter_code.upcase unless self.remitter_code.nil?
       self.invoice_no = self.invoice_no.upcase unless self.invoice_no.nil?
     end
+  end
+  
+  def check_email_ids
+    invalid_ids = []
+    value = self.additional_email_ids
+    unless value.nil?
+      value.split(/;\s*/).each do |email| 
+        unless email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
+          invalid_ids << email
+        end
+      end
+    end
+    errors.add(:additional_email_ids, "is invalid") unless invalid_ids.empty?
+  end
+  
+  def check_mobile_nos
+    invalid_nos = []
+    value = self.additional_mobile_nos
+    unless value.nil?
+      value.split(/;\s*/).each do |mobile_no| 
+        unless mobile_no =~ /\A[0-9]{10}+\z/i
+          invalid_nos << mobile_no
+        end
+      end
+    end
+    errors.add(:additional_mobile_nos, "is invalid") unless invalid_nos.empty?
   end
 end

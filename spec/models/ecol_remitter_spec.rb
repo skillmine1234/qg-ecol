@@ -28,6 +28,9 @@ describe EcolRemitter do
       it { should allow_value(1.2).for(att) }
       it { should_not allow_value(1.234).for(att) }
     end
+    
+    it { should validate_length_of(:additional_email_ids).is_at_most(2000) }
+    it { should validate_length_of(:additional_mobile_nos).is_at_most(500) }
 
     context "uniqueness" do
       it do 
@@ -321,6 +324,34 @@ describe EcolRemitter do
       ecol_remitter.customer_code.should == "AS89NNMM"
       ecol_remitter.remitter_code.should == "QWERTY10"
       ecol_remitter.invoice_no.should == "ABCDEF"
+    end
+  end
+  
+  context "check_email_ids" do
+    it 'should validate additional_email_ids' do
+      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com; divyajayan')
+      ecol_remitter.save.should == false
+      ecol_remitter.errors_on(:additional_email_ids).should == ["is invalid"]
+      
+      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com; divyajayan@gmail.com')
+      ecol_remitter.save.should == true
+      
+      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com')
+      ecol_remitter.save.should == true
+    end
+  end
+  
+  context "check_mobile_nos" do
+    it 'should validate additional_mobile_nos' do
+      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '123456789012; 9876198aksjda')
+      ecol_remitter.save.should == false
+      ecol_remitter.errors_on(:additional_mobile_nos).should == ["is invalid"]
+      
+      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '9876543210; 9999900000')
+      ecol_remitter.save.should == true
+      
+      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '9876543210')
+      ecol_remitter.save.should == true
     end
   end
 end

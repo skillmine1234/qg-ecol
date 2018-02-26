@@ -103,6 +103,16 @@
       #msg-error
         = error_message_for(@ecol_remitter, :due_date_tol_days, :prepend_text => "")
   .form-extended
+    .control-group
+      = f.label :additional_mobile_nos, "Additional Mobile No's", :class => 'control-label'
+      = f.text_field :additional_mobile_nos, :placeholder => "Enter Mobile No.s separated by ';'", :maxlength => 500
+      #msg-error
+        = error_message_for(@ecol_remitter, :additional_mobile_nos, :prepend_text => "")
+    .control-group
+      = f.label :additional_email_ids, "Additional Email ID's", :class => 'control-label'
+      = f.text_field :additional_email_ids, :placeholder => "Enter Email IDs separated by ';'", :maxlength => 2000
+      #msg-error
+        = error_message_for(@ecol_remitter, :additional_email_ids, :prepend_text => "")
     - @ecol_remitter.udfs.each do |c|
       .control-group
         = render :partial => 'ecol_remitters/udf_fields', :locals => {:f => f , :c => c, :entity => @ecol_remitter}
