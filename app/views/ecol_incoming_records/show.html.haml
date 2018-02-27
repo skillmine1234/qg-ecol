@@ -1,0 +1,176 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;  height:1200px;'}
+    #form-details
+      %h3 E-Collect Incoming Record
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px;'}
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        %tr
+          %td.label Version
+          %td.value
+            = link_to "#{audit_count(@ecol_record.incoming_file_record)}", :controller => :ecol_incoming_records, :action => :audit_logs, :version_id => audit_count(@ecol_record.incoming_file_record), :id => @ecol_record.incoming_file_record_id
+        %tr
+          %td.label Record Text
+          %td.value
+            - if @ecol_record.incoming_file_record.record_txt.nil?
+              .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "No Record Text Available for this record", "data-placement" => 'bottom', "data-html" => true}
+                Show Record Text
+            - else
+              = link_to "Show Record Text", "#", :class => 'show_record_text', :href => "#recordText", data: { record_txt: @ecol_record.incoming_file_record.record_txt} 
+        %tr
+          %td.label File Name 
+          %td.value
+            = @ecol_record.file_name
+        %tr
+          %td.label Customer Code
+          %td.value
+            = @ecol_record.customer_code
+        %tr
+          %td.label Remitter Code
+          %td.value
+            = @ecol_record.remitter_code
+        %tr
+          %td.label Customer Subcode
+          %td.value
+            = @ecol_record.customer_subcode
+        %tr
+          %td.label Invoice No.
+          %td.value
+            = @ecol_record.invoice_no
+        %tr
+          %td.label Customer Account No.
+          %td.value
+            = @ecol_record.customer_account_no
+        %tr
+          %td.label Customer Subcode Email
+          %td.value
+            = @ecol_record.customer_subcode_email
+        %tr
+          %td.label Customer Subcode Mobile
+          %td.value
+            = @ecol_record.customer_subcode_mobile
+        %tr
+          %td.label Remitter Name
+          %td.value
+            = @ecol_record.rmtr_name
+        %tr
+          %td.label Remitter Address
+          %td.value
+            = @ecol_record.rmtr_address
+        %tr
+          %td.label Remitter Email
+          %td.value
+            = @ecol_record.rmtr_email
+        %tr
+          %td.label Remitter Mobile
+          %td.value
+            = @ecol_record.rmtr_mobile
+        %tr
+          %td.label Invoice Amount
+          %td.value
+            = @ecol_record.invoice_amt
+        %tr
+          %td.label Minimum Credit Amount
+          %td.value
+            = @ecol_record.min_credit_amt
+        %tr
+          %td.label Maximum Credit Amount
+          %td.value
+            = @ecol_record.max_credit_amt
+        %tr
+          %td.label Start Date
+          %td.value
+            = @ecol_record.start_date
+        %tr
+          %td.label Due Date
+          %td.value
+            = @ecol_record.due_date
+        %tr
+          %td.label Due Date Tolerance Days
+          %td.value
+            = @ecol_record.due_date_tol_days
+        %tr
+          %td.label Remitter Account No.
+          %td.value
+            = @ecol_record.rmtr_acct_no
+        %tr
+          %td.label Misc. Field 11
+          %td.value
+            = @ecol_record.misc_field_11
+        %tr
+          %td.label Misc. Field 12
+          %td.value
+            = @ecol_record.misc_field_12
+        %tr
+          %td.label Misc. Field 13
+          %td.value
+            = @ecol_record.misc_field_13
+        %tr
+          %td.label Misc. Field 14
+          %td.value
+            = @ecol_record.misc_field_14
+        %tr
+          %td.label Misc. Field 15
+          %td.value
+            = @ecol_record.misc_field_15
+        %tr
+          %td.label Misc. Field 16
+          %td.value
+            = @ecol_record.misc_field_16
+        %tr
+          %td.label Misc. Field 17
+          %td.value
+            = @ecol_record.misc_field_17
+        %tr
+          %td.label Misc. Field 18
+          %td.value
+            = @ecol_record.misc_field_18
+        %tr
+          %td.label Misc. Field 19
+          %td.value
+            = @ecol_record.misc_field_19
+        %tr
+          %td.label Misc. Field 20
+          %td.value
+            = @ecol_record.misc_field_20
+        %tr
+          %td.label Branch Office Region
+          %td.value
+            = @ecol_record.branch_office_region
+        %tr
+          %td.label Sales Office Region
+          %td.value
+            = @ecol_record.sales_office_region
+        %tr
+          %td.label Regional Code
+          %td.value
+            = @ecol_record.regional_code
+        %tr
+          %td.label Branch Code
+          %td.value
+            = @ecol_record.branch_code
+        %tr
+          %td.label Project Name
+          %td.value
+            = @ecol_record.project_name
+        %tr
+          %td.label Project Code
+          %td.value
+            = @ecol_record.project_code
+        %tr
+          %td.label Value Variation
+          %td.value
+            = @ecol_record.value_variation            
+            
+
+#recordText.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Record Text
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    .demo-area
+      %button#d_clip_button1.my_clip_button1{"data-clipboard-target" => "record_txt"}
+        %b Copy To Clipboard...
+    %pre#record_txt{:style => 'word-wrap: break-word'}
+      .reply{:style => 'word-wrap: break-word'}

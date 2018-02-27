@@ -1,0 +1,10 @@
+= search_form_for @searcher do |f|
+  = f.standard_fields
+  = f.input :customer_code
+  = f.input :remitter_code
+  = f.input :invoice_no
+  = f.input :file_name, as: :hidden, input_html: {value: params[:file_name]}
+  = f.input :status, as: :hidden, input_html: {value: params[:status]}
+
+  = f.action_buttons
+= pagination_links(@records)
