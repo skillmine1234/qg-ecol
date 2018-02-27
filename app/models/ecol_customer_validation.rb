@@ -102,7 +102,6 @@ module EcolCustomerValidation
 
   def validate_app_code
     errors.add(:app_code, "Can't be blank if Validation Method is Web Service or Customer Alert is On") if (self.val_method == "W" || self.cust_alert_on != 'N') && self.app_code.blank?
-    errors.add(:return_if_val_reject, "Should be enabled when App Code is Standard") if self.val_method != 'N' && (EcolApp::STD_APP_CODES.include?(self.app_code) && self.return_if_val_reject != 'Y')
   end
   
   def validate_should_prevalidate

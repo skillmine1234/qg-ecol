@@ -274,16 +274,6 @@ describe EcolCustomer do
       ecol_customer2.save.should == true
     end
     
-    it "should validate app_code" do
-      ecol_customer = Factory.build(:ecol_customer, val_method: 'W', app_code: 'ECSTDX01', return_if_val_reject: 'N')
-      ecol_customer.save.should == false
-      ecol_customer.errors_on(:return_if_val_reject).should == ["Should be enabled when App Code is Standard"]
-      
-      ecol_customer = Factory.build(:ecol_customer, app_code: 'ECSTDX01', return_if_val_reject: 'Y')
-      ecol_customer.save.should == true
-      ecol_customer.errors_on(:return_if_val_reject).should == []
-    end
-    
     it "should validate presence/absence of the combination of identity_user_id and allowed_operations" do
       ecol_customer = Factory.build(:ecol_customer, allowed_operations: nil, identity_user_id: '12345')
       ecol_customer.save.should == false
