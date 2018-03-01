@@ -232,16 +232,16 @@ describe EcolCustomer do
       ecol_customer.errors[:base].should == []
     end
       
-    it "should check presence of rmtr_pass_txt if rmtr_alert_on is P or A" do
-      ecol_customer = Factory.build(:ecol_customer, :rmtr_alert_on => "P", :rmtr_pass_txt => nil)
+    it "should check presence of rmtr_pass_txt or rmtr_pass_template_id if rmtr_alert_on is P or A" do
+      ecol_customer = Factory.build(:ecol_customer, :rmtr_alert_on => "P", :rmtr_pass_txt => nil, rmtr_pass_template_id: nil)
       ecol_customer.save.should == false
-      ecol_customer.errors_on(:rmtr_pass_txt).should == ["Can't be blank if Send Alerts To Remitter On is On Pass or Always"]
+      ecol_customer.errors_on(:base).should == ["Both SMS Text for Passed Payment and Template for Credit Pass can't be blank if Send Alerts To Remitter On is On Pass or Always"]
     end
     
-    it "should check presence of rmtr_return_txt if rmtr_alert_on is R or A" do  
-      ecol_customer = Factory.build(:ecol_customer, :rmtr_alert_on => "R", :rmtr_return_txt => nil)
+    it "should check presence of rmtr_return_txt or rmtr_return_template_id if rmtr_alert_on is R or A" do  
+      ecol_customer = Factory.build(:ecol_customer, :rmtr_alert_on => "R", :rmtr_return_txt => nil, rmtr_return_template_id: nil)
       ecol_customer.save.should == false
-      ecol_customer.errors_on(:rmtr_return_txt).should == ["Can't be blank if Send Alerts To Remitter On is On Return or Always"]
+      ecol_customer.errors_on(:base).should == ["Both SMS Text for Returned Payment and Template for Credit Return can't be blank if Send Alerts To Remitter On is On Return or Always"]
     end
     
     it "should check values of nrtx_sufxs 2 & 3 if nrtv_sufx_1 is N" do
@@ -570,8 +570,8 @@ describe EcolCustomer do
   
   context "templates_for_credit_pass" do
     it "should return the templates for credit pass" do
-      event1 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'CREDIT')
-      event2 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'RETURN')
+      event1 = Factory(:sc_event, service_code: 'ECOL', event_type: 'CREDIT')
+      event2 = Factory(:sc_event, service_code: 'ECOL', event_type: 'RETURN')
       template1 = Factory(:ns_template, sc_event_id: event1.id, approval_status: 'A')
       template2 = Factory(:ns_template, sc_event_id: event2.id, approval_status: 'A')
       EcolCustomer.templates_for_credit_pass.should == [template1]
@@ -580,11 +580,26 @@ describe EcolCustomer do
   
   context "templates_for_credit_return" do
     it "should return the templates for credit return" do
-      event1 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'CREDIT')
-      event2 = Factory(:sc_event, service_code: 'E-COLLECT', event_type: 'RETURN')
+      event1 = Factory(:sc_event, service_code: 'ECOL', event_type: 'CREDIT')
+      event2 = Factory(:sc_event, service_code: 'ECOL', event_type: 'RETURN')
       template1 = Factory(:ns_template, sc_event_id: event1.id, approval_status: 'A')
       template2 = Factory(:ns_template, sc_event_id: event2.id, approval_status: 'A')
       EcolCustomer.templates_for_credit_return.should == [template2]
+    end
+  end
+  
+  context "check_sms_email_text_and_template" do
+    it "should check presence of sms_email_text and template" do
+      ecol_customer = Factory.build(:ecol_customer, rmtr_alert_on: 'P', rmtr_pass_template_id: 1, rmtr_pass_txt: 'some text')
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:base).should include("Both SMS Text for Passed Payment and Template for Credit Pass are not allowed")
+      
+      ecol_customer = Factory.build(:ecol_customer, rmtr_alert_on: 'R', rmtr_return_template_id: 1, rmtr_return_txt: 'some text')
+      ecol_customer.save.should == false
+      ecol_customer.errors_on(:base).should include("Both SMS Text for Returned Payment and Template for Credit Return are not allowed")
+      
+      ecol_customer = Factory.build(:ecol_customer, rmtr_alert_on: 'A', rmtr_pass_template_id: 1, rmtr_pass_txt: nil, rmtr_return_template_id: nil, rmtr_return_txt: 'some text')
+      ecol_customer.save.should == true
     end
   end
 end

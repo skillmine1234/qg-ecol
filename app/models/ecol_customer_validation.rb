@@ -7,8 +7,8 @@ module EcolCustomerValidation
     :acct_token_2_and_3_should_be_N_if_acct_token_1_is_N,
     :acct_token_3_should_be_N_if_acct_toekn_2_is_N,
     :same_value_cannot_be_selected_for_all_nrtv_sufxs,
-    :rmtr_pass_txt_is_mandatory_if_rmtr_alert_on_is_P_or_A,
-    :rmtr_return_txt_is_mandatory_if_rmtr_alert_on_is_R_or_A,
+    :rmtr_pass_txt_or_template_is_mandatory_if_rmtr_alert_on_is_P_or_A,
+    :rmtr_return_txt_or_template_is_mandatory_if_rmtr_alert_on_is_R_or_A,
     :nrtv_sufx_2_and_3_should_be_N_if_nrtv_sufx_1_is_N,
     :nrtv_sufx_3_should_be_N_if_nrtv_sufx_2_is_N,
     :customer_code_format, 
@@ -19,7 +19,8 @@ module EcolCustomerValidation
     :validate_app_code, 
     :validate_should_prevalidate,
     :check_options_of_allowed_operations,
-    :check_token_for_val_method_V
+    :check_token_for_val_method_V,
+    :check_sms_email_text_and_template
   end
   
   def val_tokens_should_be_N_if_val_method_is_N
@@ -64,15 +65,15 @@ module EcolCustomerValidation
     end
   end
   
-  def rmtr_pass_txt_is_mandatory_if_rmtr_alert_on_is_P_or_A
-    if ((self.rmtr_alert_on == "P" || self.rmtr_alert_on == "A") && self.rmtr_pass_txt.blank?)
-      errors.add(:rmtr_pass_txt, "Can't be blank if Send Alerts To Remitter On is On Pass or Always")
+  def rmtr_pass_txt_or_template_is_mandatory_if_rmtr_alert_on_is_P_or_A
+    if ((self.rmtr_alert_on == "P" || self.rmtr_alert_on == "A") && self.rmtr_pass_txt.blank? && self.rmtr_pass_template_id.blank?)
+      errors[:base] << "Both SMS Text for Passed Payment and Template for Credit Pass can't be blank if Send Alerts To Remitter On is On Pass or Always"
     end  
   end
   
-  def rmtr_return_txt_is_mandatory_if_rmtr_alert_on_is_R_or_A 
-    if ((self.rmtr_alert_on == "R" || self.rmtr_alert_on == "A") && self.rmtr_return_txt.blank?)
-      errors.add(:rmtr_return_txt, "Can't be blank if Send Alerts To Remitter On is On Return or Always")
+  def rmtr_return_txt_or_template_is_mandatory_if_rmtr_alert_on_is_R_or_A 
+    if ((self.rmtr_alert_on == "R" || self.rmtr_alert_on == "A") && self.rmtr_return_txt.blank? && self.rmtr_return_template_id.blank?)
+      errors[:base] << "Both SMS Text for Returned Payment and Template for Credit Return can't be blank if Send Alerts To Remitter On is On Return or Always"
     end
   end
   
@@ -119,5 +120,10 @@ module EcolCustomerValidation
     if val_method == 'V' && (token_2_type != 'N' || token_3_type != 'N')
       errors[:base] << "Only one token is allowed when the Validation Method is Virtual Account"
     end
+  end
+  
+  def check_sms_email_text_and_template
+    errors[:base] << "Both SMS Text for Passed Payment and Template for Credit Pass are not allowed" if rmtr_pass_template_id.present? && rmtr_pass_txt.present?
+    errors[:base] << "Both SMS Text for Returned Payment and Template for Credit Return are not allowed" if rmtr_return_template_id.present? && rmtr_return_txt.present?  
   end
 end
