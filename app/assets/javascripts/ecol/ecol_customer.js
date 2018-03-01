@@ -377,40 +377,60 @@ $(document).ready(function(){
     if (rmtr_alert == 'P') {
       $("#ecol_customer_rmtr_return_txt").val('');
       $("#ecol_customer_rmtr_return_txt").prop("disabled",true);
+      $("#ecol_customer_rmtr_return_template_id").val('');
+      $("#ecol_customer_rmtr_return_template_id").prop("disabled",true);
       $("#ecol_customer_rmtr_pass_txt").prop("disabled",false);
+      $("#ecol_customer_rmtr_pass_template_id").prop("disabled",false);
     }
     else if (rmtr_alert == 'R') {
       $("#ecol_customer_rmtr_pass_txt").val('');
       $("#ecol_customer_rmtr_pass_txt").prop("disabled",true);
+      $("#ecol_customer_rmtr_pass_template_id").val('');
+      $("#ecol_customer_rmtr_pass_template_id").prop("disabled",true);
       $("#ecol_customer_rmtr_return_txt").prop("disabled",false);
+      $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
     }
     else if (rmtr_alert == 'N') {
       $("#ecol_customer_rmtr_pass_txt").prop("disabled",true);
       $("#ecol_customer_rmtr_return_txt").prop("disabled",true);
+      $("#ecol_customer_rmtr_pass_template_id").prop("disabled",true);
+      $("#ecol_customer_rmtr_return_template_id").prop("disabled",true);
     }
     else {
       $("#ecol_customer_rmtr_return_txt").prop("disabled",false);
       $("#ecol_customer_rmtr_pass_txt").prop("disabled",false);
+      $("#ecol_customer_rmtr_pass_template_id").prop("disabled",false);
+      $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
     }
   });
   
   if ($("#ecol_customer_rmtr_alert_on").val() == 'P') {
     $("#ecol_customer_rmtr_return_txt").val('');
     $("#ecol_customer_rmtr_return_txt").prop("disabled",true);
+    $("#ecol_customer_rmtr_return_template_id").val('');
+    $("#ecol_customer_rmtr_return_template_id").prop("disabled",true);
     $("#ecol_customer_rmtr_pass_txt").prop("disabled",false);
+    $("#ecol_customer_rmtr_pass_template_id").prop("disabled",false);
   }
   else if ($("#ecol_customer_rmtr_alert_on").val() == 'R') {
     $("#ecol_customer_rmtr_pass_txt").val('');
     $("#ecol_customer_rmtr_pass_txt").prop("disabled",true);
+    $("#ecol_customer_rmtr_pass_template_id").val('');
+    $("#ecol_customer_rmtr_pass_template_id").prop("disabled",true);
     $("#ecol_customer_rmtr_return_txt").prop("disabled",false);
+    $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
   }
   else if ($("#ecol_customer_rmtr_alert_on").val() == 'N') {
     $("#ecol_customer_rmtr_pass_txt").prop("disabled",true);
     $("#ecol_customer_rmtr_return_txt").prop("disabled",true);
+    $("#ecol_customer_rmtr_pass_template_id").prop("disabled",true);
+    $("#ecol_customer_rmtr_return_template_id").prop("disabled",true);
   }
   else {
     $("#ecol_customer_rmtr_return_txt").prop("disabled",false);
     $("#ecol_customer_rmtr_pass_txt").prop("disabled",false);
+    $("#ecol_customer_rmtr_pass_template_id").prop("disabled",false);
+    $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
   }
   
   if ($('#ecol_customer_return_if_val_reject').is(":checked")) {

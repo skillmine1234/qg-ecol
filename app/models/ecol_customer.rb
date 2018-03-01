@@ -42,10 +42,7 @@ class EcolCustomer < ActiveRecord::Base
   validates_presence_of :allowed_operations, if: "identity_user_id.present?", message: "can't be blank when Identity User ID is present"
   validates_presence_of :identity_user_id, if: "allowed_operations.present?", message: "can't be blank when Allowed Operations is present"
   validate :code_uniqueness_for_6_4_char
-  
-  validates_absence_of :rmtr_pass_template_id, if: "rmtr_pass_txt.present?"
-  validates_absence_of :rmtr_return_template_id, if: "rmtr_return_txt.present?"
-  
+    
   before_save :to_upcase
 
   def customer_code_format
@@ -126,10 +123,10 @@ class EcolCustomer < ActiveRecord::Base
   end
   
   def self.templates_for_credit_pass
-    NsTemplate.joins("INNER JOIN sc_events ON sc_events.service_code = 'E-COLLECT' AND sc_events.event_type = 'CREDIT' AND ns_templates.sc_event_id = sc_events.id")
+    NsTemplate.joins("INNER JOIN sc_events ON sc_events.service_code = 'ECOL' AND sc_events.event_type = 'CREDIT' AND ns_templates.sc_event_id = sc_events.id")
   end
   
   def self.templates_for_credit_return
-    NsTemplate.joins("INNER JOIN sc_events ON sc_events.service_code = 'E-COLLECT' AND sc_events.event_type = 'RETURN' AND ns_templates.sc_event_id = sc_events.id")
+    NsTemplate.joins("INNER JOIN sc_events ON sc_events.service_code = 'ECOL' AND sc_events.event_type = 'RETURN' AND ns_templates.sc_event_id = sc_events.id")
   end
 end

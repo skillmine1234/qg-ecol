@@ -233,10 +233,20 @@
       #msg-error
         = error_message_for(@ecol_customer, :rmtr_pass_txt, :prepend_text => "")
     .control-group
+      = f.label :rmtr_pass_template_id, "Template for Credit Pass", :class => 'control-label'
+      = f.select :rmtr_pass_template_id, options_for_select(EcolCustomer.templates_for_credit_pass.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_pass_template_id) ,:include_blank => 'SELECT'
+      #msg-error
+        = error_message_for(@ecol_customer, :rmtr_pass_template_id, :prepend_text => "")
+    .control-group
       = f.label :rmtr_return_txt, "SMS Text for Returned Payment", :class => 'control-label'
       = f.text_area :rmtr_return_txt, :maxlength => 500, :rows => 10, :style => 'width:300px; height:100px'
       #msg-error
         = error_message_for(@ecol_customer, :rmtr_return_txt, :prepend_text => "")
+    .control-group
+      = f.label :rmtr_return_template_id, "Template for Credit Return", :class => 'control-label'
+      = f.select :rmtr_return_template_id, options_for_select(EcolCustomer.templates_for_credit_return.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_return_template_id) ,:include_blank => 'SELECT'
+      #msg-error
+        = error_message_for(@ecol_customer, :rmtr_return_template_id, :prepend_text => "")
     .control-group
       = f.label :auto_credit, "Auto Credit", :class => 'control-label'
       = f.check_box :auto_credit, {},"Y","N"
@@ -247,16 +257,6 @@
       = f.check_box :auto_return, {},"Y","N"
       #msg-error
         = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
-    .control-group
-      = f.label :rmtr_pass_template_id, "Template for Credit Pass", :class => 'control-label'
-      = f.select :rmtr_pass_template_id, options_for_select(EcolCustomer.templates_for_credit_pass.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_pass_template_id) ,:prompt => 'SELECT'
-      #msg-error
-        = error_message_for(@ecol_customer, :rmtr_pass_template_id, :prepend_text => "")
-    .control-group
-      = f.label :rmtr_return_template_id, "Template for Credit Return", :class => 'control-label'
-      = f.select :rmtr_return_template_id, options_for_select(EcolCustomer.templates_for_credit_return.map { |i| [i.display_text, i.id] }, @ecol_customer.rmtr_return_template_id) ,:prompt => 'SELECT'
-      #msg-error
-        = error_message_for(@ecol_customer, :rmtr_return_template_id, :prepend_text => "")
 
 
   .form-actions
