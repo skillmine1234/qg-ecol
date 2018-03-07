@@ -33,6 +33,6 @@ class EcolIncomingRecordsController < ApplicationController
   end
 
   def search_params
-    params.permit(:page, :customer_code, :remitter_code, :invoice_no, :status, :file_name, :overrided_flag)
+    params.require(:ecol_incoming_record_searcher).permit(:page, :customer_code, :remitter_code, :invoice_no, :status, :file_name, :overrided_flag)
   end
 end
