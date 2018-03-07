@@ -32,7 +32,7 @@ class EcolRemitter < ActiveRecord::Base
     invalid_ids = []
     value = self.additional_email_ids
     unless value.nil?
-      value.split(/;\s*/).each do |email| 
+      value.split(/,\s*/).each do |email| 
         unless email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
           invalid_ids << email
         end
@@ -45,7 +45,7 @@ class EcolRemitter < ActiveRecord::Base
     invalid_nos = []
     value = self.additional_mobile_nos
     unless value.nil?
-      value.split(/;\s*/).each do |mobile_no| 
+      value.split(/,\s*/).each do |mobile_no| 
         unless mobile_no =~ /\A[0-9]{10}+\z/i
           invalid_nos << mobile_no
         end

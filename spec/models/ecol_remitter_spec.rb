@@ -329,11 +329,11 @@ describe EcolRemitter do
   
   context "check_email_ids" do
     it 'should validate additional_email_ids' do
-      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com; divyajayan')
+      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com, divyajayan')
       ecol_remitter.save.should == false
       ecol_remitter.errors_on(:additional_email_ids).should == ["is invalid"]
       
-      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com; divyajayan@gmail.com')
+      ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com, divyajayan@gmail.com')
       ecol_remitter.save.should == true
       
       ecol_remitter = Factory.build(:ecol_remitter, additional_email_ids: 'divya@gmail.com')
@@ -343,11 +343,11 @@ describe EcolRemitter do
   
   context "check_mobile_nos" do
     it 'should validate additional_mobile_nos' do
-      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '123456789012; 9876198aksjda')
+      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '123456789012, 9876198aksjda')
       ecol_remitter.save.should == false
       ecol_remitter.errors_on(:additional_mobile_nos).should == ["is invalid"]
       
-      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '9876543210; 9999900000')
+      ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '9876543210, 9999900000')
       ecol_remitter.save.should == true
       
       ecol_remitter = Factory.build(:ecol_remitter, additional_mobile_nos: '9876543210')
