@@ -21,10 +21,6 @@
         %th{:style=>'text-align:left; font-size:12px; background-color: lightblue;'}
           Txn Type
         %th{:style=>'text-align:left; font-size:12px; background-color: lightblue;'}
-          Hold No.
-        %th{:style=>'text-align:left; font-size:12px; background-color: lightblue;'}
-          Hold Amount
-        %th{:style=>'text-align:left; font-size:12px; background-color: lightblue;'}
           Attempt No
         %th{:style=>'text-align:left; font-size:12px; background-color: lightblue;'}
           Status
@@ -50,10 +46,6 @@
             = record.txn_amount
           %td{:style=>'text-align:left;'}
             = record.txn_type
-          %td{:style=>'text-align:left;'}
-            = record.hold_no
-          %td{:style=>'text-align:left;'}
-            = record.hold_amount
           %td{:style=>'text-align:left;'}
             = record.incoming_file_record.attempt_no
           %td{:style=>'text-align:left;'}
