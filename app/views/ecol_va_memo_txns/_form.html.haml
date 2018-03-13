@@ -37,17 +37,6 @@
       = f.text_field :txn_desc, maxlength: 255
       #msg-error
         = error_message_for(@ecol_va_memo_txn, :txn_desc, :prepend_text => "")
-    .control-group
-      = f.label :hold_no, "Hold No.", :class => 'control-label'
-      = f.number_field :hold_no, :step => 1
-      #msg-error
-        = error_message_for(@ecol_va_memo_txn, :hold_no, :prepend_text => "")
-    .control-group
-      = f.label :hold_amount, "Hold Amount", :class => 'control-label'
-      = f.number_field :hold_amount, :step => 2
-      #msg-error
-        = error_message_for(@ecol_va_memo_txn, :hold_amount, :prepend_text => "")
-
 
   .form-actions
     - (f.object.new_record? and f.object.reference_no.nil?) ? label_name = "Create" : label_name = "Update"

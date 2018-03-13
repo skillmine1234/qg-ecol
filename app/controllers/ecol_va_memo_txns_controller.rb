@@ -59,11 +59,11 @@ class EcolVaMemoTxnsController < ApplicationController
   private
   
   def search_params
-    params.require(:ecol_va_memo_txn_searcher).permit(:account_no, :hold_no, :txn_type, :from_txn_amount, :to_txn_amount, :from_hold_amount, :to_hold_amount)
+    params.require(:ecol_va_memo_txn_searcher).permit(:account_no, :txn_type, :from_txn_amount, :to_txn_amount)
   end
 
   def ecol_va_memo_txn_params
-    params.require(:ecol_va_memo_txn).permit(:reference_no, :account_no, :txn_amount, :hold_no, :txn_type, :txn_desc, :hold_amount, :customer_code, 
+    params.require(:ecol_va_memo_txn).permit(:reference_no, :account_no, :txn_amount, :txn_type, :txn_desc, :customer_code, 
                                              :created_at, :updated_at, :created_by, :updated_by, :lock_version, :approved_id, :approved_version)
   end
 end

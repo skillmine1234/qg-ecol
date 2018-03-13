@@ -38,16 +38,6 @@
               = @ecol_va_memo_txn.txn_desc
             %td
           %tr
-            %td.label Hold No
-            %td.value
-              = @ecol_va_memo_txn.hold_no
-            %td
-          %tr
-            %td.label Hold Amount
-            %td.value
-              = number_to_currency(@ecol_va_memo_txn.hold_amount, unit: 'Rs ')
-            %td
-          %tr
             %td.label E-Collect VA Txn
             %td.value
               = link_to @ecol_va_memo_txn.ecol_va_txn_id, @ecol_va_memo_txn.ecol_va_txn if @ecol_va_memo_txn.ecol_va_txn.present?
