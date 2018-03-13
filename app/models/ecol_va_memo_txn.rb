@@ -15,10 +15,8 @@ class EcolVaMemoTxn < ActiveRecord::Base
   validates_presence_of :reference_no, :account_no, :txn_amount, :txn_type, :customer_code
   validates :account_no, format: {with: /\A[a-z|A-Z|0-9]+\z/, :message => 'Invalid format, expected format is : {[a-z|A-Z|0-9]}' }, length: { maximum: 64 }
   validates_numericality_of :txn_amount
-  validates_numericality_of :hold_no, :hold_amount, allow_blank: true
   validates :txn_desc, length: { maximum: 255 }, :allow_blank => true
   validate :presence_of_ecol_customer
-  validates_absence_of :hold_no, :hold_amount, if: "txn_type == 'DEBIT'"
   
   after_save :create_transaction, if: "approval_status=='A' && !Rails.env.test?"
 
@@ -37,8 +35,8 @@ class EcolVaMemoTxn < ActiveRecord::Base
                                                     pi_account_no: self.account_no,
                                                     pi_txn_amount: self.txn_amount,
                                                     pi_txn_type: self.txn_type,
-                                                    pi_hold_no: self.hold_no,
-                                                    pi_hold_amount: self.hold_amount,
+                                                    pi_hold_no: nil,
+                                                    pi_hold_amount: nil,
                                                     pi_txn_desc: self.txn_desc,
                                                     pi_allow_modify: 'N',
                                                     pi_auditable_type: 'EcolVaMemoTxn',

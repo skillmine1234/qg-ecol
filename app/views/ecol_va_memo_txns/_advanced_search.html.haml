@@ -2,8 +2,6 @@
   = f.standard_fields
   = f.input :account_no
   = f.input :txn_type, as: :enum
-  = f.input :hold_no
   = f.input :txn_amount, as: :between
-  = f.input :hold_amount, as: :between
   = f.action_buttons
 = pagination_links(@records)

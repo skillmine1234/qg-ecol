@@ -20,10 +20,6 @@
       Txn Type
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Txn Amount
-    %th{:style=>'text-align:left; background-color: lightblue;'}
-      Hold No.  
-    %th{:style=>'text-align:left; background-color: lightblue;'}
-      Hold Amount
 			
   .tbody
     - @records.each do |ecol_va_memo_txn|
@@ -45,7 +41,3 @@
           = ecol_va_memo_txn.txn_type
         %td{:style=>'text-align:left;'}
           = ecol_va_memo_txn.txn_amount
-        %td{:style=>'text-align:left;'}
-          = ecol_va_memo_txn.hold_no
-        %td{:style=>'text-align:left;'}
-          = ecol_va_memo_txn.hold_amount

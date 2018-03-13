@@ -1,5 +1,5 @@
 class EcolVacdIncomingRecordSearcher < Searcher
-  attr_searchable :account_no, :txn_type, :hold_no, :file_name, :status, :overrided_flag
+  attr_searchable :account_no, :txn_type, :file_name, :status, :overrided_flag
 
   private
 
@@ -9,7 +9,6 @@ class EcolVacdIncomingRecordSearcher < Searcher
     reln = reln.where("incoming_file_records.overrides is null") if overrided_flag.present? and overrided_flag == "false"
     reln = reln.where("ecol_vacd_incoming_records.account_no=?",account_no) if account_no.present?
     reln = reln.where("ecol_vacd_incoming_records.txn_type=?",txn_type) if txn_type.present?
-    reln = reln.where("ecol_vacd_incoming_records.hold_no=?",hold_no) if hold_no.present?
     reln
   end
 end
