@@ -5,6 +5,8 @@ class EcolApp < ActiveRecord::Base
   include Setting
 
   STD_APP_CODES = ['ECSTDX01','ECSTDJ01']
+  
+  PROTOCOL_VERSION = ['SSL', 'SSLv3', 'TLS', 'TLSv1', 'TLSv1.1', 'TLSv1.2', 'SSL_TLS', 'SSL_TLSv2']
 
   belongs_to :created_user, :foreign_key =>'created_by', :class_name => 'User'
   belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
