@@ -88,6 +88,6 @@ class EcolAppsController < ApplicationController
     :udf3_name, :udf3_type, 
     :udf4_name, :udf4_type,
     :udf5_name, :udf5_type,
-    :app_code, :approval_status, :approved_version, :approved_id, :customer_code, :protocol_version)
+    :app_code, :approval_status, :approved_version, :approved_id, :customer_code)
   end
 end
