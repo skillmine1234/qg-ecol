@@ -44,11 +44,6 @@
             %td#msg-error
               = error_message_for(@ecol_app, :http_username, :prepend_text => "")
           %tr
-            %td.label Protocol Version
-            %td.value
-              = @ecol_app.protocol_version
-            %td
-          %tr
             %td.label E-Collect UDTable Records
             %td.value
               = link_to_unless (@ecol_app.udfs_cnt == 0), @ecol_app.ecol_app_udtables.count, udtables_path(app_code: @ecol_app.app_code)
