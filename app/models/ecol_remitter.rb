@@ -10,6 +10,8 @@ class EcolRemitter < ActiveRecord::Base
   belongs_to :ecol_customer
 
   validates_presence_of :is_enabled
+  validates_absence_of :additional_email_ids, unless: "rmtr_email.present?", message: "must be blank when Remitter Email is not set"
+  validates_absence_of :additional_mobile_nos, unless: "rmtr_mobile.present?", message: "must be blank when Remitter Mobile is not set"
   validate :check_email_ids, :check_mobile_nos
   validates_length_of :additional_email_ids, maximum: 2000, allow_blank: true
   validates_length_of :additional_mobile_nos, maximum: 500, allow_blank: true

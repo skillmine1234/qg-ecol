@@ -354,4 +354,22 @@ describe EcolRemitter do
       ecol_remitter.save.should == true
     end
   end
+  
+  context "validate_absence_of" do
+    it "should validate absence of additional email_ids and mobile_nos fields" do
+      ecol_remitter = Factory.build(:ecol_remitter, rmtr_mobile: nil, additional_mobile_nos: '1234567890')
+      ecol_remitter.save.should == false
+      ecol_remitter.errors_on(:additional_mobile_nos).should == ["must be blank when Remitter Mobile is not set"]
+      
+      ecol_remitter = Factory.build(:ecol_remitter, rmtr_mobile: '9999922222', additional_mobile_nos: '9876543210, 9999900000')
+      ecol_remitter.save.should == true
+      
+      ecol_remitter = Factory.build(:ecol_remitter, rmtr_email: nil, additional_email_ids: 'abc@gmail.com')
+      ecol_remitter.save.should == false
+      ecol_remitter.errors_on(:additional_email_ids).should == ["must be blank when Remitter Email is not set"]
+      
+      ecol_remitter = Factory.build(:ecol_remitter, rmtr_email: 'qqq@gmail.com', additional_email_ids: 'abc@gmail.com, ooo@gmail.com')
+      ecol_remitter.save.should == true
+    end
+  end
 end
