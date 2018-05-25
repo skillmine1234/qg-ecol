@@ -26,8 +26,8 @@ class EcolApp < ActiveRecord::Base
   
   validates_length_of :app_code, maximum: 50
   validates_length_of :customer_code, maximum: 20, allow_blank: true
-  validates_length_of :notify_url, maximum: 100, allow_blank: true
-  validates_length_of :validate_url, maximum: 100, allow_blank: true
+  validates_length_of :notify_url, maximum: 500, allow_blank: true
+  validates_length_of :validate_url, maximum: 500, allow_blank: true
   validates_length_of :http_username, maximum: 50, allow_blank: true
   validates_length_of :http_password, maximum: 50, allow_blank: true
   

@@ -23,10 +23,10 @@
         = f.text_field :app_code, :readonly => true
     .control-group
       = f.label :validate_url, "Validate URL", :class => 'control-label'
-      = f.text_field :validate_url, maxlength: 100
+      = f.text_field :validate_url, maxlength: 500
     .control-group
       = f.label :notify_url, "Notify URL", :class => 'control-label'
-      = f.text_field :notify_url, maxlength: 100
+      = f.text_field :notify_url, maxlength: 500
     .control-group
       = f.label :http_username, "HTTP Username", :class => 'control-label'
       = f.text_field :http_username, maxlength: 50

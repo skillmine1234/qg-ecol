@@ -44,7 +44,7 @@ describe EcolApp do
     it { should validate_length_of(:customer_code).is_at_most(20) }
 
     [:notify_url, :validate_url].each do |att|
-      it { should validate_length_of(att).is_at_most(100) }
+      it { should validate_length_of(att).is_at_most(500) }
     end
     
     it "should validate presence of http_password if http_username is present" do
