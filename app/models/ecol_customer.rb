@@ -44,7 +44,11 @@ class EcolCustomer < ActiveRecord::Base
   validate :code_uniqueness_for_6_4_char
   validate :validate_sub_member_bank_ifsc, if: "sub_member_bank == 'Y'"
   before_save :to_upcase
+  after_create :add_ifsc, if: "sub_member_bank == 'Y'"
 
+  def add_ifsc
+    IfscDetail.create(ifsccode: self.sub_member_bank_ifsc) unless IfscDetail.find_by_ifsccode(self.sub_member_bank_ifsc).present?
+  end
 
   def validate_sub_member_bank_ifsc
     errors.add(:sub_member_bank_ifsc, "Should be present") unless sub_member_bank_ifsc.present?
