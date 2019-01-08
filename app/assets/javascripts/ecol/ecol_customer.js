@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  
+
   $("#ecol_customer_val_method").on("change",function(){
     var val_method =  $(this).val();
     if (val_method === 'N'){
@@ -83,8 +83,8 @@ $(document).ready(function(){
     }
 
   });
-  
-  
+
+
   if ($('#ecol_customer_val_method').val() === 'N'){
     $('#ecol_customer_val_token_1').val('N');
     $('#ecol_customer_val_token_1').prop('disabled',true);
@@ -133,7 +133,7 @@ $(document).ready(function(){
 			}
 		}
   }
-    
+
   else{
     $('#ecol_customer_val_txn_date').prop('disabled',false);
     $('#ecol_customer_val_txn_amt').prop('disabled',false);
@@ -156,9 +156,9 @@ $(document).ready(function(){
 		}
     if ($('#ecol_customer_val_method').val() === 'D'){
       $('#ecol_customer_should_prevalidate').prop('disabled', true)
-      $('#ecol_customer_should_prevalidate').attr('checked', false);  
+      $('#ecol_customer_should_prevalidate').attr('checked', false);
     }
-  } 
+  }
 
   $("#ecol_customer_token_1_type").on("change",function(){
     var token_1_type =  $(this).val();
@@ -189,7 +189,7 @@ $(document).ready(function(){
       $('#ecol_customer_token_1_ends_with').prop('readOnly',false);
     }
   });
-  
+
   if ($('#ecol_customer_token_1_type').val() === 'N'){
     $('#ecol_customer_val_token_1').prop('disabled',true);
     $('#ecol_customer_token_1_length').val(0);
@@ -215,7 +215,7 @@ $(document).ready(function(){
     $('#ecol_customer_token_1_contains').prop('readOnly',false);
     $('#ecol_customer_token_1_ends_with').prop('readOnly',false);
   }
-  
+
   $("#ecol_customer_token_2_type").on("change",function(){
     var token_2_type =  $(this).val();
     if (token_2_type === 'N'){
@@ -245,7 +245,7 @@ $(document).ready(function(){
       $('#ecol_customer_token_2_ends_with').prop('readOnly',false);
     }
   });
-  
+
   if ($('#ecol_customer_token_2_type').val() === 'N'){
     $('#ecol_customer_val_token_2').prop('disabled',true);
     $('#ecol_customer_token_2_length').val(0);
@@ -271,14 +271,14 @@ $(document).ready(function(){
     $('#ecol_customer_token_2_contains').prop('readOnly',false);
     $('#ecol_customer_token_2_ends_with').prop('readOnly',false);
   }
-  
+
   $("#ecol_customer_token_3_type").on("change",function(){
     var token_3_type =  $(this).val();
     if (token_3_type === 'N'){
       $('#ecol_customer_val_token_3').val('N');
       $('#ecol_customer_val_token_3').prop('disabled',true);
       $('#ecol_customer_token_3_length').val(0);
-      $('#ecol_customer_token_3_length').prop('readOnly',true); 
+      $('#ecol_customer_token_3_length').prop('readOnly',true);
       $('#ecol_customer_token_3_length').prop('readOnly',true);
       $('#ecol_customer_token_3_starts_with').val('');
       $('#ecol_customer_token_3_starts_with').prop('readOnly',true);
@@ -302,7 +302,7 @@ $(document).ready(function(){
       $('#ecol_customer_token_3_ends_with').prop('readOnly',false);
     }
   });
-  
+
   if ($('#ecol_customer_token_3_type').val() === 'N'){
     $('#ecol_customer_val_token_3').prop('disabled',true);
     $('#ecol_customer_token_3_length').val(0);
@@ -328,8 +328,8 @@ $(document).ready(function(){
     $('#ecol_customer_token_3_contains').prop('readOnly',false);
     $('#ecol_customer_token_3_ends_with').prop('readOnly',false);
   }
-  
-  
+
+
   $("#ecol_customer_val_method").on("change",function(){
     var val_method =  $(this).val();
     for (var i=1; i<=3; i++){
@@ -351,8 +351,8 @@ $(document).ready(function(){
         $("#ecol_customer_nrtv_sufx_" + i).children('option[value="UDF2"]').prop("disabled",false);
       }
     }
-  });  
-  
+  });
+
   for (var i=1; i<=3; i++){
     if ($('#ecol_customer_val_method').val() == 'N' || $('#ecol_customer_val_method').val() == 'W'){
       // $("#ecol_customer_nrtv_sufx_" + i).children('option[value="SC"]').prop("disabled",true);
@@ -368,10 +368,10 @@ $(document).ready(function(){
       // $("#ecol_customer_nrtv_sufx_" + i).children('option[value="IN"]').prop("disabled",false);
       $("#ecol_customer_nrtv_sufx_" + i).children('option[value="RN"]').prop("disabled",false);
       $("#ecol_customer_nrtv_sufx_" + i).children('option[value="UDF1"]').prop("disabled",false);
-      $("#ecol_customer_nrtv_sufx_" + i).children('option[value="UDF2"]').prop("disabled",false);   
+      $("#ecol_customer_nrtv_sufx_" + i).children('option[value="UDF2"]').prop("disabled",false);
     }
   }
-  
+
   $("#ecol_customer_rmtr_alert_on").on("change",function(){
     var rmtr_alert =  $(this).val();
     if (rmtr_alert == 'P') {
@@ -403,7 +403,7 @@ $(document).ready(function(){
       $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
     }
   });
-  
+
   if ($("#ecol_customer_rmtr_alert_on").val() == 'P') {
     $("#ecol_customer_rmtr_return_txt").val('');
     $("#ecol_customer_rmtr_return_txt").prop("disabled",true);
@@ -432,7 +432,7 @@ $(document).ready(function(){
     $("#ecol_customer_rmtr_pass_template_id").prop("disabled",false);
     $("#ecol_customer_rmtr_return_template_id").prop("disabled",false);
   }
-  
+
   if ($('#ecol_customer_return_if_val_reject').is(":checked")) {
     $("#ecol_customer_credit_acct_val_fail").val('');
     $("#ecol_customer_credit_acct_val_fail").prop("disabled",true);
@@ -443,7 +443,7 @@ $(document).ready(function(){
     $("#ecol_customer_debit_acct_val_fail").val('');
     $("#ecol_customer_debit_acct_val_fail").prop("disabled",true);
   }
-  
+
   $("#ecol_customer_return_if_val_reject").on("click",function(){
     if ($(this).is(":checked")) {
       $("#ecol_customer_credit_acct_val_fail").val('');
@@ -456,10 +456,22 @@ $(document).ready(function(){
       $("#ecol_customer_debit_acct_val_fail").prop("disabled",true);
     }
   });
-  
+
   $('#ecol_customer_allowed_operations').multiselect({selectedList: 4});
-  
+
   $('#ecol_customer_form').bind('submit', function() {
       $(this).find(':input').removeAttr('disabled');
   });
+  set_submember_bank_ifsc();
+  $("#ecol_customer_sub_member_bank").on('click',set_submember_bank_ifsc)
+
+  function set_submember_bank_ifsc(){
+    if ($("#ecol_customer_sub_member_bank").is(":checked")) {
+      $("#ecol_customer_sub_member_bank_ifsc").prop("disabled",false);
+    }
+    else {
+      $("#ecol_customer_sub_member_bank_ifsc").prop("disabled",true);
+      $("#ecol_customer_sub_member_bank_ifsc").val('');
+    }
+  }
 });
