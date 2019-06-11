@@ -8,7 +8,12 @@ class EcolTransactionsController < ApplicationController
   include EcolTransactionsHelper
   
   def index
-    ecol_transactions = EcolTransaction.order("id desc")
+    if params[:approval_status] == "U"
+      ecol_transactions = EcolTransaction.where(approval_status: "U").order("id desc")
+    else
+      ecol_transactions = EcolTransaction.where("approval_status IN (?) and last_action IN (?)" ,["N","A"],["C"]).order("id desc")
+    end  
+
     if params[:advanced_search].present? || params[:summary].present?
       ecol_transactions = find_ecol_transactions(ecol_transactions,params).order("id desc")
     end
@@ -104,6 +109,48 @@ class EcolTransactionsController < ApplicationController
   ensure
    redirect_to ecol_transaction
   end
+
+  def pending_validation
+    if UnapprovedRecord.where(approvable_id: params[:id]) == []
+      UnapprovedRecord.create(approvable_id: params[:id],approvable_type: "EcolTransaction")
+      @ecol_transaction = EcolTransaction.find(params[:id])
+      if params[:reject] == "yes"
+        @ecol_transaction.approval_status = "U"
+        @ecol_transaction.reject_flag = "Y"
+      elsif params[:pending] == "yes"
+        @ecol_transaction.pending_flag = "Y" 
+        @ecol_transaction.approval_status = "U"
+      end
+      @ecol_transaction.save
+
+      flash[:notice] = "Transaction added successfully for approval"
+    else
+      flash[:notice] = "Already Transaction pending for approval"
+    end
+    redirect_to :back
+  end
+
+
+  def approve_ecol_trans
+    @ecol_transaction = EcolTransaction.find(params[:id])
+    if params[:reject] == "true"
+      @ecol_transaction.approval_status = "A"
+      @ecol_transaction.last_action = "R"
+      flash[:notice] = "Transaction rejected"
+    else
+        if @ecol_transaction.reject_flag == "Y"
+         @ecol_transaction.status = 'PENDING RETURN'
+        elsif @ecol_transaction.pending_flag == "Y"
+          @ecol_transaction.status = 'PENDING CREDIT'
+        end
+        @ecol_transaction.approval_status = "A"
+        @ecol_transaction.pending_approval = "N"
+    end
+    @ecol_transaction.save
+    UnapprovedRecord.where(approvable_id: params[:id]).first.delete 
+    redirect_to :back
+  end
+
 
   private
 

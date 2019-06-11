@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
     member do
       put :override_transaction
+      put :pending_validation
+      put :approve_ecol_trans
     end
   end
   resources :udf_attributes

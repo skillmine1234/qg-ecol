@@ -26,3 +26,5 @@
 - if @ecol_transaction.notify_status == "NOTIFICATION FAILED" && @ecol_transaction.pending_approval == 'Y'
   %a.btn{"data-toggle" => "modal", :href => "#myModalOverrideNotification", :role => "button", :class => "btn btn-primary"} OVERRIDE NOTIFICATION
   = render :partial => "override_form", :locals => {type: 'notification'}
+- if @ecol_transaction.status == "PENDING VALIDATION"
+  = render  :partial => "pending_validation_form", :locals => {state: 'pending_validation'} 

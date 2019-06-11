@@ -258,6 +258,11 @@
       #msg-error
         = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
     .control-group
+      = f.label :auto_return, "Auto Return On Validation Failed", :class => 'control-label'
+      = f.check_box :validation_failed_auto_return, {},"Y","N"
+      #msg-error
+        = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")    
+    .control-group
       = f.label :sub_member_bank, "*Sub Member Bank?", :class => 'control-label'
       = f.check_box :sub_member_bank, {},"Y","N"
       #msg-error
