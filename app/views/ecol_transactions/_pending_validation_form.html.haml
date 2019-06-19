@@ -1,7 +1,7 @@
 - if check_pending_validation(@ecol_transaction)
-  %a.btn{"data-toggle" => "modal", :href => "#myModalretry", :role => "button", :class => "btn btn-primary"} APPROVE TRANSACTION
+  %a.btn{"data-toggle" => "modal", :href => "#myModalretry", :role => "button", :class => "btn btn-primary"} APPROVE VALIDATION
 
-  %a.btn{"data-toggle" => "modal", :href => "#myModalreject", :role => "button", :class => "btn btn-primary"} REJECT TRANSACTION
+  %a.btn{"data-toggle" => "modal", :href => "#myModalreject", :role => "button", :class => "btn btn-primary"} REJECT VALIDATION
 
   .modal.hide.fade{"id" => "myModalretry", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-header
