@@ -1,17 +1,17 @@
 - if check_pending_validation(@ecol_transaction)
-  %a.btn{"data-toggle" => "modal", :href => "#myModalretry", :role => "button", :class => "btn btn-primary"} RETRY TRANSACTION
+  %a.btn{"data-toggle" => "modal", :href => "#myModalretry", :role => "button", :class => "btn btn-primary"} APPROVE TRANSACTION
 
   %a.btn{"data-toggle" => "modal", :href => "#myModalreject", :role => "button", :class => "btn btn-primary"} REJECT TRANSACTION
 
   .modal.hide.fade{"id" => "myModalretry", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-header
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-      %h3#myModalLabel  RETRY TRANSACTION
+      %h3#myModalLabel  APPROVE TRANSACTION
       #error_message{:style => 'color:red'}
     .modal-body
       = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:pending=>"yes"), :method=>:put, :html=>{} do |ef|
         = hidden_field_tag(:state, state)
-        = submit_tag "RETRY TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
+        = submit_tag "APPROVE TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
 
   .modal.hide.fade{"id" => "myModalreject", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
     .modal-header

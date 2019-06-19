@@ -47,7 +47,7 @@ class EcolCustomer < ActiveRecord::Base
   after_create :add_ifsc, if: "sub_member_bank == 'Y'"
 
   def add_ifsc
-    IfscDetail.create(ifsccode: self.sub_member_bank_ifsc) unless IfscDetail.find_by_ifsccode(self.sub_member_bank_ifsc).present?
+    IfscDetail.create(ifsccode: self.sub_member_bank_ifsc,last_mod_time: Time.now) unless IfscDetail.find_by_ifsccode(self.sub_member_bank_ifsc).present?
   end
 
   def validate_sub_member_bank_ifsc

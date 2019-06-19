@@ -11,7 +11,7 @@ class EcolTransactionsController < ApplicationController
     if params[:approval_status] == "U"
       ecol_transactions = EcolTransaction.where(approval_status: "U").order("id desc")
     else
-      ecol_transactions = EcolTransaction.where("approval_status IN (?) and last_action IN (?)" ,["N","A"],["C"]).order("id desc")
+      ecol_transactions = EcolTransaction.all.order("id desc")
     end  
 
     if params[:advanced_search].present? || params[:summary].present?
@@ -116,9 +116,9 @@ class EcolTransactionsController < ApplicationController
       @ecol_transaction = EcolTransaction.find(params[:id])
       if params[:reject] == "yes"
         @ecol_transaction.approval_status = "U"
-        @ecol_transaction.reject_flag = "Y"
+        @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_REJECT_PENDING"
       elsif params[:pending] == "yes"
-        @ecol_transaction.pending_flag = "Y" 
+        @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_APPROVAL_PENDING" 
         @ecol_transaction.approval_status = "U"
       end
       @ecol_transaction.save
@@ -134,13 +134,16 @@ class EcolTransactionsController < ApplicationController
   def approve_ecol_trans
     @ecol_transaction = EcolTransaction.find(params[:id])
     if params[:reject] == "true"
-      @ecol_transaction.approval_status = "A"
-      @ecol_transaction.last_action = "R"
+      @ecol_transaction.approval_status = "N"
+      @ecol_transaction.intermidiate_transaction_state = "N"
+      @ecol_transaction.last_action = "C"
       flash[:notice] = "Transaction rejected"
     else
-        if @ecol_transaction.reject_flag == "Y"
+        if @ecol_transaction.intermidiate_transaction_state == "PENDINGVALIDATION_REJECT_PENDING"
          @ecol_transaction.status = 'PENDING RETURN'
-        elsif @ecol_transaction.pending_flag == "Y"
+         @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_REJECT_APPROVED"
+        elsif @ecol_transaction.intermidiate_transaction_state == "PENDINGVALIDATION_APPROVAL_PENDING"
+          @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_APPROVAL_APPROVED"
           @ecol_transaction.status = 'PENDING CREDIT'
         end
         @ecol_transaction.approval_status = "A"
