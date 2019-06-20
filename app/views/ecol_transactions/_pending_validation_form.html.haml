@@ -9,7 +9,7 @@
       %h3#myModalLabel  APPROVE TRANSACTION
       #error_message{:style => 'color:red'}
     .modal-body
-      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:pending=>"yes"), :method=>:put, :html=>{} do |ef|
+      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:status=>"pending"), :method=>:put, :html=>{} do |ef|
         = hidden_field_tag(:state, state)
         = submit_tag "APPROVE TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
 
@@ -19,7 +19,7 @@
       %h3#myModalLabel  REJECT TRANSACTION
       #error_message{:style => 'color:red'}
     .modal-body
-      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:reject=>"yes"),:method=>:put, :html=>{} do |ef|
+      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:status=>"reject"),:method=>:put, :html=>{} do |ef|
         = hidden_field_tag(:state, state)
         = submit_tag "REJECT TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
 - else

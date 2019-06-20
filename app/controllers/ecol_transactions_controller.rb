@@ -95,34 +95,44 @@ class EcolTransactionsController < ApplicationController
   end
   
   def override_transaction
-    ecol_transaction = EcolTransaction.find(params[:id])
-    ActiveRecord::Base.transaction do
-      if params[:status].blank?
-        flash[:alert] = "Please choose a status!"
-      else
-        ecol_transaction.override(params[:status], @current_user.id, params[:remarks])
-        flash[:alert] = "Transaction status has been overriden successfully!"
+    @ecol_transaction = EcolTransaction.find(params[:id])
+    if params[:reject] != "true"
+      begin
+        ActiveRecord::Base.transaction do
+          @ecol_transaction.override(params[:status], @current_user.id, params[:remarks])
+          @ecol_transaction.approval_status = "A"
+          flash[:alert] = "Transaction status has been overriden successfully!"
+        end
+      rescue ::Fault::ProcedureFault, OCIError => e
+       flash[:alert] = "#{e.message}"
       end
-    end
-  rescue ::Fault::ProcedureFault, OCIError => e
-   flash[:alert] = "#{e.message}"    
-  ensure
-   redirect_to ecol_transaction
+    else
+      @ecol_transaction.intermidiate_transaction_state = nil 
+      @ecol_transaction.approval_status = nil
+    end 
+    UnapprovedRecord.where(approvable_id: params[:id]).first.delete
+    @ecol_transaction.save 
+   redirect_to @ecol_transaction
   end
 
   def pending_validation
     if UnapprovedRecord.where(approvable_id: params[:id]) == []
       UnapprovedRecord.create(approvable_id: params[:id],approvable_type: "EcolTransaction")
       @ecol_transaction = EcolTransaction.find(params[:id])
-      if params[:reject] == "yes"
-        @ecol_transaction.approval_status = "U"
+      if params[:status] == "reject"
         @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_REJECT_PENDING"
-      elsif params[:pending] == "yes"
+      elsif params[:status] == "pending"
         @ecol_transaction.intermidiate_transaction_state = "PENDINGVALIDATION_APPROVAL_PENDING" 
-        @ecol_transaction.approval_status = "U"
+      elsif params[:status] == "VALIDATED: OK"   
+        @ecol_transaction.intermidiate_transaction_state = "VALIDATIONFAILED_APPROVAL_PENDING" 
+      elsif params[:status] == "VALIDATED: REJECTED"
+        @ecol_transaction.intermidiate_transaction_state = "VALIDATIONFAILED_REJECT_PENDING"  
       end
+      if params[:remarks]!= nil
+          @ecol_transaction.remarks = params[:remarks]
+      end 
+      @ecol_transaction.approval_status = "U"
       @ecol_transaction.save
-
       flash[:notice] = "Transaction added successfully for approval"
     else
       flash[:notice] = "Already Transaction pending for approval"
@@ -134,9 +144,8 @@ class EcolTransactionsController < ApplicationController
   def approve_ecol_trans
     @ecol_transaction = EcolTransaction.find(params[:id])
     if params[:reject] == "true"
-      @ecol_transaction.approval_status = "N"
-      @ecol_transaction.intermidiate_transaction_state = "N"
-      @ecol_transaction.last_action = "C"
+      @ecol_transaction.approval_status = nil
+      @ecol_transaction.intermidiate_transaction_state = nil
       flash[:notice] = "Transaction rejected"
     else
         if @ecol_transaction.intermidiate_transaction_state == "PENDINGVALIDATION_REJECT_PENDING"

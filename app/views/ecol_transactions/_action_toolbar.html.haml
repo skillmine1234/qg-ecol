@@ -21,7 +21,8 @@
   - state = "NOTIFICATION"
   = render :partial => 'retry_buttons', :locals => {:state => state}
 - if @ecol_transaction.status == "VALIDATION FAILED" && @ecol_transaction.validation_status == "VALIDATION FAILED" && @ecol_transaction.pending_approval == 'Y'
-  %a.btn{"data-toggle" => "modal", :href => "#myModalOverrideValidation", :role => "button", :class => "btn btn-primary"} OVERRIDE VALIDATION
+  - if check_pending_validation(@ecol_transaction)
+    %a.btn{"data-toggle" => "modal", :href => "#myModalOverrideValidation", :role => "button", :class => "btn btn-primary"} OVERRIDE VALIDATION 
   = render :partial => "override_form", :locals => {type: 'validation'}
 - if @ecol_transaction.notify_status == "NOTIFICATION FAILED" && @ecol_transaction.pending_approval == 'Y'
   %a.btn{"data-toggle" => "modal", :href => "#myModalOverrideNotification", :role => "button", :class => "btn btn-primary"} OVERRIDE NOTIFICATION

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       put  'update_multiple'
     end
     member do
+      put :override_transaction_add_to_approval 
       put :override_transaction
       put :pending_validation
       put :approve_ecol_trans
