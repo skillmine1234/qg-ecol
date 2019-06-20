@@ -297,6 +297,12 @@
             %td#msg-error
               = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
           %tr
+            %td.label Auto Return On Validation Failed
+            %td.value
+              = @ecol_customer.autoreturn_validationfailed
+            %td#msg-error
+              = error_message_for(@ecol_customer, :autoreturn_validationfailed, :prepend_text => "")    
+          %tr
             %td.label Template for Credit Pass
             %td.value
               = link_to @ecol_customer.credit_pass_template.try(:display_text), @ecol_customer.credit_pass_template if @ecol_customer.credit_pass_template.present?

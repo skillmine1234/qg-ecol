@@ -109,6 +109,7 @@ class EcolTransactionsController < ApplicationController
     else
       @ecol_transaction.intermidiate_transaction_state = nil 
       @ecol_transaction.approval_status = nil
+      flash[:alert] = "Transaction Rejected"
     end 
     UnapprovedRecord.where(approvable_id: params[:id]).first.delete
     @ecol_transaction.save 
@@ -146,7 +147,7 @@ class EcolTransactionsController < ApplicationController
     if params[:reject] == "true"
       @ecol_transaction.approval_status = nil
       @ecol_transaction.intermidiate_transaction_state = nil
-      flash[:notice] = "Transaction rejected"
+      flash[:notice] = "Transaction Rejected"
     else
         if @ecol_transaction.intermidiate_transaction_state == "PENDINGVALIDATION_REJECT_PENDING"
          @ecol_transaction.status = 'PENDING RETURN'
