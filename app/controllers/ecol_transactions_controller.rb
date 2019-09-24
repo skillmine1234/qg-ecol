@@ -8,17 +8,13 @@ class EcolTransactionsController < ApplicationController
   include EcolTransactionsHelper
   
   def index
-    if params[:approval_status] == "U"
-      ecol_transactions = EcolTransaction.where(approval_status: "U").order("id desc")
-    else
-      ecol_transactions = EcolTransaction.all.order("id desc")
-    end  
-
+    ecol_transactions = EcolTransaction.all.order("id desc")  
+    
     if params[:advanced_search].present? || params[:summary].present?
       ecol_transactions = find_ecol_transactions(ecol_transactions,params).order("id desc")
     end
     @ecol_transactions_count = ecol_transactions.count(:id)
-    @ecol_transactions = ecol_transactions.paginate(:per_page => 10, :page => params[:page]) rescue []
+    @ecol_transactions = ecol_transactions.paginate(:per_page => 25, :page => params[:page]) rescue []
   end
   
   def show
