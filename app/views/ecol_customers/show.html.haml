@@ -291,12 +291,6 @@
             %td#msg-error
               = error_message_for(@ecol_customer, :auto_credit, :prepend_text => "")
           %tr
-            %td.label Auto Return
-            %td.value
-              = @ecol_customer.auto_return
-            %td#msg-error
-              = error_message_for(@ecol_customer, :auto_return, :prepend_text => "")
-          %tr
             %td.label Auto Return On Validation Failed
             %td.value
               = @ecol_customer.autoreturn_validationfailed

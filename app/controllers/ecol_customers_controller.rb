@@ -86,7 +86,7 @@ class EcolCustomersController < ApplicationController
     params.require(:ecol_customer).permit(:code, :name, :is_enabled, :val_method, :token_1_type, :token_1_length, :val_token_1, :token_2_type,
   :token_2_length, :val_token_2, :token_3_type, :token_3_length, :val_token_3, :val_txn_date, :val_txn_amt, :val_ben_name,
   :val_rem_acct, :return_if_val_reject, :file_upld_mthd, :credit_acct_val_pass, :credit_acct_val_fail, :nrtv_sufx_1, :nrtv_sufx_2, :nrtv_sufx_3, :rmtr_alert_on,
-  :rmtr_pass_txt, :rmtr_return_txt, :created_by, :updated_by, :lock_version, :auto_credit, :auto_return, :approved_id, :approved_version, :val_rmtr_name,
+  :rmtr_pass_txt, :rmtr_return_txt, :created_by, :updated_by, :lock_version, :auto_credit, :approved_id, :approved_version, :val_rmtr_name,
   :val_last_token_length, :token_1_starts_with, :token_1_contains, :token_1_ends_with, :token_2_starts_with, :token_2_contains,
   :token_2_ends_with, :token_3_starts_with, :token_3_contains, :token_3_ends_with, :customer_id, :cust_alert_on,
   :pool_acct_no, :app_code, :identity_user_id, :should_prevalidate,:sub_member_bank,:sub_member_bank_ifsc, {allowed_operations: []}, :rmtr_pass_template_id, :rmtr_return_template_id,:autoreturn_validationfailed)

@@ -115,7 +115,7 @@ module EcolTransactionsHelper
 
   def check_pending_validation(ecol_transaction)
     unapproved = UnapprovedRecord.where(approvable_id: ecol_transaction.id)
-    if (unapproved == [] && ecol_transaction.last_action != "R")
+    if (unapproved == [])
       true
     else
       false
