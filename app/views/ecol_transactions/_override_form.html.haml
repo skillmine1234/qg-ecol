@@ -15,7 +15,7 @@
           = submit_tag "Submit", :class=>"btn btn-primary override_button", :id => "override_button"
   - else
     - can = can? :approve, @ecol_transaction
-    - chk_option = can == true ? '' : 'disabled'
+    - chk_option = can == true ? '' : 'hidden'
     - status = @ecol_transaction.intermidiate_transaction_state == "VALIDATIONFAILED_APPROVAL_PENDING" ?  "VALIDATED: OK" : "VALIDATED: REJECTED"
     %a.btn{"data-toggle" => "modal", :href => "#myModalapprove", :role => "button", :class => "btn btn-primary #{chk_option}"} APPROVE
 

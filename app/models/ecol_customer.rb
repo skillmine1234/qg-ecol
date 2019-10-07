@@ -142,4 +142,8 @@ class EcolCustomer < ActiveRecord::Base
   def self.templates_for_credit_return
     NsTemplate.joins("INNER JOIN sc_events ON sc_events.service_code = 'ECOL' AND sc_events.event_type = 'RETURN' AND ns_templates.sc_event_id = sc_events.id")
   end
+
+  def auto_return_on_failed?
+    self.autoreturn_validationfailed == 'Y'
+  end
 end

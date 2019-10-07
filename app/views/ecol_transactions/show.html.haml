@@ -35,7 +35,7 @@
     %h3
       Audit Logs:
       = link_to 'Show', {:controller => 'ecol_transactions', :action => 'ecol_audit_logs', :id => @ecol_transaction.id, :step_name => 'ALL'}
-  - if can? :update, @ecol_transaction
+  - if (can? :update, @ecol_transaction) || ((current_user.has_role? 'supervisor') && (can? :approve, @ecol_transaction))
     .toolbar
       = render :partial => 'action_toolbar'
   .header-form-main{:style=>'background-color: #F1F2F8; width: 100%; display: inline-block;'}
