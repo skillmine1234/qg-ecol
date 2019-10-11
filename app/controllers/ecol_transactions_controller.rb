@@ -107,7 +107,7 @@ class EcolTransactionsController < ApplicationController
       @ecol_transaction.approval_status = nil
       flash[:alert] = "Transaction Rejected"
     end 
-    UnapprovedRecord.where(approvable_id: params[:id]).first.delete
+    UnapprovedRecord.where(approvable_id: params[:id]).first.try(:delete)
     @ecol_transaction.save 
    redirect_to @ecol_transaction
   end

@@ -39,10 +39,10 @@ class EcolTransaction < ActiveRecord::Base
   end
   
   def override(status, user_id, remarks)
-    if self.status == 'VALIDATION FAILED'
-      result = plsql.pk_qg_ecol_audit_helper.override_and_enqueue(id, status, user_id, nil, remarks, nil, nil)
-    elsif self.status == 'PENDING VALIDATION'
+    if self.status == 'PENDING VALIDATION'
       result = plsql.pk_qg_ecol_audit_helper.ecollect_pendingValidation(id, status, user_id, nil, remarks, nil, nil)
+    else
+      result = plsql.pk_qg_ecol_audit_helper.override_and_enqueue(id, status, user_id, nil, remarks, nil, nil)
     end
     raise ::Fault::ProcedureFault.new(OpenStruct.new(code: result[:po_fault_code], subCode: nil, reasonText: "#{result[:po_fault_reason]}")) if result[:po_fault_code].present?
   end
