@@ -40,7 +40,7 @@ class EcolTransaction < ActiveRecord::Base
   
   def override(status, user_id, remarks)
     if self.status == 'PENDING VALIDATION'
-      result = plsql.pk_qg_ecol_audit_helper.ecollect_pendingValidation(id, status, user_id, nil, remarks, nil, nil)
+      result = plsql.ecollect_pendingValidation(id, status, user_id, nil, remarks, nil, nil)
     else
       result = plsql.pk_qg_ecol_audit_helper.override_and_enqueue(id, status, user_id, nil, remarks, nil, nil)
     end
