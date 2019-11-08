@@ -8,7 +8,13 @@ class EcolTransactionsController < ApplicationController
   include EcolTransactionsHelper
   
   def index
-    ecol_transactions = EcolTransaction.all.order("id desc")  
+    if params[:approval_status] == "U"
+      ecol_transactions = EcolTransaction.all.where(approval_status: "U").order("id desc")  
+    else
+      ecol_transactions = EcolTransaction.all.order("id desc")  
+    end
+
+    
     
     if params[:advanced_search].present? || params[:summary].present?
       ecol_transactions = find_ecol_transactions(ecol_transactions,params).order("id desc")
