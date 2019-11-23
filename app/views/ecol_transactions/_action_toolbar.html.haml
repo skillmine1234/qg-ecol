@@ -1,5 +1,5 @@
 %br
-- if pending_status(@ecol_transaction.status) && !@ecol_transaction.ecol_customer.auto_return_on_failed? && !(current_user.has_role? 'supervisor')
+- if pending_status(@ecol_transaction.status) && (!@ecol_transaction.ecol_customer.auto_return_on_failed? || @ecol_transaction.ecol_customer.auto_return_on_failed == nil ) && !(current_user.has_role? 'supervisor')
   - state = find_pending_status(@ecol_transaction.status)
   = render :partial => 'retry_buttons', :locals => {:state => state}
 - if approval_status(@ecol_transaction.status)
@@ -21,7 +21,7 @@
   - state = "NOTIFICATION"
   = render :partial => 'retry_buttons', :locals => {:state => state}
 - if @ecol_transaction.status == "VALIDATION FAILED" && @ecol_transaction.validation_status == "VALIDATION FAILED" && @ecol_transaction.pending_approval == 'Y'
-  - if check_pending_validation(@ecol_transaction) && !@ecol_transaction.ecol_customer.auto_return_on_failed? && !(current_user.has_role? 'supervisor')
+  - if check_pending_validation(@ecol_transaction) && (!@ecol_transaction.ecol_customer.auto_return_on_failed? || @ecol_transaction.ecol_customer.auto_return_on_failed == nil) && !(current_user.has_role? 'supervisor')
     %a.btn{"data-toggle" => "modal", :href => "#myModalOverrideValidation", :role => "button", :class => "btn btn-primary"} OVERRIDE VALIDATION 
   = render :partial => "override_form", :locals => {type: 'validation'}
 - if @ecol_transaction.notify_status == "NOTIFICATION FAILED" && @ecol_transaction.pending_approval == 'Y'
