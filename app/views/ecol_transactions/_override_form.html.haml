@@ -17,7 +17,8 @@
     - can = can? :approve, @ecol_transaction
     - chk_option = can == true ? '' : 'hidden'
     - status = @ecol_transaction.intermidiate_transaction_state == "VALIDATIONFAILED_APPROVAL_PENDING" ?  "VALIDATED: OK" : "VALIDATED: REJECTED"
-    %a.btn{"data-toggle" => "modal", :href => "#myModalapprove", :role => "button", :class => "btn btn-primary #{chk_option}"} APPROVE
+    - text = @ecol_transaction.intermidiate_transaction_state == "VALIDATIONFAILED_APPROVAL_PENDING" ? "CREDIT" : "RETURN"
+    %a.btn{"data-toggle" => "modal", :href => "#myModalapprove", :role => "button", :class => "btn btn-primary #{chk_option}"} APPROVE #{text}
 
     %a.btn{"data-toggle" => "modal", :href => "#myModalrejecttrans", :role => "button", :class => "btn btn-primary #{chk_option}"} REJECT
     
