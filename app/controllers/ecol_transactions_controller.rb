@@ -9,7 +9,7 @@ class EcolTransactionsController < ApplicationController
   
   def index
     if params[:approval_status] == "U"
-      ecol_transactions = EcolTransaction.all.where(['created_at > ?', 15.days.ago]).where(approval_status: "U").order("id desc")  
+      ecol_transactions = EcolTransaction.where(['created_at > ?', 5.days.ago]).where(approval_status: "U").order("id desc")  
     else
       ecol_transactions = EcolTransaction.all.order("id desc")
     end

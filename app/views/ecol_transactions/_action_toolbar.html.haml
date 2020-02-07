@@ -1,5 +1,5 @@
 %br
-- if pending_status(@ecol_transaction.status) && (@ecol_transaction.ecol_customer.present? ? (!@ecol_transaction.ecol_customer.auto_return_on_failed?) : true)  && !(current_user.has_role? 'supervisor')
+- if pending_status(@ecol_transaction.status)  && !(current_user.has_role? 'supervisor')
   - state = find_pending_status(@ecol_transaction.status)
   = render :partial => 'retry_buttons', :locals => {:state => state}
 - if approval_status(@ecol_transaction.status)
