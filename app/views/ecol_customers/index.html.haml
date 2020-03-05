@@ -11,7 +11,7 @@
 %br
 = "Total Count: #{@ecol_customers_count}"
 %br
-= will_paginate @ecol_customers
+= will_paginate @ecol_customers, :page_links => true
 %br
 %table.table.table-bordered.table-striped.table-hover
   .thead

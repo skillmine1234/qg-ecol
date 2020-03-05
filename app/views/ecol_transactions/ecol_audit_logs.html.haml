@@ -5,7 +5,7 @@
     %br
     = "Total Count: #{@ecol_values_count}"
     %br
-    = will_paginate @ecol_values
+    = will_paginate @ecol_values, :page_links => true
     %br
     %table.table.table-bordered.table-striped.table-hover{:style=>'background-color: #F1F2F8;'}
       .thead
