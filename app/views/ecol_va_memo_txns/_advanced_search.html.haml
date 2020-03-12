@@ -4,4 +4,5 @@
   = f.input :txn_type, as: :enum
   = f.input :txn_amount, as: :between
   = f.action_buttons
+= "Total Count: #{@records.count}"
 = will_paginate @records, :page_links => true

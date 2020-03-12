@@ -6,4 +6,5 @@
   = f.input :status, as: :hidden, input_html: {value: params[:status]}
 
   = f.action_buttons
+= "Total Count: #{@records.count}"
 = will_paginate @records, :page_links => true
