@@ -6,4 +6,4 @@
   = f.input :hold_no
   = f.input :hold_amount, as: :between
   = f.action_buttons
-= pagination_links(@records)
+= will_paginate @records, :page_links => true

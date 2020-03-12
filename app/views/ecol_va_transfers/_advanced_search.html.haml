@@ -6,4 +6,4 @@
   = f.input :status_code, as: :enum
   = f.input :req_timestamp, as: :between
   = f.action_buttons
-= pagination_links(@records)
+= will_paginate @records, :page_links => true
