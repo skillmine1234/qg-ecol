@@ -9,16 +9,16 @@ class EcolTransactionsController < ApplicationController
   
   def index
     if params[:approval_status] == "U"
-      ecol_transactions = EcolTransaction.where(['created_at > ?', 5.days.ago]).where(approval_status: "U").order("id desc")  
+      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.months.ago]).where(approval_status: "U").order("id desc") 
     else
-      ecol_transactions = EcolTransaction.all.order("id desc")
+      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.months.ago]).order("id desc")
     end
     
     if params[:advanced_search].present? || params[:summary].present?
       ecol_transactions = find_ecol_transactions(ecol_transactions,params).order("id desc")
+      @ecol_transactions_count = ecol_transactions.count(:id)
+      @ecol_transactions = ecol_transactions.paginate(:per_page => 10, :page => params[:page]) rescue []
     end
-    @ecol_transactions_count = ecol_transactions.count(:id)
-    @ecol_transactions = ecol_transactions.paginate(:per_page => 25, :page => params[:page]) rescue []
   end
   
   def show

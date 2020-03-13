@@ -1,91 +1,88 @@
-%br
-%br
+%br/
+%br/
 %h1 Listing E-Collect Transactions
 %h2.collapsible
   Advanced Search
   %span.caret
-.collapsible-content
+.collapsible-content{:style => "display:block;"}
   = render :partial => 'advanced_search'
-%br
-%br
-= "Total Count: #{@ecol_transactions_count}"
-%br
-= will_paginate @ecol_transactions
-
-= simple_form_for :ecol_transaction, :url => update_multiple_ecol_transactions_path, :html => { :method => :put, :class => 'form-horizontal', :autocomplete=>"off", :id => 'update_transactions', :style=> 'overflow: auto;'} do |f| 
-  %table.table.table-bordered.table-striped.table-hover
-    .thead
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        = check_box_tag(:select_all, value = "1", checked = false, options = {})
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Beneficiary Account Number
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Beneficiary IFSC
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Beneficiary Name
-      %th{:style=>'Text-align:left; background-color: lightblue;'}
-        Remitter Name
-      %th{:style=>'Text-align:left; background-color: lightblue;'}
-        Transfer Date
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Transfer Amount
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Status
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Pending Approval
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Settlement Status 
-      %th{:style=>'text-align:left; background-color: lightblue;'}
-        Validation Status
-
-    .tbody
-      - @ecol_transactions.each do |ecol_transaction|   
-        %tr
-          %td{:style=>'text-align:left;'}
-            = link_to 'Show', ecol_transaction
-          %td{:style=>'text-align:left;'}
-            - if ecol_transaction.pending_approval == 'Y' or pending_status(ecol_transaction.status) or ecol_transaction.settle_status == "SETTLEMENT FAILED" or ecol_transaction.notify_status == "NOTIFICATION FAILED"
-              = check_box_tag "ecol_transaction_ids[]", ecol_transaction.id, false, class: 'txn_select'
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.bene_account_no
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.bene_account_ifsc
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.bene_full_name
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.rmtr_full_name
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.transfer_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.transfer_amt
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.status
-          %td{:style=>'text-align:left;'}
-            = ecol_transaction.pending_approval
-          %td{:style=>'text-align:left;'}
-            - if !ecol_transaction.settle_status.nil?
-              = link_to ecol_transaction.settle_status, "#", :class => 'settle-link', :href => "#settleText", data: { settle_result: (ecol_transaction.settle_result || '-')}
-            - else
-              = '-'
-          %td{:style=>'text-align:left;'}
-            - if !ecol_transaction.validation_result.nil?
-              = link_to ecol_transaction.validation_status, "#", :class => 'validation-link', :href => "#validationText", data: { validation_result: ecol_transaction.validation_result}
-            - else
-              = ecol_transaction.validation_status
-  .form-actions{:style=>"text-align: center;"}
-    = hidden_field_tag :status
-    = hidden_field_tag :approval
-    = hidden_field_tag :notify_status
-    = hidden_field_tag :settle_status
-    - if can? :update, @ecol_transactions.first
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction1', data: {:confirm=>"Are you sure?"}, :value => "Retry Validation"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction2', data: {:confirm=>"Are you sure?"}, :value => "Approve Return"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction3', data: {:confirm=>"Are you sure?"}, :value => "Approve Credit"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction4', data: {:confirm=>"Are you sure?"}, :value => "Retry Return"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction5', data: {:confirm=>"Are you sure?"}, :value => "Retry Credit"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction6', data: {:confirm=>"Are you sure?"}, :value => "Retry Settlement"
-      = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction7', data: {:confirm=>"Are you sure?"}, :value => "Retry Notification"
-
-
+%br/
+%br/
+- if params[:advanced_search].present?
+  = will_paginate @ecol_transactions
+  = "Total Count: #{@ecol_transactions_count}"
+  %br/
+  = simple_form_for :ecol_transaction, :url => update_multiple_ecol_transactions_path, :html => { :method => :put, :class => 'form-horizontal', :autocomplete=>"off", :id => 'update_transactions', :style=> 'overflow: auto;'} do |f|
+    %table.table.table-bordered.table-striped.table-hover
+      .thead
+        %th{:style => "text-align:left; background-color: lightblue;"}
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          = check_box_tag(:select_all, value = "1", checked = false, options = {})
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Beneficiary Account Number
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Beneficiary IFSC
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Beneficiary Name
+        %th{:style => "Text-align:left; background-color: lightblue;"}
+          Remitter Name
+        %th{:style => "Text-align:left; background-color: lightblue;"}
+          Transfer Date
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Transfer Amount
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Status
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Pending Approval
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Settlement Status
+        %th{:style => "text-align:left; background-color: lightblue;"}
+          Validation Status
+      .tbody
+        - @ecol_transactions.each do |ecol_transaction|
+          %tr
+            %td{:style => "text-align:left;"}
+              = link_to 'Show', ecol_transaction
+            %td{:style => "text-align:left;"}
+              - if ecol_transaction.pending_approval == 'Y' or pending_status(ecol_transaction.status) or ecol_transaction.settle_status == "SETTLEMENT FAILED" or ecol_transaction.notify_status == "NOTIFICATION FAILED"
+                = check_box_tag "ecol_transaction_ids[]", ecol_transaction.id, false, class: 'txn_select'
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.bene_account_no
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.bene_account_ifsc
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.bene_full_name
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.rmtr_full_name
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.transfer_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p") rescue ""
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.transfer_amt
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.status
+            %td{:style => "text-align:left;"}
+              = ecol_transaction.pending_approval
+            %td{:style => "text-align:left;"}
+              - if !ecol_transaction.settle_status.nil?
+                = link_to ecol_transaction.settle_status, "#", :class => 'settle-link', :href => "#settleText", data: { settle_result: (ecol_transaction.settle_result || '-')}
+              - else
+                = '-'
+            %td{:style => "text-align:left;"}
+              - if !ecol_transaction.validation_result.nil?
+                = link_to ecol_transaction.validation_status, "#", :class => 'validation-link', :href => "#validationText", data: { validation_result: ecol_transaction.validation_result}
+              - else
+                = ecol_transaction.validation_status
+    .form-actions{:style => "text-align: center;"}
+      = hidden_field_tag :status
+      = hidden_field_tag :approval
+      = hidden_field_tag :notify_status
+      = hidden_field_tag :settle_status
+      - if can? :update, @ecol_transactions.first
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction1', data: {:confirm=>"Are you sure?"}, :value => "Retry Validation"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction2', data: {:confirm=>"Are you sure?"}, :value => "Approve Return"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction3', data: {:confirm=>"Are you sure?"}, :value => "Approve Credit"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction4', data: {:confirm=>"Are you sure?"}, :value => "Retry Return"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction5', data: {:confirm=>"Are you sure?"}, :value => "Retry Credit"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction6', data: {:confirm=>"Are you sure?"}, :value => "Retry Settlement"
+        = f.button :submit ,:class=>"btn btn-primary ecol_transcations_btn", :id => 'submit_transaction7', data: {:confirm=>"Are you sure?"}, :value => "Retry Notification"
 = render :partial => 'modal_boxes'
