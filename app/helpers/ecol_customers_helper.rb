@@ -27,10 +27,10 @@ module EcolCustomersHelper
   def find_ecol_customers(params)
     ecol_customers = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcolCustomer.unscoped : EcolCustomer
     ecol_customers = ecol_customers.where("approval_status=?",params[:approval_status]) if params[:approval_status].present?
-    ecol_customers = ecol_customers.where("code=?",params[:code]) if params[:code].present?
+    ecol_customers = ecol_customers.where("code IN (?)",params[:code].split(",").collect(&:strip)) if params[:code].present?
     ecol_customers = ecol_customers.where("is_enabled=?",params[:is_enabled]) if params[:is_enabled].present?
-    ecol_customers = ecol_customers.where("credit_acct_val_pass=?",params[:credit_acct_val_pass]) if params[:credit_acct_val_pass].present?
-    ecol_customers = ecol_customers.where("credit_acct_val_fail=?",params[:credit_acct_val_fail]) if params[:credit_acct_val_fail].present?
+    ecol_customers = ecol_customers.where("credit_acct_val_pass IN (?)",params[:credit_acct_val_pass].split(",").collect(&:strip)) if params[:credit_acct_val_pass].present?
+    ecol_customers = ecol_customers.where("credit_acct_val_fail IN (?)",params[:credit_acct_val_fail].split(",").collect(&:strip)) if params[:credit_acct_val_fail].present?
     ecol_customers
   end
 

@@ -71,4 +71,7 @@
           = number_with_precision(ecol_remitter.invoice_amt, :precision => 2) || 0
         %td{:style=>'text-align:left;'}
           = ecol_remitter.due_date
-
+:javascript
+  $(document).ready(function(){
+    $('input[type="text"]'). attr("placeholder", "Multisearch Search Enabled");
+  });

@@ -34,3 +34,8 @@
           = ecol_app.validate_url
         %td{:style=>'text-align:left; word-wrap: break-word;'}
           = ecol_app.notify_url
+
+:javascript
+  $(document).ready(function(){
+    $('input[type="text"]'). attr("placeholder", "Multisearch Search Enabled");
+  });

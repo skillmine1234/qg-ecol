@@ -1,10 +1,10 @@
 = form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
   .control-group
     = label_tag "Unique Ref No", "Unique Ref No", :class => 'control-label'
-    = text_field_tag :transfer_unique_no, params[:transfer_unique_no]
+    = text_field_tag :transfer_unique_no, params[:transfer_unique_no],placeholder: 'Multisearch Search Enabled'
   .control-group
     = label_tag "Customer Code", "Customer Code", :class => 'control-label'
-    = text_field_tag :customer_code, params[:customer_code]
+    = text_field_tag :customer_code, params[:customer_code],placeholder: 'Multisearch Search Enabled'
   .control-group
     = label_tag "Status", nil , :class => 'control-label'
     = select_tag :status, options_for_select([['NEW','NEW'],['PENDING VALIDATION','PENDING VALIDATION'],['VALIDATION FAILED','VALIDATION FAILED'],['PENDING CREDIT','PENDING CREDIT'],['PENDING RETURN','PENDING RETURN'],['CREDITED','CREDITED'],['RETURNED','RETURNED'],['CREDIT FAILED','CREDIT FAILED'],['RETURN FAILED','RETURN FAILED']],params[:status]),:prompt => 'ANY'
@@ -27,10 +27,10 @@
     = select_tag :return_transfer_type, options_for_select([['NEFT','NEFT'],['FT','FT'],['RTGS','RTGS']],params[:return_transfer_type]),:prompt => 'ANY'
   .control-group
     = label_tag "Beneficiary Account Number", "Beneficiary Account Number" , :class => 'control-label'
-    = text_field_tag :bene_account_no, params[:bene_account_no]
+    = text_field_tag :bene_account_no, params[:bene_account_no],placeholder: 'Multisearch Search Enabled'
   .control-group
     = label_tag "Remitter Account IFSC", "Remitter Account IFSC" , :class => 'control-label'
-    = text_field_tag :rmtr_account_ifsc, params[:rmtr_account_ifsc]
+    = text_field_tag :rmtr_account_ifsc, params[:rmtr_account_ifsc],placeholder: 'Multisearch Search Enabled'
   .control-group
     = label_tag "Transfer Date", "Transfer Date", :class => 'control-label'
     = text_field_tag :from_date, params[:from_date]

@@ -71,3 +71,8 @@
           = ecol_customer.credit_acct_val_fail
         %td{:style=>'text-align:left;'}
           = ecol_customer.pool_acct_no
+
+:javascript
+  $(document).ready(function(){
+    $('input[type="text"]'). attr("placeholder", "Multisearch Search Enabled");
+  });
