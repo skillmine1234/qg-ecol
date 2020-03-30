@@ -9,9 +9,9 @@ class EcolTransactionsController < ApplicationController
   
   def index
     if params[:approval_status] == "U"
-      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.months.ago]).where(approval_status: "U").order("id desc") 
+      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.days.ago]).where(approval_status: "U").order("id desc") 
     else
-      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.months.ago]).order("id desc")
+      ecol_transactions = EcolTransaction.where(['created_at > ?', IncomingFile.get_record_display_period.to_i.days.ago]).order("id desc")
     end
     
     if params[:advanced_search].present? || params[:summary].present?
