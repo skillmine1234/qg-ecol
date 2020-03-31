@@ -1,4 +1,5 @@
 = form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+  = hidden_field_tag :approval_status, params[:approval_status]
   .control-group
     = label_tag "Unique Ref No", "Unique Ref No", :class => 'control-label'
     = text_field_tag :transfer_unique_no, params[:transfer_unique_no],placeholder: 'Multisearch Search Enabled'

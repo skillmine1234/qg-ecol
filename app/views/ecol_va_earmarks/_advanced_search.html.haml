@@ -6,5 +6,5 @@
   = f.input :hold_no
   = f.input :hold_amount, as: :between
   = f.action_buttons
-= "Total Count: #{@records.count}"
+= "Total Count: #{EcolVaEarmark.all.size}"
 = will_paginate @records, :page_links => true
