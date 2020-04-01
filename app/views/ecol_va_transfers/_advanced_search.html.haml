@@ -7,4 +7,4 @@
   = f.input :req_timestamp, as: :between
   = f.action_buttons
 = "Total Count: #{EcolVaTransfer.all.size}"
-= will_paginate @records, :page_links => true
+= pagination_links(@records)
