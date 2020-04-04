@@ -4,11 +4,11 @@
 %h2.collapsible
   Advanced Search
   %span.caret
-.collapsible-content{:style => "display:block;"}
+.collapsible-content{:style => params[:advanced_search].present? || params[:page].present? ? "display:none;" : "display:block;"}
   = render :partial => 'advanced_search'
 %br/
 %br/
-- if params[:advanced_search].present?
+- if params[:advanced_search].present? || params[:page].present?
   = will_paginate @ecol_transactions
   = "Total Count: #{@ecol_transactions_count}"
   %br/
