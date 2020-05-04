@@ -3,8 +3,14 @@
 %br
 %br
 %h1 Listing E-Collect Apps
-= render :partial => 'advanced_search'
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
 %br
+= "Total Count: #{@ecol_apps.count}"
+= will_paginate @ecol_apps, :page_links => true
 %br
 %table.table.table-bordered.table-striped.table-hover{style: 'table-layout: fixed; width: 100%;'}
   .thead
@@ -20,7 +26,7 @@
       Notify URL
 			
   .tbody
-    - @records.each do |ecol_app|
+    - @ecol_apps.each do |ecol_app|
       %tr
         %td{:style=>'text-align:left;'}
           = link_to 'Show', ecol_app

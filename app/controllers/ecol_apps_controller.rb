@@ -5,6 +5,7 @@ class EcolAppsController < ApplicationController
   respond_to :json
   include ApplicationHelper
   include Approval2::ControllerAdditions
+  include EcolAppHelper
   
   def new
     @ecol_app = EcolApp.new
@@ -44,12 +45,12 @@ class EcolAppsController < ApplicationController
   end
 
   def index
-    if request.get?
-      @searcher = EcolAppSearcher.new(params.permit(:page, :approval_status))
+    if params[:advanced_search].present?
+      ecol_apps = find_ecol_apps(params).order("id DESC")
     else
-      @searcher = EcolAppSearcher.new(search_params)
+      ecol_apps = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcolApp.unscoped.where("approval_status =?",'U').order("id desc") : EcolApp.order("id desc")
     end
-    @records = @searcher.paginate
+    @ecol_apps = ecol_apps.paginate(:per_page => 10, :page => params[:page]) rescue []
   end
   
   def audit_logs
