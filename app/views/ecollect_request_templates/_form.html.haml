@@ -1,0 +1,111 @@
+/ :css
+/   .required:after {
+/     content:" *";
+/     color: red;
+/   }
+= simple_form_for @ecollect_request_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecollect_request_template, :base, :prepend_text => "")
+  .form-main{:style=>'width: 50%'}  
+    .control-group
+      = f.label :client_code, "Client Code", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :client_code
+      #msg-error
+        = error_message_for(@ecollect_request_template, :client_code, :prepend_text => "")
+    .control-group
+      = f.label :request_type, "Request Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :request_type, [ 'POST', 'GET'], :prompt => 'Select Request Type'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :app_id, :prepend_text => "")
+    .control-group
+      = f.label :is_encryption_required, "Is Encryption enabled?", :class => 'control-label', :class => 'control-label required'
+      = f.check_box :is_encryption_required,{},1,0
+      #msg-error
+        = error_message_for(@ecollect_request_template, :is_encryption_required, :prepend_text => "")
+    .control-group
+      = f.label :algorithm, "Algorithm", :class => 'control-label', :class => 'control-label required'
+      = f.select :algorithm, [ 'AES', 'ECB','PKCS5Padding'], :prompt => 'Select Algorithm'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :algorithm, :prepend_text => "")
+    .control-group
+      = f.label :api_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :api_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :api_type, :prepend_text => "")
+    .control-group
+      = f.label :decrypt_response, "Decrypt Response", :class => 'control-label', :class => 'control-label required'
+      = f.check_box :decrypt_response,{},1,0
+      #msg-error
+        = error_message_for(@ecollect_request_template, :decrypt_response, :prepend_text => "")
+    .control-group
+      = f.label :is_hash_required, "Hash enabled?", :class => 'control-label', :class => 'control-label required'
+      = f.check_box :is_hash_required,{},1,0
+      #msg-error
+        = error_message_for(@ecollect_request_template, :is_hash_required, :prepend_text => "")
+      = link_to 'Create Hash', "#",:style => "padding-left: 50px;"
+  .form-extended{:style=>'width: 50%;'}
+    .control-group
+      = f.label :request, "Request", :class => 'control-label', :class => 'control-label required'
+      = f.text_area :request, :style => 'height:100px'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
+    .control-group
+      = f.label :url, "Encrypt Key", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :url
+      #msg-error
+        = error_message_for(@ecollect_request_template, :encrypt_key, :prepend_text => "")
+    .control-group
+      = f.label :secret_key, "Secret Key", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :secret_key
+      #msg-error
+        = error_message_for(@ecollect_request_template, :secret_key, :prepend_text => "")
+  .form-actions
+    - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_request_template', :value => "#{label_name} Request Template"
+    = link_to :Cancel,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn"
+
+
+:javascript
+  $(document).ready(function(){
+    if(!$('#ecollect_request_template_is_encryption_required').is(":checked")){
+      $('#ecollect_request_template_algorithm').val('');
+      $('#ecollect_request_template_algorithm').attr("disabled", true); 
+      $('#ecollect_request_template_api_type').val('');
+      $('#ecollect_request_template_api_type').attr("disabled", true);
+      $('#ecollect_request_template_url').val('');
+      $('#ecollect_request_template_url').prop('readOnly',true);
+      $('#ecollect_request_template_secret_key').val('');
+      $('#ecollect_request_template_secret_key').prop('readOnly',true);
+      $("#ecollect_request_template_decrypt_response").attr("disabled", true);
+    }
+    else {
+      $('#ecollect_request_template_algorithm').attr("disabled", false);
+      $('#ecollect_request_template_api_type').attr("disabled", false);
+      $('#ecollect_request_template_url').prop('readOnly',false);
+      $('#ecollect_request_template_secret_key').prop('readOnly',false);
+      $("#ecollect_request_template_decrypt_response").attr("disabled", false);
+    }
+    
+    $("#ecollect_request_template_is_encryption_required").on("click", function () {
+      if (!$(this).is(":checked")){
+        $('#ecollect_request_template_algorithm').val('');
+        $('#ecollect_request_template_algorithm').attr("disabled", true); 
+        $('#ecollect_request_template_api_type').val('');
+        $('#ecollect_request_template_api_type').attr("disabled", true);
+        $('#ecollect_request_template_url').val('');
+        $('#ecollect_request_template_url').prop('readOnly',true);
+        $('#ecollect_request_template_secret_key').val('');
+        $('#ecollect_request_template_secret_key').prop('readOnly',true);
+        $("#ecollect_request_template_decrypt_response").attr("disabled", true);
+      }
+      else {
+        $('#ecollect_request_template_algorithm').attr("disabled", false);
+        $('#ecollect_request_template_api_type').attr("disabled", false);
+        $('#ecollect_request_template_url').prop('readOnly',false);
+        $('#ecollect_request_template_secret_key').prop('readOnly',false);
+        $("#ecollect_request_template_decrypt_response").attr("disabled", false);
+      }
+    });
+  });

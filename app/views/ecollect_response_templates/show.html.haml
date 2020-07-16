@@ -1,0 +1,47 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 ECollect Response Template Details
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecollect_response_template
+        %a.btn{:href => "#{!(can) ? '#' : '/ecollect_response_templates/' + @ecollect_response_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        %tr
+          %td.label Request Tempate ID
+          %td.value
+            = @ecollect_response_template.request_template_id
+          %td
+        %tr
+          %td.label Client Code
+          %td.value
+            = @ecollect_response_template.client_code
+          %td
+        %tr
+          %td.label Response Code
+          %td.value
+            = @ecollect_response_template.response_code
+          %td
+        
+        %tr
+          %td.label Created By
+          %td.value
+            = @ecollect_response_template.created_user.try(:username)
+          %td
+        %tr
+          %td.label Updated By
+          %td.value
+            = @ecollect_response_template.updated_user.try(:username)
+          %td
+        %tr
+          %td.label Created At
+          %td.value
+            = @ecollect_response_template.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+          %td
+        %tr
+          %td.label Updated At
+          %td.value
+            = @ecollect_response_template.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position:relative;left:700px;"
+          %td
+          

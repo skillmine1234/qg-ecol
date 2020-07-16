@@ -1,0 +1,48 @@
+%br
+= link_to 'New ECollect Request Template', new_ecollect_request_template_path
+%br
+%br
+%h1 Listing ECollect Request Template
+/ %h2.collapsible
+/   Advanced Search
+/   %span.caret
+/ .collapsible-content
+/   = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecollect_request_templates.count}"
+%br
+= will_paginate @ecollect_request_templates, :page_links => true
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Client Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request Type
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Is Encryption enabled?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Algorithm
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Parameter Type
+        
+  .tbody
+    - @ecollect_request_templates.each do |ecollect_request_template|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecollect_request_template_path(ecollect_request_template)
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template)
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.client_code
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.request_type
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.is_encryption_required == 1 ? "Y" : "N"
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.algorithm
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.api_type
+

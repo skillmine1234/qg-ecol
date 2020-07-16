@@ -1,0 +1,32 @@
+:css
+  .required:after {
+    content:" *";
+    color: red;
+  }
+= simple_form_for @ecollect_response_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecollect_response_template, :base, :prepend_text => "")
+  .form-main{:style=>'width: 100%'}  
+    .control-group
+      = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :request_template_id
+      #msg-error
+        = error_message_for(@ecollect_hash_template, :request_template_id, :prepend_text => "")
+  .form-main
+    .control-group
+      = f.label :client_code, "Client Code", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :client_code
+      #msg-error
+        = error_message_for(@ecollect_response_template, :client_code, :prepend_text => "")
+    .control-group
+      = f.label :response_code, "Response Code", :class => 'control-label', :class => 'control-label required'
+      = f.select :response_code, [ '200', '400','404','500','Network Timeout','Error'], :prompt => 'Select Response Code'
+      #msg-error
+        = error_message_for(@ecollect_response_template, :response_code, :prepend_text => "")
+
+  .form-actions
+    - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_response_template', :value => "#{label_name} Response Template"
+    = link_to :Cancel,'/ecollect_response_templates', :name => 'cancel', :class=>"cancel btn"

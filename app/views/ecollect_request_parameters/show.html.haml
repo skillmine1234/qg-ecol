@@ -1,0 +1,77 @@
+:css
+  .floatLeft { width: 50%; float: left; }
+  .floatRight {width: 50%; float: right; }
+  .container { overflow: hidden; }
+.form-horizontal.show_form
+  .form-main-with-color{:style => "background-color: #F1F2F8;"}
+    #form-details
+      %h3 ECollect Request Parameter Details
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecollect_request_parameter
+        %a.btn{:href => "#{!(can) ? '#' : '/ecollect_request_parameters/' + @ecollect_request_parameter.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+      .container
+        .floatLeft
+          %table.table.no-border
+            %tr
+              %td.label Request Template ID
+              %td.value
+                = @ecollect_request_parameter.request_template_id
+              %td
+            %tr
+              %td.label Parameter Type
+              %td.value
+                = @ecollect_request_parameter.parameter_type
+              %td
+            %tr
+              %td.label Format Data Type
+              %td.value
+                = @ecollect_request_parameter.format_datatype
+              %td
+            %tr
+              %td.label Key
+              %td.value
+                = @ecollect_request_parameter.key
+              %td
+            %tr
+              %td.label Length
+              %td.value
+                = @ecollect_request_parameter.length
+              %td
+        .floatRight
+          %table.table.no-border
+            %tr
+              %td.label Value Type
+              %td.value
+                = @ecollect_request_parameter.value_type
+              %td
+            %tr
+              %td.label Parameter Value
+              %td.value
+                = @ecollect_request_parameter.value
+              %td
+            %tr
+              %td.label Format
+              %td.value
+                = @ecollect_request_parameter.format
+              %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_request_parameter.created_user.try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_request_parameter.updated_user.try(:username)
+              %td
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_request_parameter.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_request_parameter.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+                = link_to :Back,'/ecollect_request_parameters', :name => 'cancel', :class=>"cancel btn",:style => "position:relative;left:120px;"
+              %td

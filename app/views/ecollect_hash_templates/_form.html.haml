@@ -1,0 +1,51 @@
+/ :css
+/   .required:after {
+/     content:" *";
+/     color: red;
+/   }
+= simple_form_for @ecollect_hash_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@ecollect_hash_template, :base, :prepend_text => "")
+  .form-main{:style=>'width: 100%'}  
+    .control-group
+      = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :request_template_id
+      #msg-error
+        = error_message_for(@ecollect_hash_template, :request_template_id, :prepend_text => "")
+  .form-main{:style=>'width: 50%'}  
+    .control-group
+      = f.label :checksum_type, "Checksum Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], :prompt => 'Select Checksum Type'
+      #msg-error
+        = error_message_for(@ecollect_hash_template, :checksum_type, :prepend_text => "")
+    .control-group
+      = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :parameter_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :parameter_type, :prepend_text => "")
+  .form-extended{:style=>'width: 50%;'}
+    .control-group
+      = f.label :key, "Hash Key", :class => 'control-label', :class => 'control-label required'
+      = f.text_area :key, :style => 'height:100px'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
+    .control-group
+      = f.label :request, "Request", :class => 'control-label', :class => 'control-label required'
+      = f.text_area :request, :style => 'height:100px'
+      #msg-error
+        = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
+        
+
+  / %h1 Ecollect Hash Parameters
+  / %br
+  #ecol-hash-parameters-form
+    = f.fields_for :ecollect_hash_parameters do |ecollect_hash_parameter|
+      = render 'ecollect_hash_parameter_fields', f: ecollect_hash_parameter
+    .links
+      = link_to_add_association 'Add', f, :ecollect_hash_parameters,{class: 'ecollect-hash-parameter-add-entry'} 
+  .form-actions
+    - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_hash_template', :value => "#{label_name} Hash"
+    = link_to :Cancel,'/ecollect_hash_templates', :name => 'cancel', :class=>"cancel btn"

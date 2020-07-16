@@ -28,6 +28,11 @@ Rails.application.routes.draw do
       put :index
     end
   end
+
+  resources :ecollect_request_templates
+  resources :ecollect_hash_templates
+  resources :ecollect_response_templates
+  resources :ecollect_request_parameters
   
   get '/ecol_rule/:id/audit_logs' => 'ecol_rules#audit_logs'
   get '/ecol_customer/:id/audit_logs' => 'ecol_customers#audit_logs'

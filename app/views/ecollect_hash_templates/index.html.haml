@@ -1,0 +1,47 @@
+%br
+= link_to 'New ECollect Hash', new_ecollect_hash_template_path
+%br
+%br
+%h1 Listing ECollect Hash
+/ %h2.collapsible
+/   Advanced Search
+/   %span.caret
+/ .collapsible-content
+/   = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecollect_hash_templates.count}"
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request Template ID
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Checksum Type
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Parameter Type
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Hash Key
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request
+        
+  .tbody
+    - @ecollect_hash_templates.each do |ecollect_hash_template|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecollect_hash_template_path(ecollect_hash_template)
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecollect_hash_template_path(ecollect_hash_template)
+        %td{:style=>'text-align:left;'}
+          = ecollect_hash_template.request_template_id
+        %td{:style=>'text-align:left;'}
+          = ecollect_hash_template.checksum_type
+        %td{:style=>'text-align:left;'}
+          = ecollect_hash_template.parameter_type
+        %td{:style=>'text-align:left;'}
+          = ecollect_hash_template.key
+        %td{:style=>'text-align:left;'}
+          = ecollect_hash_template.request
+          
+

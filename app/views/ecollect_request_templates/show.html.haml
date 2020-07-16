@@ -1,0 +1,87 @@
+:css
+  .floatLeft { width: 50%; float: left; }
+  .floatRight {width: 50%; float: right; }
+  .container { overflow: hidden; }
+.form-horizontal.show_form
+  .form-main-with-color{:style => "background-color: #F1F2F8;"}
+    #form-details
+      %h3 ECollect Request Template Details
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecollect_request_template
+        %a.btn{:href => "#{!(can) ? '#' : '/ecollect_request_templates/' + @ecollect_request_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+      .container
+        .floatLeft
+          %table.table.no-border
+            %tr
+              %td.label Client Code
+              %td.value
+                = @ecollect_request_template.client_code
+              %td
+            %tr
+              %td.label Request Type
+              %td.value
+                = @ecollect_request_template.request_type
+              %td
+            %tr
+              %td.label Is Encryption enabled?
+              %td.value
+                = @ecollect_request_template.is_encryption_required == 1 ? "Y" : "N"
+              %td
+            %tr
+              %td.label Algorithm
+              %td.value
+                = @ecollect_request_template.algorithm
+              %td
+            %tr
+              %td.label Parameter Type
+              %td.value
+                = @ecollect_request_template.api_type
+              %td
+            %tr
+              %td.label Decrypt Response
+              %td.value
+                = @ecollect_request_template.decrypt_response == 1 ? "Y" : "N"
+              %td
+            %tr
+              %td.label Hash enabled?
+              %td.value
+                = @ecollect_request_template.is_hash_required == 1 ? "Y" : "N"
+              %td
+        .floatRight
+          %table.table.no-border
+            %tr
+              %td.label Request
+              %td.value
+                = text_area(:ecollect_request_template,:request,:cols => 3, :rows => 3,:readonly => true)
+              %td
+            %tr
+              %td.label Encrypt Key
+              %td.value
+                = @ecollect_request_template.url
+              %td
+            %tr
+              %td.label Secret Key
+              %td.value
+                = @ecollect_request_template.secret_key
+              %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_request_template.created_user.try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_request_template.updated_user.try(:username)
+              %td
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_request_template.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_request_template.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+                = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position:relative;left:120px;"
+              %td

@@ -16,6 +16,10 @@ en:
     ecol_va_account: 'ECollect VA Accounts'
     ecol_va_earmark: 'ECollect VA Earmarks'
     ecol_va_memo_txn: 'E-Collect VA Memo Transactions'
+    ecollect_request_template: 'ECollect Request Template'
+    ecollect_hash_template: 'ECollect Hash Template'
+    ecollect_request_parameter: 'ECollectRequestParameter'
+    ecollect_response_template: 'ECollect Response Template'
   attributes:
     account_no: 'Account No.'
     hold_no: 'Hold No.'
