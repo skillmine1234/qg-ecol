@@ -28,7 +28,7 @@
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :key, "Hash Key", :class => 'control-label', :class => 'control-label required'
-      = f.text_area :key, :style => 'height:100px'
+      = f.text_field :key
       #msg-error
         = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
     .control-group
@@ -36,7 +36,7 @@
       = f.text_area :request, :style => 'height:100px'
       #msg-error
         = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
-        
+
 
   / %h1 Ecollect Hash Parameters
   / %br
@@ -44,7 +44,7 @@
     = f.fields_for :ecollect_hash_parameters do |ecollect_hash_parameter|
       = render 'ecollect_hash_parameter_fields', f: ecollect_hash_parameter
     .links
-      = link_to_add_association 'Add', f, :ecollect_hash_parameters,{class: 'ecollect-hash-parameter-add-entry'} 
+      = link_to_add_association button_tag('+', type: "button", class: "ecollect-hash-parameter-add-entry btn btn-primary"), f, :ecollect_hash_parameters
   .form-actions
     - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
     = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_hash_template', :value => "#{label_name} Hash"

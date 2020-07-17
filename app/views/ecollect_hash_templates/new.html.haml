@@ -4,5 +4,8 @@
 
 :javascript
   $( document ).ready(function() {
-    $(".ecollect-hash-parameter-add-entry").click()
+    $(".ecollect-hash-parameter-add-entry").click();
+    if($(".ecollect-hash-parameter-remove-entry").length == 1){
+      $(".ecollect-hash-parameter-remove-entry").hide();
+    }
   });

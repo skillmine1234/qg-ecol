@@ -24,7 +24,7 @@ class EcolCustomer < ActiveRecord::Base
   validates_inclusion_of :val_method, :in => %w( N W D V)
   validates_inclusion_of :token_1_type, :token_2_type, :token_3_type, :in => %w( N SC RC IN )
   validates_inclusion_of :file_upld_mthd, :in => %w( N F I ), :allow_blank => true
-  validates_inclusion_of :nrtv_sufx_1, :nrtv_sufx_2, :nrtv_sufx_3, :in => %w( N SC RC IN RN ORN ORA TUN UDF1 UDF2 )
+  validates_inclusion_of :nrtv_sufx_1, :nrtv_sufx_2, :nrtv_sufx_3, :in => %w( N SC RC IN RN RMRF ORN ORA TUN UDF1 UDF2 )
   validates_inclusion_of :rmtr_alert_on, :in => %w( N P R A )
 
   validates :code, format: {with: /\A[a-z|A-Z|0-9]+\z/, :message => 'Invalid format, expected format is : {[a-z|A-Z|0-9]}' }, length: {maximum: 15, minimum: 1}

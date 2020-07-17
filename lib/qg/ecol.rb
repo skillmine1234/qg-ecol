@@ -4,7 +4,7 @@ module Qg
   module Ecol
     NAME = 'ECollect'
     GROUP = 'e-collect'
-    MENU_ITEMS = [:ecol_app, :ecol_customer, :ecol_remitter, :ecol_transaction, :udf_attribute, :ecol_summary,:ecollect_request_template,:ecollect_hash_template,:ecollect_request_parameter,:ecollect_response_template]
+    MENU_ITEMS = [:ecol_app, :ecol_customer, :ecol_remitter, :ecol_transaction, :udf_attribute, :ecol_summary]
     MODELS = ['EcolRule','EcolCustomer','EcolRemitter','EcolTransaction','UdfAttribute','IncomingFile','EcolFetchStatistic','QgEcolTodaysNeftTxn',
               'QgEcolTodaysRtgsTxn','QgEcolTodaysImpsTxn','QgEcolTodaysUpiTxn','OutgoingFile','EcolApp','EcolAppUdtable','EcolSummary','EcolVaTxn',
               'EcolVaAccount','EcolVaEarmark','EcolVacdIncomingFile','EcolVacdIncomingRecord','IncomingFileRecord','EcolVaMemoTxn','EcolVaTransfer',

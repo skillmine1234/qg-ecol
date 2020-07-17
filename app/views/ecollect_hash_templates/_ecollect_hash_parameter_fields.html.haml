@@ -5,20 +5,20 @@
       = f.select :format_datatype, [ 'String', 'Integer'], :prompt => 'Select Format Data Type'
     .control-group
       = f.label :value, "Key Value", :class => 'control-label', :class => 'control-label required'
-      = f.text_area :value, :style => 'height:100px'
+      = f.text_field :value
     .control-group
       = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-      = f.text_area :parameter_type, :style => 'height:100px'
+      = f.text_field :parameter_type
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
-      = f.text_area :key, :style => 'height:100px'
+      = f.text_field :key
     .control-group
       = f.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
       = f.select :value_type, [ 'Static', 'Dynamic'], :prompt => 'Select Value Type'
     .control-group
       = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
-      = f.text_area :format, :style => 'height:100px'
+      = f.text_field :format
     .control-group
-      = link_to_remove_association "remove", f,{class: 'ecollect-hash-parameter-remove-entry',style: "position: relative;left: 478px;bottom: 160px;"} 
+      = link_to_remove_association button_tag('x', type: "button", class: "ecollect-hash-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 76px;"), f
   %hr

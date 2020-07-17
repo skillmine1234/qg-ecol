@@ -46,6 +46,8 @@ module EcolCustomersHelper
       "Invoice Number"
     when "RN"
       "Remitter Name"
+    when "RMRF"
+      "Remitter reference"
     when "ORN"
       "Original Remitter Name"
     when "ORA"

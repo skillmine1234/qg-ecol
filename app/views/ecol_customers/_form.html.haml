@@ -268,6 +268,15 @@
       #msg-error
         = error_message_for(@ecol_customer, :sub_member_bank_ifsc, :prepend_text => "")
 
+  = link_to 'ECollect Request Template', new_ecollect_request_template_path,target: "_blank"
+  |
+  = link_to 'ECollect Hash Template', new_ecollect_hash_template_path,target: "_blank"
+  |
+  = link_to 'ECollect Request Parameter', new_ecollect_request_parameter_path,target: "_blank"
+  |
+  = link_to 'ECollect Response Template', new_ecollect_response_template_path,target: "_blank"
+  
+  
 
   .form-actions
     - (f.object.new_record? and f.object.code.nil?) ? label_name = "Create" : label_name = "Update"
