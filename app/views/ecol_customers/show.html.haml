@@ -340,3 +340,11 @@
               = @ecol_customer.try(:updated_at).try(:strftime, "%d/%m/%Y %I:%M%p")
             %td#msg-error
               = error_message_for(@ecol_customer, :updated_at, :prepend_text => "")
+
+    = link_to 'ECollect Request Template', new_ecollect_request_template_path,target: "_blank"
+    |
+    = link_to 'ECollect Hash Template', new_ecollect_hash_template_path,target: "_blank"
+    |
+    = link_to 'ECollect Request Parameter', new_ecollect_request_parameter_path,target: "_blank"
+    |
+    = link_to 'ECollect Response Template', new_ecollect_response_template_path,target: "_blank"
