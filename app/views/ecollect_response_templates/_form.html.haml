@@ -4,20 +4,28 @@
     color: red;
   }
 = simple_form_for @ecollect_response_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
+  = hidden_field_tag :customer_code, params[:customer_code]
+  = hidden_field_tag :step_name, params[:step_name]
   .control-group
     = f.label ' '
     #msg-error
       = error_message_for(@ecollect_response_template, :base, :prepend_text => "")
-  .form-main{:style=>'width: 100%'}  
-    .control-group
-      = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :request_template_id
-      #msg-error
-        = error_message_for(@ecollect_hash_template, :request_template_id, :prepend_text => "")
+  / .form-main{:style=>'width: 100%'}  
+  /   .control-group
+  /     = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+  /     - if f.object.new_record?
+  /       = f.text_field :request_template_id,:value => params[:template_id],disabled: true
+  /     - else
+  /       = f.text_field :request_template_id,disabled: true
+  /     #msg-error
+  /       = error_message_for(@ecollect_hash_template, :request_template_id, :prepend_text => "")
   .form-main
     .control-group
-      = f.label :client_code, "Client Code", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :client_code
+      = f.label :client_code, "Customer Code", :class => 'control-label', :class => 'control-label required'
+      - if f.object.new_record?
+        = f.text_field :client_code,:value => params[:customer_code],:readonly => true
+      - else
+        = f.text_field :client_code,disabled: true
       #msg-error
         = error_message_for(@ecollect_response_template, :client_code, :prepend_text => "")
     .control-group
@@ -30,3 +38,11 @@
     - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
     = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_response_template', :value => "#{label_name} Response Template"
     = link_to :Cancel,'/ecollect_response_templates', :name => 'cancel', :class=>"cancel btn"
+
+:javascript
+  $(document).ready(function(){
+    var step_name = ["Validate", "Notify"];
+    if($("#customer_code").val() == "" || !step_name.includes($("#step_name").val())){
+      $("#new_ecollect_response_template :input").prop("disabled", true);
+    }
+  });

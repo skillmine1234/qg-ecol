@@ -33,6 +33,7 @@ Rails.application.routes.draw do
   resources :ecollect_hash_templates
   resources :ecollect_response_templates
   resources :ecollect_request_parameters
+  resources :ecollect_encrypt_decrypts
   
   get '/ecol_rule/:id/audit_logs' => 'ecol_rules#audit_logs'
   get '/ecol_customer/:id/audit_logs' => 'ecol_customers#audit_logs'

@@ -17,6 +17,8 @@ class EcollectRequestTemplatesController < ApplicationController
 
 	def new
 		@ecollect_request_template = EcollectRequestTemplate.new
+		@ecollect_request_template.ecollect_request_parameters.build
+		@ecollect_request_template.ecollect_hash_templates.build.ecollect_hash_parameters.build
 	end
 
 	def create
@@ -25,6 +27,7 @@ class EcollectRequestTemplatesController < ApplicationController
       render "new"
     else
       @ecollect_request_template.created_by = current_user.id
+      @ecollect_request_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
       @ecollect_request_template.save!
       flash[:alert] = "ECollect Request Template created successfully"
       redirect_to @ecollect_request_template
@@ -59,8 +62,11 @@ class EcollectRequestTemplatesController < ApplicationController
 	private
 
 	def ecollect_request_template_params
-    params.require(:ecollect_request_template).permit(:client_code,:request,:request_type,:url,
-                                        :is_encryption_required,:is_hash_required,:created_by,:updated_by,:api_type,:secret_key,:decrypt_response,:algorithm)
+    params.require(:ecollect_request_template).permit(:client_code,:request,:request_type,:url,:is_encryption_required,:is_hash_required,:created_by,:updated_by,:api_type,:secret_key,:decrypt_response,:algorithm,
+    																					ecollect_request_parameters_attributes: [:id,:request_template_id, :format_datatype, :key, :parameter_type, :format, :value, :length, :created_by, :updated_by, :custom_function, :value_type],
+    																			    ecollect_hash_templates_attributes: [:id,:checksum_type,:key,:parameter_type,:request,:request_template_id,:created_by,:updated_by,
+                                      				ecollect_hash_parameters_attributes: [:id, :format, :format_datatype,:hash_template_id,:key,:parameter_type,:value,:value_type,:created_by,:updated_by,:custom_function, :_destroy]
+                                      				])
   end
 
 end

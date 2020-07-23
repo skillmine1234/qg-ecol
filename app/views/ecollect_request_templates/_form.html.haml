@@ -4,14 +4,19 @@
 /     color: red;
 /   }
 = simple_form_for @ecollect_request_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
+  = hidden_field_tag :customer_code, params[:customer_code]
+  = hidden_field_tag :step_name, params[:step_name]
   .control-group
     = f.label ' '
     #msg-error
       = error_message_for(@ecollect_request_template, :base, :prepend_text => "")
   .form-main{:style=>'width: 50%'}  
     .control-group
-      = f.label :client_code, "Client Code", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :client_code
+      = f.label :client_code, "Customer Code", :class => 'control-label', :class => 'control-label required'
+      - if f.object.new_record?
+        = f.text_field :client_code,:value => params[:customer_code],:readonly => true
+      - else
+        = f.text_field :client_code,readonly: true
       #msg-error
         = error_message_for(@ecollect_request_template, :client_code, :prepend_text => "")
     .control-group
@@ -44,7 +49,6 @@
       = f.check_box :is_hash_required,{},1,0
       #msg-error
         = error_message_for(@ecollect_request_template, :is_hash_required, :prepend_text => "")
-      = link_to 'Create Hash', "#",:style => "padding-left: 50px;"
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :request, "Request", :class => 'control-label', :class => 'control-label required'
@@ -61,6 +65,77 @@
       = f.text_field :secret_key
       #msg-error
         = error_message_for(@ecollect_request_template, :secret_key, :prepend_text => "")
+  #ecol-hash-templates-form
+    = f.fields_for :ecollect_hash_templates do |ecollect_hash_template|
+      .form-main{:style=>'width: 100%'}  
+        - unless f.object.new_record?
+          .control-group
+            = ecollect_hash_template.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+            = ecollect_hash_template.text_field :request_template_id,disabled: true
+      .form-main{:style=>'width: 50%'}  
+        .control-group
+          = ecollect_hash_template.label :checksum_type, "Checksum Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_hash_template.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], :prompt => 'Select Checksum Type'
+        .control-group
+          = ecollect_hash_template.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_hash_template.select :parameter_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+      .form-extended{:style=>'width: 50%;'}
+        .control-group
+          = ecollect_hash_template.label :key, "Key", :class => 'control-label', :class => 'control-label required'
+          = ecollect_hash_template.text_field :key
+        .control-group
+          = ecollect_hash_template.label :request, "Request", :class => 'control-label', :class => 'control-label required'
+          = ecollect_hash_template.text_area :request, :style => 'height:100px'
+      #ecol-hash-parameters-form
+        = ecollect_hash_template.fields_for :ecollect_hash_parameters do |ecollect_hash_parameter|
+          = render 'ecollect_hash_parameter_fields', f: ecollect_hash_parameter
+        .links
+          = link_to_add_association button_tag('+', type: "button", class: "ecollect-hash-parameter-add-entry btn btn-primary",style: "float:left;margin-bottom:17px;"), f, :ecollect_hash_parameters
+
+  #ecol-request-parameters-form
+    = f.fields_for :ecollect_request_parameters do |ecollect_request_parameter|
+      .form-main{:style=>'width: 100%'}  
+        - unless f.object.new_record?
+          .control-group
+            = ecollect_request_parameter.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+            = ecollect_request_parameter.text_field :request_template_id,disabled: true
+      .form-main{:style=>'width: 50%'}
+        .control-group
+          = ecollect_request_parameter.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.select :parameter_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :parameter_type, :prepend_text => "")
+        .control-group
+          = ecollect_request_parameter.label :format_datatype, "Format Data Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.select :format_datatype, [ 'Double', 'String','Timestamp'], :prompt => 'Select Format Data Type'
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :format_datatype, :prepend_text => "")
+        .control-group
+          = ecollect_request_parameter.label :key, "Key", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.text_field :key
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :key, :prepend_text => "")
+        .control-group
+          = ecollect_request_parameter.label :length, "Length", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.text_field :length
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :length, :prepend_text => "")
+      .form-extended{:style=>'width: 50%;'}
+        .control-group
+          = ecollect_request_parameter.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.select :value_type, [ 'Static', 'Dynamic'], :prompt => 'Select Value Type'
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :value_type, :prepend_text => "")
+        .control-group
+          = ecollect_request_parameter.label :value, "Parameter Value", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.text_field :length
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :length, :prepend_text => "")
+        .control-group
+          = ecollect_request_parameter.label :format, "Format", :class => 'control-label', :class => 'control-label required'
+          = ecollect_request_parameter.text_field :format
+          #msg-error
+            = error_message_for(ecollect_request_parameter, :format, :prepend_text => "")
   .form-actions
     - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
     = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_request_template', :value => "#{label_name} Request Template"
@@ -69,6 +144,10 @@
 
 :javascript
   $(document).ready(function(){
+    var step_name = ["Validate", "Notify"];
+    if($("#customer_code").val() == "" || !step_name.includes($("#step_name").val())){
+      $("#new_ecollect_request_template :input").prop("disabled", true);
+    }
     if(!$('#ecollect_request_template_is_encryption_required').is(":checked")){
       $('#ecollect_request_template_algorithm').val('');
       $('#ecollect_request_template_algorithm').attr("disabled", true); 

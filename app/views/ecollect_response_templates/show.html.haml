@@ -7,13 +7,13 @@
         - can = can? :edit, @ecollect_response_template
         %a.btn{:href => "#{!(can) ? '#' : '/ecollect_response_templates/' + @ecollect_response_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
       %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        / %tr
+        /   %td.label Request Tempate ID
+        /   %td.value
+        /     = @ecollect_response_template.request_template_id
+        /   %td
         %tr
-          %td.label Request Tempate ID
-          %td.value
-            = @ecollect_response_template.request_template_id
-          %td
-        %tr
-          %td.label Client Code
+          %td.label Customer Code
           %td.value
             = @ecollect_response_template.client_code
           %td

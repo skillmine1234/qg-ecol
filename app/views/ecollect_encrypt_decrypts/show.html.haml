@@ -1,0 +1,59 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 ECollect Encrypt Decrypt Details
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecollect_encrypt_decrypt
+        %a.btn{:href => "#{!(can) ? '#' : '/ecollect_encrypt_decrypts/' + @ecollect_encrypt_decrypt.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = link_to :Back,'/ecollect_encrypt_decrypts', :name => 'cancel', :class=>"cancel btn"
+      .container
+        .floatLeft
+          %table.table.no-border
+            %tr
+              %td.label Request Template ID
+              %td.value
+                = @ecollect_encrypt_decrypt.request_template_id
+              %td
+            %tr
+              %td.label Algorithm
+              %td.value
+                = @ecollect_encrypt_decrypt.algorithm
+              %td
+            %tr
+              %td.label Decrypt Response
+              %td.value
+                = @ecollect_encrypt_decrypt.decrypt_response == 1 ? "Y" : "N"
+              %td
+            %tr
+              %td.label Key
+              %td.value
+                = @ecollect_encrypt_decrypt.key
+              %td
+        .floatRight
+          %table.table.no-border
+            %tr
+              %td.label Parameter Type
+              %td.value
+                = @ecollect_encrypt_decrypt.parameter_type
+              %td
+            %tr
+              %td.label Secret Key
+              %td.value
+                = @ecollect_encrypt_decrypt.secret_key
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_encrypt_decrypt.updated_user.try(:username)
+              %td
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_encrypt_decrypt.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_encrypt_decrypt.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td

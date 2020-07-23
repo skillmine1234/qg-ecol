@@ -1,6 +1,6 @@
-%br
-= link_to 'New ECollect Request Template', new_ecollect_request_template_path
-%br
+/ %br
+/ = link_to 'New ECollect Request Template', new_ecollect_request_template_path
+/ %br
 %br
 %h1 Listing ECollect Request Template
 / %h2.collapsible
@@ -18,7 +18,9 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
-      Client Code
+      Template Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Request Type
     %th{:style=>'text-align:left; background-color: lightblue;'}
@@ -35,6 +37,8 @@
           = link_to 'Show', ecollect_request_template_path(ecollect_request_template)
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template)
+        %td{:style=>'text-align:left;'}
+          =  ecollect_request_template.step_name.present? ? "#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.client_code
         %td{:style=>'text-align:left;'}

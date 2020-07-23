@@ -1,0 +1,47 @@
+/ %br
+/ = link_to 'New ECollect Encrypt Decrypt', new_ecollect_encrypt_decrypt_path
+/ %br
+%br
+%h1 Listing ECollect Encrypt Decrypt
+/ %h2.collapsible
+/   Advanced Search
+/   %span.caret
+/ .collapsible-content
+/   = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecollect_encrypt_decrypts.count}"
+= will_paginate @ecollect_encrypt_decrypts, :page_links => true
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request Template ID
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Algorithm
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Decrypt Response
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Key
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Parameter Type
+        
+  .tbody
+    - @ecollect_encrypt_decrypts.each do |ecollect_encrypt_decrypt|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecollect_encrypt_decrypt_path(ecollect_encrypt_decrypt)
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecollect_encrypt_decrypt_path(ecollect_encrypt_decrypt)
+        %td{:style=>'text-align:left;'}
+          = ecollect_encrypt_decrypt.request_template_id
+        %td{:style=>'text-align:left;'}
+          = ecollect_encrypt_decrypt.algorithm
+        %td{:style=>'text-align:left;'}
+          = ecollect_encrypt_decrypt.decrypt_response
+        %td{:style=>'text-align:left;'}
+          = ecollect_encrypt_decrypt.key
+        %td{:style=>'text-align:left;'}
+          = ecollect_encrypt_decrypt.parameter_type
+
