@@ -13,9 +13,9 @@
     .control-group
       = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
       - if f.object.new_record?
-        = f.text_field :request_template_id,:value => params[:template_id],disabled: true
+        = f.text_field :request_template_id,:value => params[:template_id],readonly: true
       - else
-        = f.text_field :request_template_id,disabled: true
+        = f.text_field :request_template_id,readonly: true
       #msg-error
         = error_message_for(@ecollect_encrypt_decrypt, :request_template_id, :prepend_text => "")
   .form-main{:style=>'width: 50%'}

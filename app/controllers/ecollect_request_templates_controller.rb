@@ -23,15 +23,23 @@ class EcollectRequestTemplatesController < ApplicationController
 
 	def create
 		@ecollect_request_template = EcollectRequestTemplate.new(ecollect_request_template_params)
-    if !@ecollect_request_template.valid?
-      render "new"
-    else
-      @ecollect_request_template.created_by = current_user.id
+    # if !@ecollect_request_template.valid?
+    #   render "new"
+    # else
+    #   @ecollect_request_template.created_by = current_user.id
+    #   @ecollect_request_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
+    #   @ecollect_request_template.save!
+    #   flash[:alert] = "ECollect Request Template created successfully"
+    #   redirect_to @ecollect_request_template
+    # end
+    @ecollect_request_template.created_by = current_user.id
       @ecollect_request_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
-      @ecollect_request_template.save!
-      flash[:alert] = "ECollect Request Template created successfully"
+    if @ecollect_request_template.save
+    	flash[:alert] = "ECollect Request Template created successfully"
       redirect_to @ecollect_request_template
-    end
+  	else
+    	render "new"
+  	end
 	end
 
 	def update
