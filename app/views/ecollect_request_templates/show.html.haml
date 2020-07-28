@@ -29,7 +29,10 @@
               %td.value
                 = @ecollect_request_template.is_encryption_required == 1 ? "Y" : "N"
                 - if @ecollect_request_template.is_encryption_required == 1
-                  = link_to 'Create Encrypt Decrypt', new_ecollect_encrypt_decrypt_path(template_id: @ecollect_request_template.id),:style => "padding-left: 50px;",target: "_blank"
+                  - if @ecollect_request_template.ecollect_encrypt_decrypt.present?
+                    = link_to 'View Encrypt Decrypt', ecollect_encrypt_decrypt_path(@ecollect_request_template.ecollect_encrypt_decrypt.id),:style => "padding-left: 50px;",target: "_blank"
+                  - else
+                    = link_to 'Create Encrypt Decrypt', new_ecollect_encrypt_decrypt_path(template_id: @ecollect_request_template.id),:style => "padding-left: 50px;",target: "_blank"
               %td
             %tr
               %td.label Algorithm
@@ -101,7 +104,7 @@
             %tr
               %td.label Request Template Code
               %td.value
-                = "#{@ecollect_request_template.step_name}-#{@ecollect_request_template.id}"
+                = @ecollect_request_template.step_name.present? ? "#{@ecollect_request_template.step_name}-#{@ecollect_request_template.id}" : ""
               %td
             %tr
               %td.label Checksum Type
@@ -142,7 +145,7 @@
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Format  
         .tbody
-          - @ecollect_request_template.ecollect_hash_templates.last.try(:ecollect_hash_parameters).try(:each) do |ecollect_hash_parameter|
+          - @ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:ecollect_hash_parameters).try(:each) do |ecollect_hash_parameter|
             %tr
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.format_datatype

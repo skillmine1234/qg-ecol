@@ -16,7 +16,7 @@
 %table.table.table-bordered.table-striped.table-hover
   .thead
     %th{:style=>'text-align:left; background-color: lightblue;'}
-    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}	
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Template Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
@@ -38,7 +38,7 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template)
         %td{:style=>'text-align:left;'}
-          =  ecollect_request_template.step_name.present? ? "#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
+          = ecollect_request_template.step_name.present? ? "#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.client_code
         %td{:style=>'text-align:left;'}

@@ -1,6 +1,7 @@
 class EcollectRequestTemplate < ActiveRecord::Base
 	has_many :ecollect_hash_templates, class_name: 'EcollectHashTemplate', foreign_key: "request_template_id"
 	has_many :ecollect_request_parameters, class_name: 'EcollectRequestParameter', foreign_key: "request_template_id"
+	has_one :ecollect_encrypt_decrypt, class_name: 'EcollectEncryptDecrypt', foreign_key: "request_template_id"
 	accepts_nested_attributes_for :ecollect_hash_templates
 	accepts_nested_attributes_for :ecollect_request_parameters
 	has_many :ecollect_hash_parameters, through: :ecollect_hash_templates

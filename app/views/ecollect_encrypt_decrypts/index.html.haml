@@ -17,7 +17,7 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
-      Request Template ID
+      Template Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Algorithm
     %th{:style=>'text-align:left; background-color: lightblue;'}
@@ -35,7 +35,8 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecollect_encrypt_decrypt_path(ecollect_encrypt_decrypt)
         %td{:style=>'text-align:left;'}
-          = ecollect_encrypt_decrypt.request_template_id
+          - if ecollect_encrypt_decrypt.ecollect_request_template.present?
+            = link_to ecollect_encrypt_decrypt.ecollect_request_template.step_name.present? ? "#{ecollect_encrypt_decrypt.ecollect_request_template.step_name}-#{ecollect_encrypt_decrypt.ecollect_request_template.id}" : "", ecollect_request_template_path(ecollect_encrypt_decrypt.request_template_id)
         %td{:style=>'text-align:left;'}
           = ecollect_encrypt_decrypt.algorithm
         %td{:style=>'text-align:left;'}
