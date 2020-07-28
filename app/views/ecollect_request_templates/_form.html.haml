@@ -128,9 +128,9 @@
             = error_message_for(ecollect_request_parameter, :value_type, :prepend_text => "")
         .control-group
           = ecollect_request_parameter.label :value, "Parameter Value", :class => 'control-label', :class => 'control-label required'
-          = ecollect_request_parameter.text_field :length
+          = ecollect_request_parameter.text_field :value
           #msg-error
-            = error_message_for(ecollect_request_parameter, :length, :prepend_text => "")
+            = error_message_for(ecollect_request_parameter, :value, :prepend_text => "")
         .control-group
           = ecollect_request_parameter.label :format, "Format", :class => 'control-label', :class => 'control-label required'
           = ecollect_request_parameter.text_field :format
