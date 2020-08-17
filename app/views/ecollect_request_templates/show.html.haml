@@ -126,7 +126,7 @@
             %tr
               %td.label Request
               %td.value
-                %textarea#ecollect_request_template_request{:cols => "3", :name => "ecollect_request_template[request]", :readonly => "readonly", :rows => "3"} #{@ecollect_request_template.ecollect_hash_templates.last.request}
+                %textarea#ecollect_request_template_request{:cols => "3", :name => "ecollect_request_template[request]", :readonly => "readonly", :rows => "3"} #{@ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:request)}
               %td
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
       %h3 Ecollect Hash Parameter:-
@@ -145,7 +145,7 @@
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Format  
         .tbody
-          - @ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:ecollect_hash_parameters).try(:each) do |ecollect_hash_parameter|
+          - @ecollect_request_template.try(:ecollect_hash_parameters).try(:each) do |ecollect_hash_parameter|
             %tr
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.format_datatype
@@ -160,69 +160,39 @@
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.format
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
-      .container{:style => "padding-bottom: 10px;"}
-        %h3 Ecollect Request Parameter:-
-        .floatLeft
-          %table.table.no-border
-            / %tr
-            /   %td.label Request Template ID
-            /   %td.value
-            /     = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:request_template_id)
-            /   %td
+      %h3 Ecollect Request Parameter:-
+      %table.table.table-bordered.table-striped.table-hover
+        .thead
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Parameter Type
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Value Type
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Format Data Type
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Parameter Value
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Key
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Format  
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Length  
+        .tbody
+          - @ecollect_request_template.try(:ecollect_request_parameters).try(:each) do |ecollect_request_parameter|
             %tr
-              %td.label Parameter Type
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:parameter_type)
-              %td
-            %tr
-              %td.label Format Data Type
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:format_datatype)
-              %td
-            %tr
-              %td.label Key
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:key)
-              %td
-            %tr
-              %td.label Length
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:length)
-              %td
-        .floatRight
-          %table.table.no-border
-            %tr
-              %td.label Value Type
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:value_type)
-              %td
-            %tr
-              %td.label Parameter Value
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:value)
-              %td
-            %tr
-              %td.label Format
-              %td.value
-                = @ecollect_request_template.ecollect_request_parameters.try(:first).try(:format)
-                = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position: relative;left: 100%;"
-              %td
-            / %tr
-            /   %td.label Created By
-            /   %td.value
-            /     = @ecollect_request_template.ecollect_request_parameters.first.created_user.try(:username)
-            /   %td
-            / %tr
-            /   %td.label Updated By
-            /   %td.value
-            /     = @ecollect_request_template.ecollect_request_parameters.first.updated_user.try(:username)
-            /   %td
-            / %tr
-            /   %td.label Created At
-            /   %td.value
-            /     = @ecollect_request_template.ecollect_request_parameters.first.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
-            /   %td
-            / %tr
-            /   %td.label Updated At
-            /   %td.value
-            /     = @ecollect_request_template.ecollect_request_parameters.first.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.parameter_type
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.value_type
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.format_datatype
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.value
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.key
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.format
+              %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.length
+  .form-main{:style=>'width: 100%'}
+    = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position: relative;bottom: 33px;float: right;left: -12px;"

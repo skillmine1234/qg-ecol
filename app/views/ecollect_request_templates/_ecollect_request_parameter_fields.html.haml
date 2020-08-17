@@ -1,0 +1,31 @@
+.nested-fields
+  .form-main{:style=>'width: 100%'}  
+    / - unless f.object.new_record?
+    /   .control-group
+    /     = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
+    /     = f.text_field :request_template_id,disabled: true
+    .form-main{:style=>'width: 50%'}
+      .control-group
+        = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+        = f.select :parameter_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+      .control-group
+        = f.label :format_datatype, "Format Data Type", :class => 'control-label', :class => 'control-label required'
+        = f.select :format_datatype, [ 'Double', 'String','Timestamp'], :prompt => 'Select Format Data Type'
+      .control-group
+        = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
+        = f.text_field :key
+      .control-group
+        = f.label :length, "Length", :class => 'control-label', :class => 'control-label required'
+        = f.text_field :length
+    .form-extended{:style=>'width: 50%;'}
+      .control-group
+        = f.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
+        = f.select :value_type, [ 'Static', 'Dynamic'], :prompt => 'Select Value Type'
+      .control-group
+        = f.label :value, "Parameter Value", :class => 'control-label', :class => 'control-label required'
+        = f.text_field :value
+      .control-group
+        = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
+        = f.text_field :format
+      .control-group
+        = link_to_remove_association button_tag('x', type: "button", class: "ecollect-req-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"), f
