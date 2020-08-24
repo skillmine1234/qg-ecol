@@ -1,0 +1,23 @@
+.nested-fields
+  .form-main{:style=>'width: 50%'}  
+    .control-group
+      = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :parameter_type, [ 'JSON', 'XML', 'TEXT'], {:include_blank => 'Select Parameter Type'},:class => 'parameter_type'
+    .control-group
+      = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
+      - if f.object.new_record?
+        = f.text_field :key,:class => 'key',value: "key1",readonly: true
+      - else
+        = f.text_field :key,:class => 'key',readonly: true
+    .control-group
+      = f.label :response_matrix_key, "Response Matrix Key", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :response_matrix_key,:class => 'response_matrix_key'
+  .form-extended{:style=>'width: 50%;'}
+    .control-group
+      = f.label :expression_to_evaluate, "Expression To Evaluate", :class => 'control-label', :class => 'control-label required'
+      = f.text_area :expression_to_evaluate,:class => 'expression_to_evaluate',style: 'height:60px;' 
+    .control-group
+      = f.label :ecollect_response_key, "Ecollect Response Key", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :ecollect_response_key,:class => 'ecollect_response_key'
+    .control-group
+      = link_to_remove_association button_tag('x', type: "button", class: "ecollect-resp-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"), f

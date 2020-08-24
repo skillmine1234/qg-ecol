@@ -1,47 +1,151 @@
+:css
+  .floatLeft { width: 50%; float: left; }
+  .floatRight {width: 50%; float: right; }
+  .container { overflow: hidden; }
 .form-horizontal.show_form
   .form-main-with-color{:style=>'background-color: #F1F2F8;'}
     #form-details
       %h3 ECollect Response Template Details
-      %br
       %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
         - can = can? :edit, @ecollect_response_template
         %a.btn{:href => "#{!(can) ? '#' : '/ecollect_response_templates/' + @ecollect_response_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
-      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
-        / %tr
-        /   %td.label Request Tempate ID
-        /   %td.value
-        /     = @ecollect_response_template.request_template_id
-        /   %td
-        %tr
-          %td.label Customer Code
-          %td.value
-            = @ecollect_response_template.client_code
-          %td
-        %tr
-          %td.label Response Code
-          %td.value
-            = @ecollect_response_template.response_code
-          %td
-        
-        %tr
-          %td.label Created By
-          %td.value
-            = @ecollect_response_template.created_user.try(:username)
-          %td
-        %tr
-          %td.label Updated By
-          %td.value
-            = @ecollect_response_template.updated_user.try(:username)
-          %td
-        %tr
-          %td.label Created At
-          %td.value
-            = @ecollect_response_template.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
-          %td
-        %tr
-          %td.label Updated At
-          %td.value
-            = @ecollect_response_template.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
-            = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position:relative;left:700px;"
-          %td
-          
+      .container
+        %h3 Ecollect Response Template:-
+        .floatLeft{:style=>'width: 100%'}
+          %table.table.no-border
+            %tr
+              %td.label Response Template ID
+              %td.value
+                = @ecollect_response_template.id
+              %td
+            %tr
+              %td.label Response Template Code
+              %td.value
+                = @ecollect_response_template.step_name.present? ? "RESP#{@ecollect_response_template.step_name}-#{@ecollect_response_template.id}" : ""
+              %td
+        .floatLeft
+          %table.table.no-border
+            %tr
+              %td.label Customer Code
+              %td.value
+                = @ecollect_response_template.client_code
+              %td
+            %tr
+              %td.label Response Code
+              %td.value
+                = @ecollect_response_template.response_code
+              %td
+            %tr
+              %td.label Is Error Flag
+              %td.value
+                = @ecollect_response_template.is_error_flag == true ? "Y" : "N"
+              %td
+        .floatRight
+          %table.table.no-border
+            
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_response_template.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_response_template.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+      %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
+      %h3 Ecollect Response Parameter:-
+      %table.table.table-bordered.table-striped.table-hover
+        .thead
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Parameter Type
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Key
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Response Matrix Key
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Expression To Evaluate
+          %th{:style=>'text-align:left; background-color: lightblue;'}
+            Ecollect Response Key
+        .tbody
+          - @ecollect_response_template.try(:ecol_resp_parameters).try(:each) do |ecol_resp_parameter|
+            %tr
+              %td{:style=>'text-align:left;'}
+                = ecol_resp_parameter.parameter_type
+              %td{:style=>'text-align:left;'}
+                = ecol_resp_parameter.key
+              %td{:style=>'text-align:left;'}
+                = ecol_resp_parameter.response_matrix_key
+              %td{:style=>'text-align:left;'}
+                = ecol_resp_parameter.expression_to_evaluate
+              %td{:style=>'text-align:left;'}
+                = ecol_resp_parameter.ecollect_response_key
+
+      %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
+      %h3 Ecollect Response Matrix:-
+      - @ecollect_response_template.try(:ecol_resp_matrices).try(:each_with_index) do |ecollect_resp_matrix,index|
+        - record_no = index + 1
+        %b{:style => "font-weight:bold;margin-left: 6px;font-size: 12px;"}
+          Record No:- #{record_no}
+        .container
+          .floatLeft
+            %table.table.no-border
+              %tr
+                %td.label Action
+                %td.value
+                  = ecollect_resp_matrix.action
+                %td
+              %tr
+                %td.label Key1
+                %td.value
+                  = ecollect_resp_matrix.key1
+                %td
+              %tr
+                %td.label Key2
+                %td.value
+                  = ecollect_resp_matrix.key2
+                %td
+              %tr
+                %td.label Key3
+                %td.value
+                  = ecollect_resp_matrix.key3
+                %td
+              %tr
+                %td.label Key4
+                %td.value
+                  = ecollect_resp_matrix.key4
+                %td
+              %tr
+                %td.label Key5
+                %td.value
+                  = ecollect_resp_matrix.key5
+                %td
+          .floatRight
+            %table.table.no-border
+              %tr
+                %td.label Key6
+                %td.value
+                  = ecollect_resp_matrix.key6
+                %td
+              %tr
+                %td.label Key7
+                %td.value
+                  = ecollect_resp_matrix.key7
+                %td
+              %tr
+                %td.label Key8
+                %td.value
+                  = ecollect_resp_matrix.key8
+                %td
+              %tr
+                %td.label Key9
+                %td.value
+                  = ecollect_resp_matrix.key9
+                %td
+              %tr
+                %td.label Key10
+                %td.value
+                  = ecollect_resp_matrix.key10
+                %td
+    .form-main{:style=>'width: 100%'}
+      = link_to :Back,'/ecollect_response_templates', :name => 'cancel', :class=>"cancel btn",:style => "position: relative;bottom: 33px;float: right;left: -12px;"

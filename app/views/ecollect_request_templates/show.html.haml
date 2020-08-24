@@ -12,6 +12,18 @@
       / %h1 ECollect  Request Template
       .container
         %h3 Ecollect Request Template:-
+        .foatLeft
+          %table.table.no-border
+            %tr
+              %td.label Request Template ID
+              %td.value
+                = @ecollect_request_template.id
+              %td
+            %tr
+              %td.label Request Template Code
+              %td.value
+                = @ecollect_request_template.step_name.present? ? "REQ#{@ecollect_request_template.step_name}-#{@ecollect_request_template.id}" : ""
+              %td
         .floatLeft
           %table.table.no-border
             %tr
@@ -27,12 +39,7 @@
             %tr
               %td.label Is Encryption enabled?
               %td.value
-                = @ecollect_request_template.is_encryption_required == 1 ? "Y" : "N"
-                - if @ecollect_request_template.is_encryption_required == 1
-                  - if @ecollect_request_template.ecollect_encrypt_decrypt.present?
-                    = link_to 'View Encrypt Decrypt', ecollect_encrypt_decrypt_path(@ecollect_request_template.ecollect_encrypt_decrypt.id),:style => "padding-left: 50px;",target: "_blank"
-                  - else
-                    = link_to 'Create Encrypt Decrypt', new_ecollect_encrypt_decrypt_path(template_id: @ecollect_request_template.id),:style => "padding-left: 50px;",target: "_blank"
+                = @ecollect_request_template.is_encryption_required == true ? "Y" : "N"
               %td
             %tr
               %td.label Algorithm
@@ -47,12 +54,12 @@
             %tr
               %td.label Decrypt Response
               %td.value
-                = @ecollect_request_template.decrypt_response == 1 ? "Y" : "N"
+                = @ecollect_request_template.decrypt_response == true ? "Y" : "N"
               %td
             %tr
               %td.label Hash enabled?
               %td.value
-                = @ecollect_request_template.is_hash_required == 1 ? "Y" : "N"
+                = @ecollect_request_template.is_hash_required == true ? "Y" : "N"
               %td
         .floatRight
           %table.table.no-border
@@ -62,7 +69,7 @@
                 = text_area(:ecollect_request_template,:request,:cols => 3, :rows => 3,:readonly => true)
               %td
             %tr
-              %td.label Encrypt Key
+              %td.label URL
               %td.value
                 = @ecollect_request_template.url
               %td
@@ -93,19 +100,41 @@
               %td
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
       .container
-        %h3 Ecollect Hash Template:-
+        %h3 Ecollect Encrypt Decrypt:-
         .floatLeft
           %table.table.no-border
             %tr
-              %td.label Request Template ID
+              %td.label Algorithm
               %td.value
-                = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:request_template_id)
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:algorithm)
               %td
             %tr
-              %td.label Request Template Code
+              %td.label Decrypt Response
               %td.value
-                = @ecollect_request_template.step_name.present? ? "#{@ecollect_request_template.step_name}-#{@ecollect_request_template.id}" : ""
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:decrypt_response) == true ? "Y" : "N"
               %td
+            %tr
+              %td.label Key
+              %td.value
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:key)
+              %td
+        .floatRight
+          %table.table.no-border
+            %tr
+              %td.label Parameter Type
+              %td.value
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:parameter_type)
+              %td
+            %tr
+              %td.label Secret Key
+              %td.value
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:secret_key)
+              %td
+      %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
+      .container
+        %h3 Ecollect Hash Template:-
+        .floatLeft
+          %table.table.no-border
             %tr
               %td.label Checksum Type
               %td.value

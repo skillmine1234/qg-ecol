@@ -16,20 +16,40 @@ class EcollectResponseTemplatesController < ApplicationController
   end
 
 	def new
-		@ecollect_response_template = EcollectResponseTemplate.new
+    @ecollect_response_template = EcollectResponseTemplate.new
+    @ecollect_response_template.ecol_resp_parameters.build
+    @ecollect_response_template.ecol_resp_matrices.build
+
+    @ecollect_response_templates = EcollectResponseTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "REQ")
+    @customer_code_exist = EcollectRequestTemplate.customer_code_exist(params[:customer_code])
 	end
 
-	def create
-		@ecollect_response_template = EcollectResponseTemplate.new(ecollect_response_template_params)
-    if !@ecollect_response_template.valid?
-      render "new"
-    else
+  def create
+    @ecollect_response_template = EcollectResponseTemplate.new(ecollect_response_template_params)
+    @customer_code_exist = EcollectRequestTemplate.customer_code_exist(params[:customer_code])
+  #   if !@ecollect_response_template.valid?
+  #     render "new"
+  #   else
+  #     @ecollect_response_template.created_by = current_user.id
+  #     @ecollect_response_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
+  #     @ecollect_response_template.save!
+  #     flash[:alert] = "ECollect Response Template created successfully"
+  #     redirect_to @ecollect_response_template
+  #   end
+    if @customer_code_exist == true
       @ecollect_response_template.created_by = current_user.id
-      @ecollect_response_template.save!
-      flash[:alert] = "ECollect Response Template created successfully"
-      redirect_to @ecollect_response_template
+      @ecollect_response_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
+      if @ecollect_response_template.save
+        flash[:alert] = "ECollect Response Template created successfully"
+        redirect_to @ecollect_response_template
+      else
+        render "new"
+      end
+    else
+      flash[:alert] = "Customer Code doesn't exist so Response Template can't be created"
+      redirect_to "/"
     end
-	end
+  end
 
 	def update
     @ecollect_response_template = EcollectResponseTemplate.unscoped.find_by_id(params[:id])
@@ -59,7 +79,9 @@ class EcollectResponseTemplatesController < ApplicationController
 	private
 
 	def ecollect_response_template_params
-    params.require(:ecollect_response_template).permit(:client_code,:response_code,:created_by,:updated_by,:api_type,:request_template_id)
+    params.require(:ecollect_response_template).permit(:client_code,:response_code,:created_by,:updated_by,:api_type,:step_name,:is_error_flag,
+                                                  ecol_resp_parameters_attributes: [:id,:expression_to_evaluate, :response_template_id, :parameter_type, :key, :ecollect_response_key, :response_matrix_key, :created_by, :updated_by,:_destroy],
+                                                  ecol_resp_matrices_attributes: [:id, :action, :key1,:key2,:key3,:key4,:key5,:key6,:key7,:key8,:key9, :key10,:response_template_id,:created_by,:updated_by,:_destroy])
   end
 
 end

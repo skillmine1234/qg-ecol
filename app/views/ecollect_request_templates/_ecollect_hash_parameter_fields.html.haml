@@ -2,7 +2,7 @@
   .form-main{:style=>'width: 50%'}  
     .control-group
       = f.label :format_datatype, "Format Data Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :format_datatype, [ 'String', 'Integer'], :prompt => 'Select Format Data Type'
+      = f.select :format_datatype, [ 'String', 'Integer'], {:include_blank => 'Select Format Data Type'}
     .control-group
       = f.label :value, "Key Value", :class => 'control-label', :class => 'control-label required'
       = f.text_field :value
@@ -15,7 +15,7 @@
       = f.text_field :key
     .control-group
       = f.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :value_type, [ 'Static', 'Dynamic'], :prompt => 'Select Value Type'
+      = f.select :value_type, [ 'Static', 'Dynamic'], {:include_blank => 'Select Value Type'}
     .control-group
       = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
       = f.text_field :format

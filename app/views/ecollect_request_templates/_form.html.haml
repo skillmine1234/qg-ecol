@@ -23,7 +23,7 @@
         = error_message_for(@ecollect_request_template, :client_code, :prepend_text => "")
     .control-group
       = f.label :request_type, "Request Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :request_type, [ 'POST', 'GET'], :prompt => 'Select Request Type'
+      = f.select :request_type, [ 'POST', 'GET'], {:include_blank => 'Select Request Type'}
       #msg-error
         = error_message_for(@ecollect_request_template, :app_id, :prepend_text => "")
     .control-group
@@ -33,12 +33,12 @@
         = error_message_for(@ecollect_request_template, :is_encryption_required, :prepend_text => "")
     .control-group
       = f.label :algorithm, "Algorithm", :class => 'control-label', :class => 'control-label required'
-      = f.select :algorithm, [ 'AES', 'ECB','PKCS5Padding'], :prompt => 'Select Algorithm'
+      = f.select :algorithm, [ 'AES', 'ECB','PKCS5Padding'],{:include_blank => 'Select Algorithm'}
       #msg-error
         = error_message_for(@ecollect_request_template, :algorithm, :prepend_text => "")
     .control-group
       = f.label :api_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :api_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+      = f.select :api_type, [ 'Header', 'Query','Body','Path'],{:include_blank => 'Select Parameter Type'}
       #msg-error
         = error_message_for(@ecollect_request_template, :api_type, :prepend_text => "")
     .control-group
@@ -51,7 +51,6 @@
       = f.check_box :is_hash_required,{},1,0
       #msg-error
         = error_message_for(@ecollect_request_template, :is_hash_required, :prepend_text => "")
-    %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :request, "Request", :class => 'control-label', :class => 'control-label required'
@@ -59,7 +58,7 @@
       #msg-error
         = error_message_for(@ecollect_request_template, :request, :prepend_text => "")
     .control-group
-      = f.label :url, "Encrypt Key", :class => 'control-label', :class => 'control-label required'
+      = f.label :url, "Url", :class => 'control-label', :class => 'control-label required'
       = f.text_field :url
       #msg-error
         = error_message_for(@ecollect_request_template, :encrypt_key, :prepend_text => "")
@@ -68,7 +67,27 @@
       = f.text_field :secret_key
       #msg-error
         = error_message_for(@ecollect_request_template, :secret_key, :prepend_text => "")
-
+  %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
+  #ecol-encrypt-decrypt-form
+    = f.fields_for :ecollect_encrypt_decrypts do |ecollect_encrypt_decrypt|
+      .form-main{:style=>'width: 50%'}  
+        .control-group
+          = ecollect_encrypt_decrypt.label :algorithm, "Algorithm", :class => 'control-label', :class => 'control-label required'
+          = ecollect_encrypt_decrypt.select :algorithm, [ 'AES', 'ECB','PKCS5Padding'],{:include_blank => 'Select Algorithm'}
+        .control-group
+          = ecollect_encrypt_decrypt.label :decrypt_response, "Decrypt Response", :class => 'control-label', :class => 'control-label required'
+          = ecollect_encrypt_decrypt.check_box :decrypt_response,{},1,0
+        .control-group
+          = ecollect_encrypt_decrypt.label :key, "Key", :class => 'control-label', :class => 'control-label required'
+          = ecollect_encrypt_decrypt.text_field :key
+      .form-extended{:style=>'width: 50%;'}
+        .control-group
+          = ecollect_encrypt_decrypt.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
+          = ecollect_encrypt_decrypt.select :parameter_type, [ 'Header', 'Query','Body','Path'], {:include_blank => 'Select Parameter Type'}
+        .control-group
+          = ecollect_encrypt_decrypt.label :secret_key, "Secret Key", :class => 'control-label', :class => 'control-label required'
+          = ecollect_encrypt_decrypt.text_field :secret_key
+  %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
   .form-main{:style=>'width: 100%;'}
     #ecol-hash-templates-form
       = f.fields_for :ecollect_hash_templates do |ecollect_hash_template|
@@ -80,10 +99,10 @@
         .form-main{:style=>'width: 50%'}  
           .control-group
             = ecollect_hash_template.label :checksum_type, "Checksum Type", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], :prompt => 'Select Checksum Type'
+            = ecollect_hash_template.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], {:include_blank => 'Select Checksum Type'}
           .control-group
             = ecollect_hash_template.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.select :parameter_type, [ 'Header', 'Query','Body','Path'], :prompt => 'Select Parameter Type'
+            = ecollect_hash_template.select :parameter_type, [ 'Header', 'Query','Body','Path'], {:include_blank => 'Select Parameter Type'}
         .form-extended{:style=>'width: 50%;'}
           .control-group
             = ecollect_hash_template.label :key, "Key", :class => 'control-label', :class => 'control-label required'
@@ -98,12 +117,12 @@
         = render 'ecollect_hash_parameter_fields', f: ecollect_hash_parameter
       .links
         = link_to_add_association button_tag('+ Add Hash Parameter', type: "button", class: "ecollect-hash-parameter-add-entry btn btn-primary",style: "float:left;margin-bottom:17px;border: none;outline:none;background: #787878;"), f, :ecollect_hash_parameters
-    %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
-  #ecol-request-parameters-form
-    = f.fields_for :ecollect_request_parameters do |ecollect_request_parameter|
-      = render 'ecollect_request_parameter_fields', f: ecollect_request_parameter
-    .links
-      = link_to_add_association button_tag('+ Add Request Parameter', type: "button", class: "ecollect-req-parameter-add-entry btn btn-primary",style: "float:left;margin-bottom:17px;border: none;outline:none;background: #787878;"), f, :ecollect_request_parameters
+    %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"} 
+    #ecol-request-parameters-form
+      = f.fields_for :ecollect_request_parameters do |ecollect_request_parameter|
+        = render 'ecollect_request_parameter_fields', f: ecollect_request_parameter
+      .links
+        = link_to_add_association button_tag('+ Add Request Parameter', type: "button", class: "ecollect-req-parameter-add-entry btn btn-primary",style: "float:left;margin-bottom:17px;border: none;outline:none;background: #787878;"), f, :ecollect_request_parameters
   .form-actions
     - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
     = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_request_template', :value => "#{label_name} Request Template"
@@ -132,6 +151,19 @@
       $('#ecollect_request_template_secret_key').prop('readOnly',true);
       $('#ecollect_request_template_decrypt_response').attr('checked', false);
       $("#ecollect_request_template_decrypt_response").css("pointer-events","none");
+
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm').val('');
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").attr('readonly', 'readonly');
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").css("pointer-events","none");
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response').attr('checked', false);
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response").css("pointer-events","none");
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').val('');
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').prop('readOnly',true);
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type').val('');
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").attr('readonly', 'readonly');
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").css("pointer-events","none");
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').val('');
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').prop('readOnly',true);
     }
     else {
       $("#ecollect_request_template_algorithm").attr('readonly', false);
@@ -141,6 +173,14 @@
       $('#ecollect_request_template_url').prop('readOnly',false);
       $('#ecollect_request_template_secret_key').prop('readOnly',false);
       $("#ecollect_request_template_decrypt_response").css("pointer-events","auto");
+
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").attr('readonly', false);
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").css("pointer-events","auto");
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response").css("pointer-events","auto");
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').prop('readOnly',false);
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").attr('readonly', false);
+      $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").css("pointer-events","auto");
+      $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').prop('readOnly',false);
     }
     
     $("#ecollect_request_template_is_encryption_required").on("click", function () {
@@ -157,6 +197,19 @@
         $('#ecollect_request_template_secret_key').prop('readOnly',true);
         $('#ecollect_request_template_decrypt_response').attr('checked', false);
         $("#ecollect_request_template_decrypt_response").css("pointer-events","none");
+
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm').val('');
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").attr('readonly', 'readonly');
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").css("pointer-events","none");
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response').attr('checked', false);
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response").css("pointer-events","none");
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').val('');
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').prop('readOnly',true);
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type').val('');
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").attr('readonly', 'readonly');
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").css("pointer-events","none");
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').val('');
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').prop('readOnly',true);
       }
       else {
         $("#ecollect_request_template_algorithm").attr('readonly', false);
@@ -166,6 +219,14 @@
         $('#ecollect_request_template_url').prop('readOnly',false);
         $('#ecollect_request_template_secret_key').prop('readOnly',false);
         $("#ecollect_request_template_decrypt_response").css("pointer-events","auto");
+
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").attr('readonly', false);
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_algorithm").css("pointer-events","auto");
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_decrypt_response").css("pointer-events","auto");
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_key').prop('readOnly',false);
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").attr('readonly', false);
+        $("#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_parameter_type").css("pointer-events","auto");
+        $('#ecollect_request_template_ecollect_encrypt_decrypts_attributes_0_secret_key').prop('readOnly',false);
       }
     });
 

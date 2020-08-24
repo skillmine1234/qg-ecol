@@ -18,7 +18,7 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}	
     %th{:style=>'text-align:left; background-color: lightblue;'}
-      Template Code
+      Request Template Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Customer Code
     %th{:style=>'text-align:left; background-color: lightblue;'}
@@ -38,13 +38,13 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template)
         %td{:style=>'text-align:left;'}
-          = ecollect_request_template.step_name.present? ? "#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
+          = ecollect_request_template.step_name.present? ? "REQ#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.client_code
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.request_type
         %td{:style=>'text-align:left;'}
-          = ecollect_request_template.is_encryption_required == 1 ? "Y" : "N"
+          = ecollect_request_template.is_encryption_required == true ? "Y" : "N"
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.algorithm
         %td{:style=>'text-align:left;'}

@@ -1,39 +1,45 @@
-:css
-  .required:after {
-    content:" *";
-    color: red;
-  }
+/ :css
+/   .required:after {
+/     content:" *";
+/     color: red;
+/   }
 = simple_form_for @ecollect_response_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
   = hidden_field_tag :customer_code, params[:customer_code]
   = hidden_field_tag :step_name, params[:step_name]
+  = hidden_field_tag :ecol_resp_template_count, (@ecollect_response_templates.present? && @ecollect_response_templates.count == 10) ? true : false
+  = hidden_field_tag :cust_code_exist, @customer_code_exist
   .control-group
     = f.label ' '
     #msg-error
       = error_message_for(@ecollect_response_template, :base, :prepend_text => "")
-  / .form-main{:style=>'width: 100%'}  
-  /   .control-group
-  /     = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
-  /     - if f.object.new_record?
-  /       = f.text_field :request_template_id,:value => params[:template_id],disabled: true
-  /     - else
-  /       = f.text_field :request_template_id,disabled: true
-  /     #msg-error
-  /       = error_message_for(@ecollect_hash_template, :request_template_id, :prepend_text => "")
-  .form-main
+  .form-main{:style=>'width: 50%'}
     .control-group
       = f.label :client_code, "Customer Code", :class => 'control-label', :class => 'control-label required'
       - if f.object.new_record?
         = f.text_field :client_code,:value => params[:customer_code],:readonly => true
       - else
-        = f.text_field :client_code,disabled: true
-      #msg-error
-        = error_message_for(@ecollect_response_template, :client_code, :prepend_text => "")
+        = f.text_field :client_code,readonly: true
+    .control-group
+      = f.label :is_error_flag, "Is Error Flag", :class => 'control-label', :class => 'control-label required'
+      = f.check_box :is_error_flag,{},1,0
+  .form-main{:style=>'width: 50%'}
     .control-group
       = f.label :response_code, "Response Code", :class => 'control-label', :class => 'control-label required'
-      = f.select :response_code, [ '200', '400','404','500','Network Timeout','Error'], :prompt => 'Select Response Code'
+      = f.select :response_code, [ '200', '400','404','500','Network Timeout','Error'], {:include_blank => 'Select Response Code'}
       #msg-error
         = error_message_for(@ecollect_response_template, :response_code, :prepend_text => "")
-
+  %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
+  #ecol-resp-parameters-form
+    = f.fields_for :ecol_resp_parameters do |ecol_resp_parameter|
+      = render 'ecol_resp_parameter_fields', f: ecol_resp_parameter
+    .links
+      = link_to_add_association button_tag('+ Add Response Parameter', type: "button", class: "ecollect-resp-parameter-add-entry btn btn-info",style: "float:left;margin-bottom:17px;border: none;outline:none;background: #787878;"), f, :ecol_resp_parameters
+  %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
+  #ecol-resp-matrices-form
+    = f.fields_for :ecol_resp_matrices do |ecol_resp_matrix|
+      = render 'ecol_resp_matrix_fields', f: ecol_resp_matrix
+    .links
+      = link_to_add_association button_tag('+ Add Response Matrix', type: "button", class: "ecollect-resp-matrix-add-entry btn btn-primary",style: "float:left;margin-bottom:17px;border: none;outline:none;background: #787878;"), f, :ecol_resp_matrices
   .form-actions
     - (f.object.new_record?) ? label_name = "Create" : label_name = "Update"
     = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_ecollect_response_template', :value => "#{label_name} Response Template"
@@ -42,7 +48,68 @@
 :javascript
   $(document).ready(function(){
     var step_name = ["Validate", "Notify"];
-    if($("#customer_code").val() == "" || !step_name.includes($("#step_name").val())){
+    if($("#customer_code").val() == "" || !step_name.includes($("#step_name").val())) {
       $("#new_ecollect_response_template :input").prop("disabled", true);
     }
+    if($("#ecol_resp_template_count").val() == "true" || $("#cust_code_exist").val() == "false") {
+      $("#new_ecollect_response_template :input").prop("disabled", true);
+    }
+    if($('#ecol-resp-parameters-form .nested-fields:visible').length > 5){
+      $('#ecol-resp-parameters-form .links a').hide();
+    }
+    if($('#ecol-resp-matrices-form .nested-fields:visible').length > 10){
+      $('#ecol-resp-matrices-form .links a').hide();
+    }
+    if($('#ecol-resp-parameters-form .nested-fields:visible').length == 1){
+      $(".ecollect-resp-parameter-remove-entry").hide()
+    }
+    if($('#ecol-resp-matrices-form .nested-fields:visible').length == 1){
+      $(".ecollect-resp-matrix-remove-entry").hide()
+    }
+    function ecol_resp_param_check_to_hide_or_show_add_link() {
+       if ($('#ecol-resp-parameters-form .nested-fields:visible').length == 5) {
+         $('#ecol-resp-parameters-form .links a').hide();
+         alert("Only 5 forms can be added for Response Parameter")
+       } else {
+         $('#ecol-resp-parameters-form .links a').show();
+       }
+     }
+
+    $('#ecol-resp-parameters-form').on('cocoon:after-insert', function(e, added_thing) {
+       ecol_resp_param_check_to_hide_or_show_add_link();      
+       var key_field_length = $('.key').length
+       added_thing.find('.key').val("key"+key_field_length);
+    });
+
+    $('#ecol-resp-parameters-form').on('cocoon:after-remove', function() {
+      ecol_resp_param_check_to_hide_or_show_add_link();
+      if($('#ecol-resp-parameters-form .nested-fields:visible').length == 1){
+        $(".ecollect-resp-parameter-remove-entry").hide()
+      }
+    });
+
+    ecol_resp_param_check_to_hide_or_show_add_link();
+
+    function ecol_resp_matrix_check_to_hide_or_show_add_link() {
+       if ($('#ecol-resp-matrices-form .nested-fields:visible').length == 10) {
+         $('#ecol-resp-matrices-form .links a').hide();
+         alert("Only 10 forms can be added for Response Matrix")
+       } else {
+         $('#ecol-resp-matrices-form .links a').show();
+       }
+    }
+
+    $('#ecol-resp-matrices-form').on('cocoon:after-insert', function() {
+       ecol_resp_matrix_check_to_hide_or_show_add_link();
+    });
+
+    $('#ecol-resp-matrices-form').on('cocoon:after-remove', function() {
+      ecol_resp_matrix_check_to_hide_or_show_add_link();
+      if($('#ecol-resp-matrices-form .nested-fields:visible').length == 1){
+        $(".ecollect-resp-matrix-remove-entry").hide()
+      }
+    });
+
+    ecol_resp_matrix_check_to_hide_or_show_add_link();
+
   });

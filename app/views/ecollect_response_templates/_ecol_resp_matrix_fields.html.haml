@@ -1,0 +1,39 @@
+.nested-fields
+  .form-main{:style=>'width: 100%'}
+    .control-group
+      = f.label :action, "Type", :class => 'control-label', :class => 'control-label required'
+      = f.select :action, [ 'PASS', 'FAIL', 'PENDING'], {:include_blank => 'Select Action'}
+  .form-main{:style=>'width: 50%'}  
+    .control-group
+      = f.label :key1, "Key1", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key1,:class => 'key1'
+    .control-group
+      = f.label :key2, "Key2", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key2,:class => 'key2'
+    .control-group
+      = f.label :key3, "Key3", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key3,:class => 'key3'
+    .control-group
+      = f.label :key4, "Key4", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key4,:class => 'key4'
+    .control-group
+      = f.label :key5, "Key5", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key5,:class => 'key5'
+  .form-extended{:style=>'width: 50%;'}
+    .control-group
+      = f.label :key6, "Key6", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key6,:class => 'key6'
+    .control-group
+      = f.label :key7, "Key7", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key7,:class => 'key7'
+    .control-group
+      = f.label :key8, "Key8", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key8,:class => 'key8'
+    .control-group
+      = f.label :key9, "Key9", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key9,:class => 'key9'
+    .control-group
+      = f.label :key10, "Key10", :class => 'control-label', :class => 'control-label required'
+      = f.text_field :key10,:class => 'key10'
+    .control-group
+      = link_to_remove_association button_tag('x', type: "button", class: "ecollect-resp-matrix-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"), f

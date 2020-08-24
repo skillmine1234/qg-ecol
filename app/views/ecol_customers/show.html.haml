@@ -344,9 +344,9 @@
     %h1 Validation Step
     = link_to 'ECollect Request Template', new_ecollect_request_template_path(customer_code: @ecol_customer.code,step_name: "Validate"),target: "_blank",:style => "padding-left: 5px;"
     |
-    = link_to 'ECollect Response Template', new_ecollect_response_template_path,target: "_blank"
+    = link_to 'ECollect Response Template', new_ecollect_response_template_path(customer_code: @ecol_customer.code,step_name: "Validate"),target: "_blank"
     %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
     %h1 Notification Step
     = link_to 'ECollect Request Template', new_ecollect_request_template_path(customer_code: @ecol_customer.code,step_name: "Notify"),target: "_blank",:style => "padding-left: 5px;"
     |
-    = link_to 'ECollect Response Template', new_ecollect_response_template_path,target: "_blank"
+    = link_to 'ECollect Response Template', new_ecollect_response_template_path(customer_code: @ecol_customer.code,step_name: "Notify"),target: "_blank"

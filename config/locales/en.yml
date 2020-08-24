@@ -7,7 +7,6 @@ en:
     ecol_transaction: 'ECollect Transactions'
     ecol_summary: 'ECollect Transaction Summary'
     ecollect_request_template: 'ECollect Request Template'
-    ecollect_encrypt_decrypt: 'ECollect Encrypt Decrypt'
     ecollect_response_template: 'ECollect Response Template'
     qg_ecol_todays_neft_txn: 'NEFT Transactions'
     qg_ecol_todays_rtgs_txn: 'RTGS Transactions'
