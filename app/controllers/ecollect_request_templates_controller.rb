@@ -61,11 +61,11 @@ class EcollectRequestTemplatesController < ApplicationController
     else
       @ecollect_request_template.updated_by = current_user.id
       @ecollect_request_template.save!
-      if @ecollect_request_template.is_hash_required == 0 && (@ecollect_request_template.ecollect_hash_templates.present? || @ecollect_request_template.ecollect_hash_parameters.present?)
+      if @ecollect_request_template.is_hash_required == false && (@ecollect_request_template.ecollect_hash_templates.present? || @ecollect_request_template.ecollect_hash_parameters.present?)
         @ecollect_request_template.ecollect_hash_templates.delete_all
         @ecollect_request_template.ecollect_hash_parameters.delete_all
       end
-      if @ecollect_request_template.is_encryption_required == 0
+      if @ecollect_request_template.is_encryption_required == false
         @ecollect_request_template.ecollect_encrypt_decrypts.delete_all if @ecollect_request_template.ecollect_encrypt_decrypts.present?
       end
       flash[:alert] = 'ECollect Request Template modified successfully'
@@ -89,10 +89,10 @@ class EcollectRequestTemplatesController < ApplicationController
 
 	def ecollect_request_template_params
     params.require(:ecollect_request_template).permit(:client_code,:request,:request_type,:url,:is_encryption_required,:is_hash_required,:created_by,:updated_by,:api_type,:secret_key,:decrypt_response,:algorithm,:step_name,
-                                              ecollect_request_parameters_attributes: [:id,:request_template_id, :format_datatype, :key, :parameter_type, :format, :value, :length, :created_by, :updated_by, :custom_function, :value_type,:_destroy],
                                               ecollect_encrypt_decrypts_attributes: [:id,:algorithm, :key, :parameter_type, :request_template_id, :secret_key, :created_by, :updated_by, :decrypt_response,:_destroy],
-                                              ecollect_hash_parameters_attributes: [:id, :format, :format_datatype,:request_template_id,:key,:parameter_type,:value,:value_type,:created_by,:updated_by,:custom_function, :_destroy],
-                                              ecollect_hash_templates_attributes: [:id,:checksum_type,:key,:parameter_type,:request,:request_template_id,:created_by,:updated_by,:_destroy])
+                                              ecollect_hash_templates_attributes: [:id,:checksum_type,:key,:parameter_type,:request,:request_template_id,:created_by,:updated_by,:_destroy],
+                                            ecollect_hash_parameters_attributes: [:id, :format, :format_datatype,:request_template_id,:key,:parameter_type,:value,:value_type,:created_by,:updated_by,:custom_function, :_destroy],
+                                              ecollect_request_parameters_attributes: [:id,:request_template_id, :format_datatype, :key, :parameter_type, :format, :value, :length, :created_by, :updated_by, :custom_function, :value_type,:_destroy])
   end
 
 end
