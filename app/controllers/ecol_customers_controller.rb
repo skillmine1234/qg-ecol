@@ -89,6 +89,6 @@ class EcolCustomersController < ApplicationController
   :rmtr_pass_txt, :rmtr_return_txt, :created_by, :updated_by, :lock_version, :auto_credit, :approved_id, :approved_version, :val_rmtr_name,
   :val_last_token_length, :token_1_starts_with, :token_1_contains, :token_1_ends_with, :token_2_starts_with, :token_2_contains,
   :token_2_ends_with, :token_3_starts_with, :token_3_contains, :token_3_ends_with, :customer_id, :cust_alert_on,
-  :pool_acct_no, :app_code, :identity_user_id, :should_prevalidate,:sub_member_bank,:sub_member_bank_ifsc, {allowed_operations: []}, :rmtr_pass_template_id, :rmtr_return_template_id,:autoreturn_validationfailed)
+  :pool_acct_no, :app_code, :identity_user_id, :should_prevalidate,:sub_member_bank,:sub_member_bank_ifsc, {allowed_operations: []}, :rmtr_pass_template_id, :rmtr_return_template_id,:autoreturn_validationfailed,:validate_process_by,:notify_process_by,:notify_retry_count,:validate_retry_count)
   end
 end
