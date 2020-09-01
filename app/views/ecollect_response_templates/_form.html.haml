@@ -54,7 +54,7 @@
     if($("#ecol_resp_template_count").val() == "true" || $("#cust_code_exist").val() == "false") {
       $("#new_ecollect_response_template :input").prop("disabled", true);
     }
-    if($('#ecol-resp-parameters-form .nested-fields:visible').length > 5){
+    if($('#ecol-resp-parameters-form .nested-fields:visible').length > 10){
       $('#ecol-resp-parameters-form .links a').hide();
     }
     if($('#ecol-resp-matrices-form .nested-fields:visible').length > 10){
@@ -67,9 +67,9 @@
       $(".ecollect-resp-matrix-remove-entry").hide()
     }
     function ecol_resp_param_check_to_hide_or_show_add_link() {
-       if ($('#ecol-resp-parameters-form .nested-fields:visible').length == 5) {
+       if ($('#ecol-resp-parameters-form .nested-fields:visible').length == 10) {
          $('#ecol-resp-parameters-form .links a').hide();
-         alert("Only 5 forms can be added for Response Parameter")
+         alert("Only 10 forms can be added for Response Parameter")
        } else {
          $('#ecol-resp-parameters-form .links a').show();
        }
@@ -77,8 +77,8 @@
 
     $('#ecol-resp-parameters-form').on('cocoon:after-insert', function(e, added_thing) {
        ecol_resp_param_check_to_hide_or_show_add_link();      
-       var key_field_length = $('.key').length
-       added_thing.find('.key').val("key"+key_field_length);
+       var key_field_length = $('.response_matrix_key').length
+       added_thing.find('.response_matrix_key').val("KEY"+key_field_length);
     });
 
     $('#ecol-resp-parameters-form').on('cocoon:after-remove', function() {

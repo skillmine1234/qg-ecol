@@ -26,9 +26,11 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Is Encryption enabled?
     %th{:style=>'text-align:left; background-color: lightblue;'}
-      Algorithm
+      Hash enabled?
     %th{:style=>'text-align:left; background-color: lightblue;'}
-      Parameter Type
+      Request
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Url
         
   .tbody
     - @ecollect_request_templates.each do |ecollect_request_template|
@@ -46,7 +48,9 @@
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.is_encryption_required == true ? "Y" : "N"
         %td{:style=>'text-align:left;'}
-          = ecollect_request_template.algorithm
+          = ecollect_request_template.is_hash_required == true ? "Y" : "N"
         %td{:style=>'text-align:left;'}
-          = ecollect_request_template.api_type
+          = ecollect_request_template.request
+        %td{:style=>'text-align:left;'}
+          = ecollect_request_template.url
 

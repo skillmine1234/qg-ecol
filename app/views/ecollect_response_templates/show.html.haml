@@ -86,7 +86,7 @@
       - @ecollect_response_template.try(:ecol_resp_matrices).try(:each_with_index) do |ecollect_resp_matrix,index|
         - record_no = index + 1
         %b{:style => "font-weight:bold;margin-left: 6px;font-size: 12px;"}
-          Record No:- #{record_no}
+          Record No #{record_no}:- 
         .container
           .floatLeft
             %table.table.no-border

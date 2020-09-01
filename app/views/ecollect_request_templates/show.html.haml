@@ -42,24 +42,19 @@
                 = @ecollect_request_template.is_encryption_required == true ? "Y" : "N"
               %td
             %tr
-              %td.label Algorithm
-              %td.value
-                = @ecollect_request_template.algorithm
-              %td
-            %tr
-              %td.label Parameter Type
-              %td.value
-                = @ecollect_request_template.api_type
-              %td
-            %tr
-              %td.label Decrypt Response
-              %td.value
-                = @ecollect_request_template.decrypt_response == true ? "Y" : "N"
-              %td
-            %tr
               %td.label Hash enabled?
               %td.value
                 = @ecollect_request_template.is_hash_required == true ? "Y" : "N"
+              %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_request_template.created_user.try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_request_template.updated_user.try(:username)
               %td
         .floatRight
           %table.table.no-border
@@ -72,21 +67,6 @@
               %td.label URL
               %td.value
                 = @ecollect_request_template.url
-              %td
-            %tr
-              %td.label Secret Key
-              %td.value
-                = @ecollect_request_template.secret_key
-              %td
-            %tr
-              %td.label Created By
-              %td.value
-                = @ecollect_request_template.created_user.try(:username)
-              %td
-            %tr
-              %td.label Updated By
-              %td.value
-                = @ecollect_request_template.updated_user.try(:username)
               %td
             %tr
               %td.label Created At
@@ -121,7 +101,7 @@
         .floatRight
           %table.table.no-border
             %tr
-              %td.label Parameter Type
+              %td.label Send Encrypted Data In
               %td.value
                 = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:parameter_type)
               %td
@@ -141,7 +121,7 @@
                 = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:checksum_type)
               %td
             %tr
-              %td.label Parameter Type
+              %td.label Send Hash Data In
               %td.value
                 = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:parameter_type)
               %td
@@ -168,6 +148,8 @@
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Parameter Type
           %th{:style=>'text-align:left; background-color: lightblue;'}
+            Custom Function
+          %th{:style=>'text-align:left; background-color: lightblue;'}
             Key
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Value Type
@@ -182,6 +164,8 @@
                 = ecollect_hash_parameter.value
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.parameter_type
+              %td{:style=>'text-align:left;'}
+                = ecollect_hash_parameter.custom_function
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.key
               %td{:style=>'text-align:left;'}
@@ -203,9 +187,11 @@
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Key
           %th{:style=>'text-align:left; background-color: lightblue;'}
+            Length  
+          %th{:style=>'text-align:left; background-color: lightblue;'}
             Format  
           %th{:style=>'text-align:left; background-color: lightblue;'}
-            Length  
+            Custom Function
         .tbody
           - @ecollect_request_template.try(:ecollect_request_parameters).try(:each) do |ecollect_request_parameter|
             %tr
@@ -220,8 +206,10 @@
               %td{:style=>'text-align:left;'}
                 = ecollect_request_parameter.key
               %td{:style=>'text-align:left;'}
+                = ecollect_request_parameter.length
+              %td{:style=>'text-align:left;'}
                 = ecollect_request_parameter.format
               %td{:style=>'text-align:left;'}
-                = ecollect_request_parameter.length
+                = ecollect_request_parameter.custom_function
   .form-main{:style=>'width: 100%'}
     = link_to :Back,'/ecollect_request_templates', :name => 'cancel', :class=>"cancel btn",:style => "position: relative;bottom: 33px;float: right;left: -12px;"

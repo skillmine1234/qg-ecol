@@ -6,12 +6,15 @@
     .control-group
       = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
       - if f.object.new_record?
-        = f.text_field :key,:class => 'key',value: "key1",readonly: true
+        = f.text_field :key,:class => 'key'
       - else
-        = f.text_field :key,:class => 'key',readonly: true
+        = f.text_field :key,:class => 'key'
     .control-group
       = f.label :response_matrix_key, "Response Matrix Key", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :response_matrix_key,:class => 'response_matrix_key'
+      - if f.object.new_record?
+        = f.text_field :response_matrix_key,:class => 'response_matrix_key',value: "KEY1",readonly: true
+      - else
+        = f.text_field :response_matrix_key,:class => 'response_matrix_key',readonly: true
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :expression_to_evaluate, "Expression To Evaluate", :class => 'control-label', :class => 'control-label required'

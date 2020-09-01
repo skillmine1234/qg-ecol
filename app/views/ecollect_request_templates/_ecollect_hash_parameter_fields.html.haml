@@ -2,20 +2,24 @@
   .form-main{:style=>'width: 50%'}  
     .control-group
       = f.label :format_datatype, "Format Data Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :format_datatype, [ 'String', 'Integer'], {:include_blank => 'Select Format Data Type'}
+      = f.select :format_datatype, [ 'STRING', 'DOUBLE','TIMESTAMP'], {:include_blank => 'Select Format Data Type'}
     .control-group
       = f.label :value, "Key Value", :class => 'control-label', :class => 'control-label required'
       = f.text_field :value
     .control-group
       = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :parameter_type
+      = f.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Parameter Type'}
+  .form-main{:style=>'width: 50%'}  
+    .control-group
+      = f.label :custom_function, "Custom Function", :class => 'control-label', :class => 'control-label required'
+      = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE'], {:include_blank => 'Select Custom Function'}
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
       = f.text_field :key
     .control-group
       = f.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :value_type, [ 'Static', 'Dynamic'], {:include_blank => 'Select Value Type'}
+      = f.select :value_type, [ 'STATIC', 'DYNAMIC','DERIVE'], {:include_blank => 'Select Value Type'}
     .control-group
       = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
       = f.text_field :format

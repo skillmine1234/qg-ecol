@@ -91,7 +91,7 @@ class EcollectRequestTemplatesController < ApplicationController
     params.require(:ecollect_request_template).permit(:client_code,:request,:request_type,:url,:is_encryption_required,:is_hash_required,:created_by,:updated_by,:api_type,:secret_key,:decrypt_response,:algorithm,:step_name,
                                               ecollect_encrypt_decrypts_attributes: [:id,:algorithm, :key, :parameter_type, :request_template_id, :secret_key, :created_by, :updated_by, :decrypt_response,:_destroy],
                                               ecollect_hash_templates_attributes: [:id,:checksum_type,:key,:parameter_type,:request,:request_template_id,:created_by,:updated_by,:_destroy],
-                                            ecollect_hash_parameters_attributes: [:id, :format, :format_datatype,:request_template_id,:key,:parameter_type,:value,:value_type,:created_by,:updated_by,:custom_function, :_destroy],
+                                              ecollect_hash_parameters_attributes: [:id, :format, :format_datatype,:request_template_id,:key,:parameter_type,:value,:value_type,:created_by,:updated_by,:custom_function, :_destroy],
                                               ecollect_request_parameters_attributes: [:id,:request_template_id, :format_datatype, :key, :parameter_type, :format, :value, :length, :created_by, :updated_by, :custom_function, :value_type,:_destroy])
   end
 
