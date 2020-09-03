@@ -41,7 +41,6 @@ class EcollectRequestTemplatesController < ApplicationController
     if @customer_code_exist == true
       @ecollect_request_template.created_by = current_user.id
       @ecollect_request_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
-      @ecollect_request_template.api_type = params[:step_name] == "Validate" ? "VALIDATE" : "NOTIFY"
       if @ecollect_request_template.save
       	flash[:alert] = "ECollect Request Template created successfully"
         redirect_to @ecollect_request_template
