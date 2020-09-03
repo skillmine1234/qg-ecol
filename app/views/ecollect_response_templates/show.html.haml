@@ -23,6 +23,11 @@
               %td.value
                 = @ecollect_response_template.step_name.present? ? "RESP#{@ecollect_response_template.step_name}-#{@ecollect_response_template.id}" : ""
               %td
+            %tr
+              %td.label Api Type
+              %td.value
+                = @ecollect_response_template.api_type
+              %td
         .floatLeft
           %table.table.no-border
             %tr

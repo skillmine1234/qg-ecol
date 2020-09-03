@@ -24,6 +24,11 @@
               %td.value
                 = @ecollect_request_template.step_name.present? ? "REQ#{@ecollect_request_template.step_name}-#{@ecollect_request_template.id}" : ""
               %td
+            %tr
+              %td.label Api Type
+              %td.value
+                = @ecollect_request_template.api_type
+              %td
         .floatLeft
           %table.table.no-border
             %tr
