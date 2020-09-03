@@ -39,6 +39,7 @@ class EcollectResponseTemplatesController < ApplicationController
     if @customer_code_exist == true
       @ecollect_response_template.created_by = current_user.id
       @ecollect_response_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
+      @ecollect_response_template.api_type = params[:step_name] == "Validate" ? "VALIDATE" : "NOTIFY"
       if @ecollect_response_template.save
         flash[:alert] = "ECollect Response Template created successfully"
         redirect_to @ecollect_response_template
