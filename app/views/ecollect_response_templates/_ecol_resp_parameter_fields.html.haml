@@ -2,7 +2,7 @@
   .form-main{:style=>'width: 50%'}  
     .control-group
       = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :parameter_type, [ 'JSON', 'XML', 'TEXT'], {:include_blank => 'Select Parameter Type'},:class => 'parameter_type'
+      = f.select :parameter_type, [ 'XML', 'JSON', 'TXT'], {:include_blank => 'Select Parameter Type'},:class => 'parameter_type'
     .control-group
       = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
       - if f.object.new_record?
