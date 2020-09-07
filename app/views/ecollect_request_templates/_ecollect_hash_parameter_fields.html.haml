@@ -24,4 +24,4 @@
       = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
       = f.text_field :format
     .control-group
-      = link_to_remove_association button_tag('x', type: "button", class: "ecollect-hash-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"), f
+      = link_to_remove_association 'x', f, data: { confirm: 'Are you sure that you want to remove this?' },class: "ecollect-hash-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"

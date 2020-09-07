@@ -80,6 +80,10 @@ class EcollectRequestTemplatesController < ApplicationController
 
   def edit
     @ecollect_request_template = EcollectRequestTemplate.unscoped.find_by_id(params[:id])
+    @ecollect_request_template.ecollect_request_parameters.build if !@ecollect_request_template.ecollect_request_parameters.present?
+    @ecollect_request_template.ecollect_encrypt_decrypts.build if !@ecollect_request_template.ecollect_encrypt_decrypts.present?
+    @ecollect_request_template.ecollect_hash_templates.build if !@ecollect_request_template.ecollect_hash_templates.present?
+    @ecollect_request_template.ecollect_hash_parameters.build if !@ecollect_request_template.ecollect_hash_parameters.present?
   end
 
 	def show

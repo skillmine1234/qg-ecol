@@ -31,4 +31,4 @@
         = f.label :custom_function, "Custom Function", :class => 'control-label', :class => 'control-label required'
         = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE'], {:include_blank => 'Select Custom Function'}
       .control-group
-        = link_to_remove_association button_tag('x', type: "button", class: "ecollect-req-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"), f
+        = link_to_remove_association 'x', f, data: { confirm: 'Are you sure that you want to remove this?' },class: "ecollect-req-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"

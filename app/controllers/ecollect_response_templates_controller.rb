@@ -71,6 +71,8 @@ class EcollectResponseTemplatesController < ApplicationController
 
   def edit
     @ecollect_response_template = EcollectResponseTemplate.unscoped.find_by_id(params[:id])
+    @ecollect_response_template.ecol_resp_parameters.build if !@ecollect_response_template.ecol_resp_parameters.present?
+    @ecollect_response_template.ecol_resp_matrices.build if !@ecollect_response_template.ecol_resp_matrices.present?
   end
 
 	def show

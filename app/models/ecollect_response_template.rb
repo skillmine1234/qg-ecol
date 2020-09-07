@@ -4,8 +4,8 @@ class EcollectResponseTemplate < ActiveRecord::Base
 	has_many :ecol_resp_parameters, class_name: 'EcolRespParameter', foreign_key: "response_template_id"
 	has_many :ecol_resp_matrices, class_name: 'EcolRespMatrix', foreign_key: "response_template_id"
 
-	accepts_nested_attributes_for :ecol_resp_parameters, allow_destroy: true
-	accepts_nested_attributes_for :ecol_resp_matrices, allow_destroy: true
+	accepts_nested_attributes_for :ecol_resp_parameters,reject_if: :all_blank, allow_destroy: true
+	accepts_nested_attributes_for :ecol_resp_matrices,reject_if: :all_blank, allow_destroy: true
 
 	# validates_presence_of :client_code,:response_code
 
