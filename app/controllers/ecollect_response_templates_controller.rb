@@ -20,7 +20,7 @@ class EcollectResponseTemplatesController < ApplicationController
     @ecollect_response_template.ecol_resp_parameters.build
     @ecollect_response_template.ecol_resp_matrices.build
 
-    @ecollect_response_templates = EcollectResponseTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "REQ")
+    @ecollect_response_templates = EcollectResponseTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "NOT")
     @customer_code_exist = EcollectRequestTemplate.customer_code_exist(params[:customer_code])
 	end
 

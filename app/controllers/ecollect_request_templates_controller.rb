@@ -22,7 +22,7 @@ class EcollectRequestTemplatesController < ApplicationController
 		@ecollect_request_template.ecollect_hash_templates.build
     @ecollect_request_template.ecollect_hash_parameters.build
 
-    @ecollect_request_templates = EcollectRequestTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "REQ")
+    @ecollect_request_templates = EcollectRequestTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "NOT")
     @customer_code_exist = EcollectRequestTemplate.customer_code_exist(params[:customer_code])
 	end
 
