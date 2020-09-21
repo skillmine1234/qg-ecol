@@ -38,7 +38,7 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Show', ecollect_request_template_path(ecollect_request_template)
         %td{:style=>'text-align:left;'}
-          = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template)
+          = link_to 'Edit', edit_ecollect_request_template_path(ecollect_request_template) if ecollect_request_template.approval_status == "A"
         %td{:style=>'text-align:left;'}
           = ecollect_request_template.step_name.present? ? "REQ#{ecollect_request_template.step_name}-#{ecollect_request_template.id}" : ""
         %td{:style=>'text-align:left;'}

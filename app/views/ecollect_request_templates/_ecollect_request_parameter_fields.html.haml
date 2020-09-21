@@ -5,6 +5,10 @@
     /     = f.label :request_template_id, "Request Template ID", :class => 'control-label', :class => 'control-label required'
     /     = f.text_field :request_template_id,disabled: true
     .form-main{:style=>'width: 50%'}
+      - if f.object.new_record?
+        = f.hidden_field :created_by
+      - if f.object.id.present?
+        = f.hidden_field :updated_by,value: current_user.id
       .control-group
         = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
         = f.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Parameter Type'}

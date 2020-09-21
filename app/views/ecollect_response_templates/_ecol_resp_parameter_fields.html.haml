@@ -1,5 +1,9 @@
 .nested-fields
-  .form-main{:style=>'width: 50%'}  
+  .form-main{:style=>'width: 50%'}
+    - if f.object.new_record?
+      = f.hidden_field :created_by,value: current_user.id
+    - if f.object.id.present?
+      = f.hidden_field :updated_by,value: current_user.id
     .control-group
       = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
       = f.select :parameter_type, [ 'XML', 'JSON', 'TXT'], {:include_blank => 'Select Parameter Type'},:class => 'parameter_type'

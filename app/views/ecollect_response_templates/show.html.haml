@@ -45,6 +45,16 @@
               %td.value
                 = @ecollect_response_template.is_error_flag == true ? "Y" : "N"
               %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_response_template.created_user.try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_response_template.updated_user.try(:username)
+              %td
         .floatRight
           %table.table.no-border
             
@@ -101,6 +111,31 @@
                   = ecollect_resp_matrix.action
                 %td
               %tr
+                %td.label Created By
+                %td.value
+                  = ecollect_resp_matrix.try(:created_user).try(:username)
+                %td
+              %tr
+                %td.label Updated By
+                %td.value
+                  = ecollect_resp_matrix.try(:updated_user).try(:username)
+                %td
+          .floatRight
+            %table.table.no-border
+              %tr
+                %td.label Created At
+                %td.value
+                  = ecollect_resp_matrix.try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+                %td
+              %tr
+                %td.label Updated At
+                %td.value
+                  = ecollect_resp_matrix.try(:updated_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+                %td
+        .container
+          .floatLeft
+            %table.table.no-border
+              %tr
                 %td.label Key1
                 %td.value
                   = ecollect_resp_matrix.key1
@@ -152,5 +187,6 @@
                 %td.value
                   = ecollect_resp_matrix.key10
                 %td
+
     .form-main{:style=>'width: 100%'}
       = link_to :Back,'/ecollect_response_templates', :name => 'cancel', :class=>"cancel btn",:style => "position: relative;bottom: 33px;float: right;left: -12px;"

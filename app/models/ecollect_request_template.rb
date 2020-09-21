@@ -1,4 +1,5 @@
 class EcollectRequestTemplate < ActiveRecord::Base
+	audited
 	has_many :ecollect_hash_templates, class_name: 'EcollectHashTemplate', foreign_key: "request_template_id"
 	has_many :ecollect_request_parameters, class_name: 'EcollectRequestParameter', foreign_key: "request_template_id"
 	has_many :ecollect_encrypt_decrypts, class_name: 'EcollectEncryptDecrypt', foreign_key: "request_template_id"
@@ -13,9 +14,23 @@ class EcollectRequestTemplate < ActiveRecord::Base
 	belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
 
 	validates_inclusion_of :step_name, :in => %w( VAL NOT )
+	after_create :create_entry_in_approval_tracker
 
 	def self.customer_code_exist(customer_code)
     ecol_customer_code = EcolCustomer.where(code: customer_code)
     return ecol_customer_code.present? ? true : false
   end
+
+  def create_entry_in_approval_tracker
+  	UnapprovedRecord.create(approvable_id: self.id, approvable_type: "EcollectRequestTemplate")
+  end
+
+  def self.return_color_code(approval_status)
+  	if approval_status == "U"
+  		"#ffffd8"
+  	else
+  		""
+  	end
+  end
+
 end

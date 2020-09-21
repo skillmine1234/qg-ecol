@@ -1,27 +1,31 @@
 .nested-fields
   .form-main{:style=>'width: 50%'}  
+    - if f.object.new_record?
+      = f.hidden_field :created_by,value: current_user.id
+    - if f.object.id.present?
+      = f.hidden_field :updated_by,value: current_user.id
     .control-group
       = f.label :format_datatype, "Format Data Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :format_datatype, [ 'STRING', 'DOUBLE','TIMESTAMP'], {:include_blank => 'Select Format Data Type'}
+      = f.select :format_datatype, [ 'STRING', 'DOUBLE','TIMESTAMP'], {:include_blank => 'Select Format Data Type'},class: "hash-param-format-datatype"
     .control-group
       = f.label :value, "Key Value", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :value
+      = f.text_field :value,class: "hash-param-value"
     .control-group
       = f.label :parameter_type, "Parameter Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Parameter Type'}
+      = f.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Parameter Type'},class: "hash-param-parameter-type"
   .form-main{:style=>'width: 50%'}  
     .control-group
       = f.label :custom_function, "Custom Function", :class => 'control-label', :class => 'control-label required'
-      = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE'], {:include_blank => 'Select Custom Function'}
+      = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE'], {:include_blank => 'Select Custom Function'},class: "hash-param-custom-function"
   .form-extended{:style=>'width: 50%;'}
     .control-group
       = f.label :key, "Key", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :key
+      = f.text_field :key,class: "hash-param-key"
     .control-group
       = f.label :value_type, "Value Type", :class => 'control-label', :class => 'control-label required'
-      = f.select :value_type, [ 'STATIC', 'DYNAMIC','DERIVE'], {:include_blank => 'Select Value Type'}
+      = f.select :value_type, [ 'STATIC', 'DYNAMIC','DERIVE'], {:include_blank => 'Select Value Type'},class: "hash-param-value-type"
     .control-group
       = f.label :format, "Format", :class => 'control-label', :class => 'control-label required'
-      = f.text_field :format
+      = f.text_field :format,class: "hash-param-format"
     .control-group
       = link_to_remove_association 'x', f, data: { confirm: 'Are you sure that you want to remove this?' },class: "ecollect-hash-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"

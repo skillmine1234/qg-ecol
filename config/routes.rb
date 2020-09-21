@@ -29,7 +29,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :ecollect_request_templates
+  resources :ecollect_request_templates do
+    member do
+      get :request_template_audit_logs
+      post :custom_approval_of_record
+    end
+  end
   resources :ecollect_hash_templates
   resources :ecollect_response_templates
   resources :ecollect_request_parameters

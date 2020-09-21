@@ -8,6 +8,10 @@
   = hidden_field_tag :step_name, params[:step_name]
   = hidden_field_tag :ecol_req_template_count, @ecollect_request_templates.present?
   = hidden_field_tag :cust_code_exist, @customer_code_exist
+  - if f.object.new_record?
+    = f.hidden_field :created_by,value: current_user.id
+  - if f.object.id.present?
+    = f.hidden_field :updated_by,value: current_user.id
   .control-group
     = f.label ' '
     #msg-error
@@ -45,6 +49,10 @@
   %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
   #ecol-encrypt-decrypt-form
     = f.fields_for :ecollect_encrypt_decrypts do |ecollect_encrypt_decrypt|
+      - if ecollect_encrypt_decrypt.object.new_record?
+        = ecollect_encrypt_decrypt.hidden_field :created_by,value: current_user.id
+      - if ecollect_encrypt_decrypt.object.id.present?
+        = ecollect_encrypt_decrypt.hidden_field :updated_by,value: current_user.id
       .form-main{:style=>'width: 50%'}  
         .control-group
           = ecollect_encrypt_decrypt.label :algorithm, "Algorithm", :class => 'control-label', :class => 'control-label required'
@@ -71,20 +79,24 @@
   .form-main{:style=>'width: 100%;'}
     #ecol-hash-templates-form
       = f.fields_for :ecollect_hash_templates do |ecollect_hash_template|
+        - if ecollect_hash_template.object.new_record?
+          = ecollect_hash_template.hidden_field :created_by,value: current_user.id
+        - if ecollect_hash_template.object.id.present?
+          = ecollect_hash_template.hidden_field :updated_by,value: current_user.id
         .form-main{:style=>'width: 50%'}  
           .control-group
             = ecollect_hash_template.label :checksum_type, "Checksum Type", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], {:include_blank => 'Select Checksum Type'}
+            = ecollect_hash_template.select :checksum_type, [ 'MD5', 'SHA1','SHA256','SHA512'], {:include_blank => 'Select Checksum Type'},class: "hash-temp-checksum-type"
           .control-group
             = ecollect_hash_template.label :parameter_type, "Send Hash Data In", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Send Hash Data In'}
+            = ecollect_hash_template.select :parameter_type, [ 'BODY', 'HEADER','QUERY','PATH'], {:include_blank => 'Select Send Hash Data In'},class: "hash-temp-send-hash-data-in"
         .form-extended{:style=>'width: 50%;'}
           .control-group
             = ecollect_hash_template.label :key, "Key", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.text_field :key
+            = ecollect_hash_template.text_field :key,class: "hash-temp-key"
           .control-group
             = ecollect_hash_template.label :request, "Request", :class => 'control-label', :class => 'control-label required'
-            = ecollect_hash_template.text_area :request, :style => 'height:79px'
+            = ecollect_hash_template.text_area :request, :style => 'height:79px',class: "hash-temp-req"
         .form-main{:style=>'width: 100%'}  
           %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
     #ecol-hash-parameters-form
@@ -180,29 +192,96 @@
     });
 
     if(!$('#ecollect_request_template_is_hash_required').is(":checked")){
-      $("#ecol-hash-templates-form :input").val('')
-      $("#ecol-hash-templates-form :input").attr("disabled", true);
-      $("#ecol-hash-parameters-form :input").val('')
-      $("#ecol-hash-parameters-form :input").attr("disabled", true);
+      $(".hash-temp-checksum-type").val('');
+      $(".hash-temp-checksum-type").attr("disabled", true);
+      $(".hash-temp-send-hash-data-in").val('');
+      $(".hash-temp-send-hash-data-in").attr("disabled", true);
+      $(".hash-temp-key").val('');
+      $(".hash-temp-key").attr("disabled", true);
+      $(".hash-temp-req").val('');
+      $(".hash-temp-req").attr("disabled", true);
+
+      $(".hash-param-format-datatype").val('');
+      $(".hash-param-format-datatype").attr("disabled", true);
+      $(".hash-param-value").val('');
+      $(".hash-param-value").attr("disabled", true);
+      $(".hash-param-parameter-type").val('');
+      $(".hash-param-parameter-type").attr("disabled", true);
+      $(".hash-param-custom-function").val('');
+      $(".hash-param-custom-function").attr("disabled", true);
+      $(".hash-param-key").val('');
+      $(".hash-param-key").attr("disabled", true);
+      $(".hash-param-value-type").val('');
+      $(".hash-param-value-type").attr("disabled", true);
+      $(".hash-param-format").val('');
+      $(".hash-param-format").attr("disabled", true);
+
+      $(".ecollect-hash-parameter-add-entry").attr("disabled", true);
     }
     else {
-      $("#ecol-hash-templates-form :input").attr("disabled", false);
-      $("#ecol-hash-parameters-form :input").attr("disabled", false);
+      $(".hash-temp-checksum-type").attr("disabled", false);
+      $(".hash-temp-send-hash-data-in").attr("disabled", false);
+      $(".hash-temp-key").attr("disabled", false);
+      $(".hash-temp-req").attr("disabled", false);
+
+      $(".hash-param-format-datatype").attr("disabled", false);
+      $(".hash-param-value").attr("disabled", false);
+      $(".hash-param-parameter-type").attr("disabled", false);
+      $(".hash-param-custom-function").attr("disabled", false);
+      $(".hash-param-key").attr("disabled", false);
+      $(".hash-param-value-type").attr("disabled", false);
+      $(".hash-param-format").attr("disabled", false);
+
+      $(".ecollect-hash-parameter-add-entry").attr("disabled", false);
     }
 
     $("#ecollect_request_template_is_hash_required").on("click", function () {
       if (!$(this).is(":checked")){
-        $("#ecol-hash-templates-form :input").val('')
-        $("#ecol-hash-templates-form :input").attr("disabled", true);
-        $("#ecol-hash-parameters-form :input").val('')
-        $("#ecol-hash-parameters-form :input").attr("disabled", true);
+        $(".hash-temp-checksum-type").val('');
+        $(".hash-temp-checksum-type").attr("disabled", true);
+        $(".hash-temp-send-hash-data-in").val('');
+        $(".hash-temp-send-hash-data-in").attr("disabled", true);
+        $(".hash-temp-key").val('');
+        $(".hash-temp-key").attr("disabled", true);
+        $(".hash-temp-req").val('');
+        $(".hash-temp-req").attr("disabled", true);
+
+        $(".hash-param-format-datatype").val('');
+        $(".hash-param-format-datatype").attr("disabled", true);
+        $(".hash-param-value").val('');
+        $(".hash-param-value").attr("disabled", true);
+        $(".hash-param-parameter-type").val('');
+        $(".hash-param-parameter-type").attr("disabled", true);
+        $(".hash-param-custom-function").val('');
+        $(".hash-param-custom-function").attr("disabled", true);
+        $(".hash-param-key").val('');
+        $(".hash-param-key").attr("disabled", true);
+        $(".hash-param-value-type").val('');
+        $(".hash-param-value-type").attr("disabled", true);
+        $(".hash-param-format").val('');
+        $(".hash-param-format").attr("disabled", true);
+
+        $(".ecollect-hash-parameter-add-entry").attr("disabled", true);
       }
       else {
-        $("#ecol-hash-templates-form :input").attr("disabled", false);
-        $("#ecol-hash-parameters-form :input").attr("disabled", false);
+        $(".hash-temp-checksum-type").attr("disabled", false);
+        $(".hash-temp-send-hash-data-in").attr("disabled", false);
+        $(".hash-temp-key").attr("disabled", false);
+        $(".hash-temp-req").attr("disabled", false);
+
+        $(".hash-param-format-datatype").attr("disabled", false);
+        $(".hash-param-value").attr("disabled", false);
+        $(".hash-param-parameter-type").attr("disabled", false);
+        $(".hash-param-custom-function").attr("disabled", false);
+        $(".hash-param-key").attr("disabled", false);
+        $(".hash-param-value-type").attr("disabled", false);
+        $(".hash-param-format").attr("disabled", false);
+
+        $(".ecollect-hash-parameter-add-entry").attr("disabled", false);
       }
     });
-    if($('#ecol-hash-parameters-form .nested-fields:visible').length > 5){
+
+    if($('#ecol-hash-parameters-form .nested-fields:visible').length > 10){
       $('#ecol-hash-parameters-form .links a').hide();
     }
     if($('#ecol-request-parameters-form .nested-fields:visible').length > 20){
@@ -215,9 +294,9 @@
       $(".ecollect-req-parameter-remove-entry").hide()
     }
     function ecol_hash_param_check_to_hide_or_show_add_link() {
-       if ($('#ecol-hash-parameters-form .nested-fields:visible').length == 5) {
+       if ($('#ecol-hash-parameters-form .nested-fields:visible').length == 10) {
          $('#ecol-hash-parameters-form .links a').hide();
-         alert("Only 5 forms can be added for Hash Parameter")
+         alert("Only 10 forms can be added for Hash Parameter")
        } else {
          $('#ecol-hash-parameters-form .links a').show();
        }

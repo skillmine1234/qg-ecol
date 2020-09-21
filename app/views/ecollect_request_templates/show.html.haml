@@ -8,12 +8,18 @@
       %h3 ECollect Request Template Details
       %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
         - can = can? :edit, @ecollect_request_template
-        %a.btn{:href => "#{!(can) ? '#' : '/ecollect_request_templates/' + @ecollect_request_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
-      / %h1 ECollect  Request Template
-      .container
+        - if @ecollect_request_template.approval_status == "A"
+          %a.btn{:href => "#{!(can) ? '#' : '/ecollect_request_templates/' + @ecollect_request_template.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'ecollect_request_templates/approve', :@record => @ecollect_request_template
+      - req_template_for_approval = EcollectRequestTemplate.return_color_code(@ecollect_request_template.approval_status)
+      .container{:style => "background-color: #{req_template_for_approval}"}
         %h3 Ecollect Request Template:-
         .foatLeft
           %table.table.no-border
+            %tr
+              %td.label Version
+              %td.value
+                = link_to "#{audit_count(@ecollect_request_template)}",request_template_audit_logs_ecollect_request_template_path(:version_id => audit_count(@ecollect_request_template), :id => @ecollect_request_template.id)
             %tr
               %td.label Request Template ID
               %td.value
@@ -66,7 +72,7 @@
             %tr
               %td.label Request
               %td.value
-                = text_area(:ecollect_request_template,:request,:cols => 3, :rows => 3,:readonly => true)
+                = text_area(:ecollect_request_template,:request,:cols => 3, :rows => 3,:readonly => true,:style => "background-color: #{req_template_for_approval}")
               %td
             %tr
               %td.label URL
@@ -84,7 +90,8 @@
                 = @ecollect_request_template.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
               %td
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
-      .container
+      - ecnry_decry_for_approval = EcollectRequestTemplate.return_color_code(@ecollect_request_template.try(:ecollect_encrypt_decrypts).try(:last).try(:approval_status))
+      .container{:style => "background-color: #{ecnry_decry_for_approval}"}
         %h3 Ecollect Encrypt Decrypt:-
         .floatLeft
           %table.table.no-border
@@ -103,6 +110,16 @@
               %td.value
                 = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:key)
               %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_request_template.try(:ecollect_encrypt_decrypts).try(:last).try(:created_user).try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_request_template.try(:ecollect_encrypt_decrypts).try(:last).try(:updated_user).try(:username)
+              %td
         .floatRight
           %table.table.no-border
             %tr
@@ -115,8 +132,19 @@
               %td.value
                 = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:secret_key)
               %td
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_request_template.ecollect_encrypt_decrypts.try(:last).try(:updated_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
-      .container
+      - hash_temp_for_approval = EcollectRequestTemplate.return_color_code(@ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:approval_status))
+      .container{:style => "background-color: #{hash_temp_for_approval}"}
         %h3 Ecollect Hash Template:-
         .floatLeft
           %table.table.no-border
@@ -130,6 +158,16 @@
               %td.value
                 = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:parameter_type)
               %td
+            %tr
+              %td.label Created By
+              %td.value
+                = @ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:created_user).try(:username)
+              %td
+            %tr
+              %td.label Updated By
+              %td.value
+                = @ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:updated_user).try(:username)
+              %td
         .floatRight
           %table.table.no-border
             %tr
@@ -140,7 +178,17 @@
             %tr
               %td.label Request
               %td.value
-                %textarea#ecollect_request_template_request{:cols => "3", :name => "ecollect_request_template[request]", :readonly => "readonly", :rows => "3"} #{@ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:request)}
+                %textarea#ecollect_request_template_request{:cols => "3", :name => "ecollect_request_template[request]", :readonly => "readonly", :rows => "3",:style => "background-color: #{hash_temp_for_approval}"} #{@ecollect_request_template.try(:ecollect_hash_templates).try(:last).try(:request)}
+              %td
+            %tr
+              %td.label Created At
+              %td.value
+                = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:created_at).try(:strftime, "%d/%m/%Y %I:%M%p")
+              %td
+            %tr
+              %td.label Updated At
+              %td.value
+                = @ecollect_request_template.ecollect_hash_templates.try(:last).try(:updated_at).try(:strftime, "%d/%m/%Y %I:%M%p")
               %td
       %hr{:style => "border: none;height: 1px;background-color: lightgray;"}
       %h3 Ecollect Hash Parameter:-
@@ -159,10 +207,11 @@
           %th{:style=>'text-align:left; background-color: lightblue;'}
             Value Type
           %th{:style=>'text-align:left; background-color: lightblue;'}
-            Format  
+            Format
         .tbody
           - @ecollect_request_template.try(:ecollect_hash_parameters).try(:each) do |ecollect_hash_parameter|
-            %tr
+            - hash_param_for_approval = EcollectRequestTemplate.return_color_code(ecollect_hash_parameter.approval_status)
+            %tr{:style => "background-color: #{hash_param_for_approval}"}
               %td{:style=>'text-align:left;'}
                 = ecollect_hash_parameter.format_datatype
               %td{:style=>'text-align:left;'}
@@ -199,7 +248,8 @@
             Custom Function
         .tbody
           - @ecollect_request_template.try(:ecollect_request_parameters).try(:each) do |ecollect_request_parameter|
-            %tr
+            - req_param_for_approval = EcollectRequestTemplate.return_color_code(ecollect_request_parameter.approval_status)
+            %tr{:style => "background-color: #{req_param_for_approval}"}
               %td{:style=>'text-align:left;'}
                 = ecollect_request_parameter.parameter_type
               %td{:style=>'text-align:left;'}
