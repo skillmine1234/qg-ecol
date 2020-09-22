@@ -8,10 +8,8 @@
   = hidden_field_tag :step_name, params[:step_name]
   = hidden_field_tag :ecol_resp_template_count, (@ecollect_response_templates.present? && @ecollect_response_templates.count == 10) ? true : false
   = hidden_field_tag :cust_code_exist, @customer_code_exist
-  .control-group
-    = f.label ' '
+  - if @ecollect_response_template.errors.any?
     #msg-error
-      = error_message_for(@ecollect_response_template, :base, :prepend_text => "")
   .form-main{:style=>'width: 50%'}
     .control-group
       = f.label :client_code, "Customer Code", :class => 'control-label', :class => 'control-label required'
