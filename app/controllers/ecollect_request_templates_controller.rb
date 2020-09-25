@@ -109,7 +109,7 @@ class EcollectRequestTemplatesController < ApplicationController
 
   def custom_approval_of_record
     @ecollect_request_template = EcollectRequestTemplate.find_by(id: params[:id])
-    if @ecollect_request_template.approval_status == 'U' && (current_user == @ecollect_request_template.created_user || (can? :approve, @ecollect_request_template))
+    if @ecollect_request_template.approval_status == 'U' && (current_user == @ecollect_request_template.created_user || (can? :custom_approval_of_record, @ecollect_request_template))
       EcollectRequestTemplate.where(id: @ecollect_request_template.id).update_all(approval_status: "A")
       @ecollect_request_template.ecollect_hash_templates.where(approval_status: "U").update_all(approval_status: "A")
       @ecollect_request_template.ecollect_hash_parameters.where(approval_status: "U").update_all(approval_status: "A")
@@ -120,7 +120,7 @@ class EcollectRequestTemplatesController < ApplicationController
       flash[:alert] = "Ecollect Request Template Approved successfully"
       redirect_to "/ecollect_request_templates/#{@ecollect_request_template.id}"
     else
-      flash[:notice] = "Couldn't Approve Record for Ecollect Request Template"
+      flash[:notice] = "Sorry you don't have Privilege to Approve the ECollect Request Template"
       redirect_to "/"
     end
   end
