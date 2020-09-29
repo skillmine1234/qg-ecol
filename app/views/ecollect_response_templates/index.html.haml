@@ -29,7 +29,7 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Show', ecollect_response_template_path(ecollect_response_template)
         %td{:style=>'text-align:left;'}
-          = link_to 'Edit', edit_ecollect_response_template_path(ecollect_response_template)
+          = link_to 'Edit', edit_ecollect_response_template_path(ecollect_response_template) if ecollect_response_template.approval_status == "A"
         %td{:style=>'text-align:left;'}
           = ecollect_response_template.step_name.present? ? "RESP#{ecollect_response_template.step_name}-#{ecollect_response_template.id}" : ""
         %td{:style=>'text-align:left;'}

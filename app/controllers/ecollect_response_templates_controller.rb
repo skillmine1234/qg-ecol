@@ -10,7 +10,7 @@ class EcollectResponseTemplatesController < ApplicationController
     # if params[:advanced_search].present?
     #   ecollect_request_templates = find_dp_esb_mappers(params).order("id DESC")
     # else
-      ecollect_response_templates = EcollectResponseTemplate.order("id desc")
+      ecollect_response_templates = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcollectResponseTemplate.unscoped.where("approval_status =?",'U').order("id desc") : EcollectResponseTemplate.where(approval_status: "A").order("id desc")
     # end
     @ecollect_response_templates = ecollect_response_templates.paginate(:per_page => 10, :page => params[:page]) rescue []
   end
@@ -20,7 +20,7 @@ class EcollectResponseTemplatesController < ApplicationController
     @ecollect_response_template.ecol_resp_parameters.build
     @ecollect_response_template.ecol_resp_matrices.build
 
-    @ecollect_response_templates = EcollectResponseTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "NOT")
+    # @ecollect_response_templates = EcollectResponseTemplate.where(client_code: params[:customer_code],step_name: params[:step_name] == "Validate" ? "VAL" : "NOT",approval_status: "A")
     @customer_code_exist = EcollectRequestTemplate.customer_code_exist(params[:customer_code])
 	end
 
@@ -41,7 +41,7 @@ class EcollectResponseTemplatesController < ApplicationController
       @ecollect_response_template.step_name = params[:step_name] == "Validate" ? "VAL" : "NOT"
       @ecollect_response_template.api_type = params[:step_name] == "Validate" ? "VALIDATE" : "NOTIFY"
       if @ecollect_response_template.save
-        flash[:alert] = "ECollect Response Template created successfully"
+        flash[:alert] = "ECollect Response Template successfully created and is pending for approval"
         redirect_to @ecollect_response_template
       else
         render "new"
@@ -55,13 +55,21 @@ class EcollectResponseTemplatesController < ApplicationController
 	def update
     @ecollect_response_template = EcollectResponseTemplate.unscoped.find_by_id(params[:id])
     @ecollect_response_template.attributes = params[:ecollect_response_template]
+    @ecollect_response_template.approval_status = "U"
     if !@ecollect_response_template.valid?
       render "edit"
     else
-      @ecollect_response_template.updated_by = current_user.id
-      @ecollect_response_template.save!
-      flash[:alert] = 'ECollect Response Template modified successfully'
-      redirect_to @ecollect_response_template
+      resp_template_fields = ["client_code", "response_code", "api_type", "request_template_id", "step_name","is_error_flag"]
+      resp_template_changes = @ecollect_response_template.changes.keys
+      track_ecol_resp_changes = (resp_template_fields & resp_template_changes).any?
+      if @ecollect_response_template.approval_status == 'U' && (current_user == @ecollect_response_template.created_user || (can? :edit, @ecollect_response_template))
+        track_ecol_resp_changes == true ? @ecollect_response_template.save! : @ecollect_response_template.save_without_auditing
+        flash[:alert] = 'ECollect Response Template modified successfully'
+        redirect_to @ecollect_response_template
+      else
+        flash[:notice] = "Sorry you don't have Privilege to Edit the ECollect Response Template!"
+        redirect_to "/"
+      end
     end
     rescue ActiveRecord::StaleObjectError
       @ecollect_response_template.reload
@@ -71,10 +79,36 @@ class EcollectResponseTemplatesController < ApplicationController
 
   def edit
     @ecollect_response_template = EcollectResponseTemplate.unscoped.find_by_id(params[:id])
-    @ecollect_response_template.ecol_resp_parameters.build if !@ecollect_response_template.ecol_resp_parameters.present?
-    @ecollect_response_template.ecol_resp_matrices.build if !@ecollect_response_template.ecol_resp_matrices.present?
+    if @ecollect_response_template.approval_status == "U"
+      flash[:notice] = "ECollect Response Template is Pending for Approval so you can't edit it!"
+      redirect_to "/"
+    else
+      @ecollect_response_template.ecol_resp_parameters.build if !@ecollect_response_template.ecol_resp_parameters.present?
+      @ecollect_response_template.ecol_resp_matrices.build if !@ecollect_response_template.ecol_resp_matrices.present?
+    end
   end
 
+  def response_template_audit_logs
+    @ecollect_response_template = EcollectResponseTemplate.unscoped.find(params[:id]) rescue nil
+    @response_template_audit = @ecollect_response_template.audits[params[:version_id].to_i] rescue nil
+  end
+
+  def custom_approval_of_record
+    @ecollect_response_template = EcollectResponseTemplate.find_by(id: params[:id])
+    if @ecollect_response_template.approval_status == 'U' && (current_user == @ecollect_response_template.created_user || (can? :custom_approval_of_record, @ecollect_response_template))
+      EcollectResponseTemplate.where(id: @ecollect_response_template.id).update_all(approval_status: "A")
+      @ecollect_response_template.ecol_resp_parameters.where(approval_status: "U").update_all(approval_status: "A")
+      @ecollect_response_template.ecol_resp_matrices.where(approval_status: "U").update_all(approval_status: "A")
+      UnapprovedRecord.where(approvable_id:  @ecollect_response_template.id, approvable_type: "EcollectResponseTemplate").delete_all
+
+      flash[:alert] = "Ecollect Response Template Approved successfully"
+      redirect_to "/ecollect_response_templates/#{@ecollect_response_template.id}"
+    else
+      flash[:notice] = "Sorry you don't have Privilege to Approve the ECollect Response Template!"
+      redirect_to "/"
+    end
+  end
+  
 	def show
     @ecollect_response_template = EcollectResponseTemplate.unscoped.find_by_id(params[:id])
   end

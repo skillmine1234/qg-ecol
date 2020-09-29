@@ -1,5 +1,6 @@
 class EcollectResponseTemplate < ActiveRecord::Base
 	self.table_name = "ecol_resp_templates"
+	audited
 
 	has_many :ecol_resp_parameters, class_name: 'EcolRespParameter', foreign_key: "response_template_id"
 	has_many :ecol_resp_matrices, class_name: 'EcolRespMatrix', foreign_key: "response_template_id"
@@ -11,4 +12,12 @@ class EcollectResponseTemplate < ActiveRecord::Base
 
 	belongs_to :created_user, :foreign_key =>'created_by', :class_name => 'User'
 	belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
+
+	validates_inclusion_of :step_name, :in => %w( VAL NOT )
+
+	after_create :create_entry_in_approval_tracker
+
+	def create_entry_in_approval_tracker
+  	UnapprovedRecord.create(approvable_id: self.id, approvable_type: "EcollectResponseTemplate")
+  end
 end

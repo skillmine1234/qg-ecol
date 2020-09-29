@@ -120,7 +120,7 @@ class EcollectRequestTemplatesController < ApplicationController
       flash[:alert] = "Ecollect Request Template Approved successfully"
       redirect_to "/ecollect_request_templates/#{@ecollect_request_template.id}"
     else
-      flash[:notice] = "Sorry you don't have Privilege to Approve the ECollect Request Template"
+      flash[:notice] = "Sorry you don't have Privilege to Approve the ECollect Request Template!"
       redirect_to "/"
     end
   end

@@ -32,5 +32,4 @@ class EcollectRequestTemplate < ActiveRecord::Base
   		""
   	end
   end
-
 end

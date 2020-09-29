@@ -6,8 +6,11 @@
 = simple_form_for @ecollect_response_template, :html => {:class=>'form-horizontal', :autocomplete=>"off"} do |f|
   = hidden_field_tag :customer_code, params[:customer_code]
   = hidden_field_tag :step_name, params[:step_name]
-  = hidden_field_tag :ecol_resp_template_count, (@ecollect_response_templates.present? && @ecollect_response_templates.count == 10) ? true : false
   = hidden_field_tag :cust_code_exist, @customer_code_exist
+  - if f.object.new_record?
+    = f.hidden_field :created_by,value: current_user.id
+  - if f.object.id.present?
+    = f.hidden_field :updated_by,value: current_user.id
   - if @ecollect_response_template.errors.any?
     #msg-error
   .form-main{:style=>'width: 50%'}
@@ -49,7 +52,7 @@
     if($("#customer_code").val() == "" || !step_name.includes($("#step_name").val())) {
       $("#new_ecollect_response_template :input").prop("disabled", true);
     }
-    if($("#ecol_resp_template_count").val() == "true" || $("#cust_code_exist").val() == "false") {
+    if($("#cust_code_exist").val() == "false") {
       $("#new_ecollect_response_template :input").prop("disabled", true);
     }
     if($('#ecol-resp-parameters-form .nested-fields:visible').length > 10){

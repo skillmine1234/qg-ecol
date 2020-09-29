@@ -35,10 +35,12 @@ Rails.application.routes.draw do
       post :custom_approval_of_record
     end
   end
-  resources :ecollect_hash_templates
-  resources :ecollect_response_templates
-  resources :ecollect_request_parameters
-  resources :ecollect_encrypt_decrypts
+  resources :ecollect_response_templates do
+    member do
+      get :response_template_audit_logs
+      post :custom_approval_of_record
+    end
+  end
   
   get '/ecol_rule/:id/audit_logs' => 'ecol_rules#audit_logs'
   get '/ecol_customer/:id/audit_logs' => 'ecol_customers#audit_logs'
