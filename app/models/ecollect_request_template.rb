@@ -14,14 +14,14 @@ class EcollectRequestTemplate < ActiveRecord::Base
 	belongs_to :updated_user, :foreign_key =>'updated_by', :class_name => 'User'
 
 	validates_inclusion_of :step_name, :in => %w( VAL NOT )
-	after_create :create_entry_in_approval_tracker
+	after_create :create_entry_in_unapproved_record
 
 	def self.customer_code_exist(customer_code)
     ecol_customer_code = EcolCustomer.where(code: customer_code)
     return ecol_customer_code.present? ? true : false
   end
 
-  def create_entry_in_approval_tracker
+  def create_entry_in_unapproved_record
   	UnapprovedRecord.create(approvable_id: self.id, approvable_type: "EcollectRequestTemplate")
   end
 

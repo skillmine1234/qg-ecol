@@ -64,6 +64,8 @@ class EcollectResponseTemplatesController < ApplicationController
       track_ecol_resp_changes = (resp_template_fields & resp_template_changes).any?
       if @ecollect_response_template.approval_status == 'U' && (current_user == @ecollect_response_template.created_user || (can? :edit, @ecollect_response_template))
         track_ecol_resp_changes == true ? @ecollect_response_template.save! : @ecollect_response_template.save_without_auditing
+        unapproved_record_exist = UnapprovedRecord.where(approvable_id: @ecollect_response_template.id, approvable_type: "EcollectResponseTemplate")
+        UnapprovedRecord.create(approvable_id: @ecollect_response_template.id, approvable_type: "EcollectResponseTemplate") if unapproved_record_exist.blank?
         flash[:alert] = 'ECollect Response Template modified successfully'
         redirect_to @ecollect_response_template
       else

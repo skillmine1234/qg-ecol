@@ -15,9 +15,9 @@ class EcollectResponseTemplate < ActiveRecord::Base
 
 	validates_inclusion_of :step_name, :in => %w( VAL NOT )
 
-	after_create :create_entry_in_approval_tracker
+	after_create :create_entry_in_unapproved_record
 
-	def create_entry_in_approval_tracker
+	def create_entry_in_unapproved_record
   	UnapprovedRecord.create(approvable_id: self.id, approvable_type: "EcollectResponseTemplate")
   end
 end
