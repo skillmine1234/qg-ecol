@@ -118,7 +118,7 @@ class EcollectRequestTemplatesController < ApplicationController
       UnapprovedRecord.where(approvable_id:  @ecollect_request_template.id, approvable_type: "EcollectRequestTemplate").delete_all
 
       flash[:alert] = "Ecollect Request Template Approved successfully"
-      redirect_to "/ecollect_request_templates/#{@ecollect_request_template.id}"
+      redirect_to unapproved_records_path(group_name: "e-collect",sc_service:"ECOL")
     else
       flash[:notice] = "Sorry you don't have Privilege to Approve the ECollect Request Template!"
       redirect_to "/"
@@ -127,10 +127,6 @@ class EcollectRequestTemplatesController < ApplicationController
 
   def show
     @ecollect_request_template = EcollectRequestTemplate.unscoped.find_by_id(params[:id])
-  end
-
-  def approve
-    redirect_to unapproved_records_path(group_name: 'e-collect')
   end
 
   private

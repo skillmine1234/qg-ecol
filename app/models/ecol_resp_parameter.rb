@@ -13,3 +13,5 @@ class EcolRespParameter < ActiveRecord::Base
 		end
   end
 end
+
+

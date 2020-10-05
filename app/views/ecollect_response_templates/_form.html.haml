@@ -11,8 +11,11 @@
     = f.hidden_field :created_by,value: current_user.id
   - if f.object.id.present?
     = f.hidden_field :updated_by,value: current_user.id
-  - if @ecollect_response_template.errors.any?
-    #msg-error
+  .control-group
+    - if @ecollect_response_template.errors.any?
+      #msg-error
+        %center
+          %p{:style => "color:#CC0000;"} Ecollect Response Template already exist with Customer Code as "#{f.object.client_code}" and Response Code as "#{f.object.response_code}"
   .form-main{:style=>'width: 50%'}
     .control-group
       = f.label :client_code, "Customer Code", :class => 'control-label', :class => 'control-label required'
@@ -27,8 +30,6 @@
     .control-group
       = f.label :response_code, "Response Code", :class => 'control-label', :class => 'control-label required'
       = f.select :response_code, [ '200', '400','404','500','NETWORK TIMEOUT','ERROR'], {:include_blank => 'Select Response Code'}
-      #msg-error
-        = error_message_for(@ecollect_response_template, :response_code, :prepend_text => "")
   %hr{:style => "border: none;height: 1px;background-color: lightgray;width:1350px;"}   
   #ecol-resp-parameters-form
     = f.fields_for :ecol_resp_parameters do |ecol_resp_parameter|
