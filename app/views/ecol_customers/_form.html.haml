@@ -287,6 +287,11 @@
       = f.text_field :notify_retry_count
       #msg-error
         = error_message_for(@ecol_customer, :notify_retry_count, :prepend_text => "")
+    .control-group
+      = f.label :return_on_credit_failed, "Return on Credit Failed", :class => 'control-label'
+      = f.check_box :return_on_credit_failed, {},"Y","N"
+      #msg-error
+        = error_message_for(@ecol_customer, :return_on_credit_failed, :prepend_text => "")
   %h1 Validation Step
   = link_to 'ECollect Request Template', new_ecollect_request_template_path(customer_code: @ecol_customer.code,step_name: "Validate"),target: "_blank",:style => "padding-left: 5px;"
   |
