@@ -1,9 +1,4 @@
-Rails.application.routes.draw do
-  resources :qg_ecol_todays_rtgs_txns
-  resources :qg_ecol_todays_neft_txns
-  resources :qg_ecol_todays_imps_txns
-  resources :qg_ecol_todays_upi_txns
-  
+Rails.application.routes.draw do  
   resources :ecol_customers
   resources :ecol_remitters
   resources :ecol_transactions do
@@ -60,55 +55,9 @@ Rails.application.routes.draw do
   get '/udf_attribute/:id/audit_logs' => 'udf_attributes#audit_logs'
   put '/udf_attribute/:id/approve' => "udf_attributes#approve"
   
-  operation_routes_for 'ecol_va_transfers'
-
-  resources :ecol_va_txns, :ecol_va_earmarks, :ecol_va_transfers do
-    collection do
-      put :index
-    end
-  end
-  
-  resources :ecol_va_earmarks do
-    collection do
-      put :index
-    end
-  end
-
-  
-  resources :ecol_va_accounts do
-    member do
-      get :show
-      get :acct_txns
-    end
-    resources :ecol_va_txns do
-      collection do
-        put :index
-      end
-    end
-    resources :ecol_va_earmarks do
-      collection do
-        put :index
-      end
-      resources :ecol_va_txns do
-        collection do
-          put :index
-        end        
-      end
-    end
-  end
-  
   resources :ecol_vacd_incoming_records do
     collection do
       put :index
-    end
-  end
-  
-  resources :ecol_va_memo_txns do
-    collection do
-      put :index
-    end
-    member do
-      put :approve
     end
   end
   

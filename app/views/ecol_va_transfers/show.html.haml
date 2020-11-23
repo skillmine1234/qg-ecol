@@ -1,6 +1,0 @@
-- panel = [[],[],[]]
-- panel[0] << {title: 'Request', height: '100px', fields: [:account_no, :req_timestamp]}
-- panel[0] << {title: 'Request', height: '100px', fields: [:status_code, :rev_unblock_status, :steps]}
-- panel[1] << {title: 'Details', height: '500px', fields: [:external_req_no, :hold_no, :transfer_type, :transfer_amount, :bene_account_no, :bene_account_ifsc, :bene_account_name, :rmtr_bene_note, :picked_at, :bank_ref_no, :reconciled_at, :returned_at, :rev_unblock_va_txn_id]}
-
-= render partial: 'shared/show', locals: {record: @record, toolbar: nil, panel: panel}

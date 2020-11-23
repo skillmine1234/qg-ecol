@@ -1,8 +1,0 @@
-= search_form_for @searcher do |f|
-  = f.standard_fields
-  = f.input :account_no
-  = f.input :txn_type, as: :enum
-  = f.input :txn_amount, as: :between
-  = f.action_buttons
-= "Total Count: #{@records.count}"
-= will_paginate @records, :page_links => true
