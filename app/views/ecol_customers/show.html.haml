@@ -337,6 +337,11 @@
               = @ecol_customer.notify_retry_count.to_i
             %td
           %tr
+            %td.label Return on Credit Failed
+            %td.value
+              = @ecol_customer.return_on_credit_failed
+            %td
+          %tr
             %td.label Created By
             %td.value
               = @ecol_customer.created_user.try(:username)
