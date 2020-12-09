@@ -33,6 +33,6 @@
         = f.text_field :format
       .control-group
         = f.label :custom_function, "Custom Function", :class => 'control-label', :class => 'control-label required'
-        = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE'], {:include_blank => 'Select Custom Function'}
+        = f.select :custom_function, ['TRANSFER_TYPE_CONVERSION', 'TRANSFER_TYPE_CONVERSION_NUM','STATUS_TYPE','TIME_IN_SECS_FROM_EPOCH','TIME_IN_TICKS_FROM_EPOCH','REMOVE_SPECIAL_CHARACTERS','CUSTOMER_IDENTIFIER','COMPANY_CODE','GET_GST_AMOUNT','BENE_ACCOUNT_NO_SUFFIX','BENE_ACCOUNT_NO_15_CHARS','TRANSFER_TYPE_NUM','REMOVE_SLASH_HYPHEN_QUOTES_CHARACTERS','REMOVE_COMMA_QUOTES_HASH_CHARACTERS','ALLOW_ALPHA_NUM_DOT_HYPHEN_COMMA','ALLOW_ALPHA_NUM_DOT_HYPHEN_COMMA_RMTR_ADDR','CURRENT_DATE_IN_YYYY_MM_DD','REMOVE_AMPERSAND','ALLOW_ALPHA_NUM_DOUBLE_QUOTES_DOT_RMTR_NOTE','CONVERSION_IN_PAISA','IGNORE_FIRST_6_DIGITS'], {:include_blank => 'Select Custom Function'}
       .control-group
         = link_to_remove_association 'x', f, data: { confirm: 'Are you sure that you want to remove this?' },class: "ecollect-req-parameter-remove-entry btn btn-danger",style: "position: relative;left: 478px;bottom: 88px;"
