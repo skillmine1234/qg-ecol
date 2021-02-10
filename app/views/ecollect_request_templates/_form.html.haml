@@ -284,7 +284,7 @@
     if($('#ecol-hash-parameters-form .nested-fields:visible').length > 10){
       $('#ecol-hash-parameters-form .links a').hide();
     }
-    if($('#ecol-request-parameters-form .nested-fields:visible').length > 20){
+    if($('#ecol-request-parameters-form .nested-fields:visible').length > 50){
       $('#ecol-request-parameters-form .links a').hide();
     }
     if($('#ecol-hash-parameters-form .nested-fields:visible').length == 1){
@@ -316,9 +316,9 @@
      ecol_hash_param_check_to_hide_or_show_add_link();
 
      function ecol_req_param_check_to_hide_or_show_add_link() {
-       if ($('#ecol-request-parameters-form .nested-fields:visible').length == 20) {
+       if ($('#ecol-request-parameters-form .nested-fields:visible').length == 50) {
          $('#ecol-request-parameters-form .links a').hide();
-         alert("Only 20 forms can be added for Request Parameter")
+         alert("Only 50 forms can be added for Request Parameter")
        } else {
          $('#ecol-request-parameters-form .links a').show();
        }
