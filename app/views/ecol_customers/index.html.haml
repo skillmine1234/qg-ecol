@@ -19,6 +19,7 @@
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
     %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
       Customer Name
     %th{:style=>'text-align:left; background-color: lightblue;'}
       Enabled?
@@ -46,6 +47,8 @@
           = link_to 'Show', ecol_customer
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecol_customer_path(ecol_customer)
+        %td{:style=>'text-align:left;'}
+          = link_to 'Templates',"#"  
         %td{:style=>'text-align:left;'}
           - if ecol_customer.approval_status == 'U'
             = link_to 'Cancel', ecol_customer, :method => :delete, :data => { :confirm => 'Are you sure?' }
