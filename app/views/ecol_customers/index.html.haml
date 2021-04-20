@@ -48,7 +48,7 @@
         %td{:style=>'text-align:left;'}
           = link_to 'Edit', edit_ecol_customer_path(ecol_customer)
         %td{:style=>'text-align:left;'}
-          = link_to 'Templates',"#"  
+          = link_to 'Templates',ecollect_request_templates_path(:search=> true,:client_code=>ecol_customer.code)
         %td{:style=>'text-align:left;'}
           - if ecol_customer.approval_status == 'U'
             = link_to 'Cancel', ecol_customer, :method => :delete, :data => { :confirm => 'Are you sure?' }

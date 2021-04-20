@@ -11,7 +11,11 @@ class EcollectRequestTemplatesController < ApplicationController
     #   ecollect_request_templates = find_dp_esb_mappers(params).order("id DESC")
     # else
       # ecollect_request_templates = EcollectRequestTemplate.order("id desc")
+      if params[:search] == "true"
+        ecollect_request_templates = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcollectRequestTemplate.unscoped.where("approval_status =? and client_code=?",'U',params[:client_code]).order("id desc") : EcollectRequestTemplate.where(approval_status: "A",client_code: params[:client_code]).order("id desc")
+      else
       ecollect_request_templates = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcollectRequestTemplate.unscoped.where("approval_status =?",'U').order("id desc") : EcollectRequestTemplate.where(approval_status: "A").order("id desc")
+    end
     # end
     @ecollect_request_templates = ecollect_request_templates.paginate(:per_page => 10, :page => params[:page]) rescue []
   end
