@@ -56,7 +56,7 @@
       .form-main{:style=>'width: 50%'}  
         .control-group
           = ecollect_encrypt_decrypt.label :algorithm, "Algorithm", :class => 'control-label', :class => 'control-label required'
-          = ecollect_encrypt_decrypt.select :algorithm, [ 'AES/ECB/PKCS5PADDING','AES/CBS/PKCS5padding' ],{:include_blank => 'Select Algorithm'}
+          = ecollect_encrypt_decrypt.select :algorithm, [ 'AES/ECB/PKCS5PADDING','AES/CBS/PKCS5Padding' ],{:include_blank => 'Select Algorithm'}
         .control-group
           = ecollect_encrypt_decrypt.label :decrypt_response, "Decrypt Response", :class => 'control-label', :class => 'control-label required'
           = ecollect_encrypt_decrypt.check_box :decrypt_response,{},1,0
