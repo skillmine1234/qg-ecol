@@ -10,7 +10,7 @@ class EcollectResponseTemplatesController < ApplicationController
     # if params[:advanced_search].present?
     #   ecollect_request_templates = find_dp_esb_mappers(params).order("id DESC")
     # else
-      ecollect_response_templates = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcollectResponseTemplate.unscoped.where("approval_status =?",'U').order("id desc") : EcollectResponseTemplate.where(approval_status: "A").order("id desc")
+      ecollect_response_templates = (params[:approval_status].present? and params[:approval_status] == 'U') ? EcollectResponseTemplate.unscoped.where("approval_status =? and client_code=?",'U',params[:client_code]).order("id desc") : EcollectResponseTemplate.where(approval_status: "A",client_code: params[:client_code]).order("id desc")
     # end
     @ecollect_response_templates = ecollect_response_templates.paginate(:per_page => 10, :page => params[:page]) rescue []
   end
