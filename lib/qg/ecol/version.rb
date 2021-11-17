@@ -1,5 +1,5 @@
 module Qg
   module Ecol
-    VERSION = "11.6.0"
+    VERSION = "12.0.0"
   end
 end
