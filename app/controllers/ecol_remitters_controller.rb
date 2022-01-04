@@ -82,7 +82,7 @@ class EcolRemittersController < ApplicationController
     :rmtr_email, :rmtr_mobile, :invoice_no, :invoice_amt, :invoice_amt_tol_pct, :min_credit_amt, :max_credit_amt,
     :due_date, :due_date_tol_days, :udf1, :udf2, :udf3, :udf4, :udf5, :udf6, :udf7, :udf8, :udf9, :udf10, :udf11,
     :udf12, :udf13, :udf14, :udf15, :udf16, :udf17, :udf18, :udf19, :udf20, :created_by, :updated_by, :lock_version,
-    :approved_id, :approved_version, :is_enabled, :additional_mobile_nos, :additional_email_ids,:credit_type)
+    :approved_id, :approved_version, :is_enabled, :additional_mobile_nos, :additional_email_ids)
   end
   
 end

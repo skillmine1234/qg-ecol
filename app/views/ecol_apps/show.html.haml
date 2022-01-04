@@ -24,13 +24,7 @@
             %td.value
               = @ecol_app.customer_code
             %td#msg-error
-              = error_message_for(@ecol_app, :customer_code, :prepend_text => "")
-          %tr
-            %td.label IS Enabled?
-            %td.value
-              = @ecol_app.is_enabled
-            %td#msg-error
-              = error_message_for(@ecol_app, :is_enabled, :prepend_text => "")     
+              = error_message_for(@ecol_app, :customer_code, :prepend_text => "")     
           %tr
             %td.label Validate URL
             %td.value
