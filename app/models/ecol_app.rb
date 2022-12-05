@@ -29,6 +29,7 @@ class EcolApp < ActiveRecord::Base
   validates_length_of :notify_url, maximum: 500, allow_blank: true
   validates_length_of :validate_url, maximum: 500, allow_blank: true
   validates_length_of :http_username, maximum: 50, allow_blank: true
+  validates :http_username, format: { with:  /\A[a-zA-Z0-9 ]+\z/ }
   validates_length_of :http_password, maximum: 50, allow_blank: true
   
   before_save :set_udfs_cnt
