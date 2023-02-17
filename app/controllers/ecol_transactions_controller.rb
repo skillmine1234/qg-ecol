@@ -17,8 +17,8 @@ class EcolTransactionsController < ApplicationController
     if params[:advanced_search].present? || params[:summary].present?
       ecol_transactions = find_ecol_transactions(ecol_transactions,params).order("id desc")
       @ecol_transactions_count = ecol_transactions.count(:id)
-      if params[:customer_code].present? && params[:status] == "VALIDATION FAILED"
-        @ecol_transactions = ecol_transactions.paginate(:per_page => 500, :page => params[:page]) rescue []
+      if (params[:customer_code].present? && params[:status] == "VALIDATION FAILED") || params[:status] == "VALIDATION FAILED"
+        @ecol_transactions = ecol_transactions.paginate(:per_page => ENV['ECOLL_TRANSACTION_DISPLAY_COUNT'], :page => params[:page]) rescue []
       else
         @ecol_transactions = ecol_transactions.paginate(:per_page => 25, :page => params[:page]) rescue []
       end  
