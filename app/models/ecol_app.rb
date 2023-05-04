@@ -17,6 +17,12 @@ class EcolApp < ActiveRecord::Base
   store :udf4, accessors: [:udf4_name, :udf4_type], coder: JSON
   store :udf5, accessors: [:udf5_name, :udf5_type], coder: JSON
 
+  validates_format_of :http_username, :with => /\A[^<>`^\[\]"#%{}|^~\\]*\z/,:message=>'Not allowed the special charachters <>%"`\~^[]%{}'
+  validates_format_of :customer_code, :with => /\A[^<>`^\[\]"#%{}|^~\\]*\z/,:message=>'Not allowed the special charachters <>%"`\~^[]%{}'
+  validates_format_of :http_password, :with => /\A[^<>`^\[\]"#%{}|^~\\]*\z/,:message=>'Not allowed the special charachters <>%"`\~^[]%{}'
+  validates_format_of :notify_url, :with => /\A[^<>`^\[\]"#%{}|^~\\]*\z/,:message=>'Not allowed the special charachters <>%"`\~^[]%{}'
+  validates_format_of :validate_url, :with => /\A[^<>`^\[\]"#%{}|^~\\]*\z/,:message=>'Not allowed the special charachters <>%"`\~^[]%{}'
+
   validates_presence_of :app_code
   validates_presence_of :customer_code, if: "EcolApp::STD_APP_CODES.include?(app_code)"
   validate :match_customer, if: "customer_code.present?"
@@ -39,6 +45,8 @@ class EcolApp < ActiveRecord::Base
   before_save :encrypt_password
   after_save :decrypt_password
   after_find :decrypt_password
+
+
   
   private
 
