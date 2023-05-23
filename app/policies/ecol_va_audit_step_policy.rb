@@ -1,2 +1,2 @@
-class EcolVaAuditStepPolicy < GmOperationPolicy
+class EcolVaAuditStepPolicy < EcolOperationPolicy
 end
