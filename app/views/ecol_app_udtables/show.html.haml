@@ -1,0 +1,70 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 E-Collect App UDTable 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecol_app_udtable
+        %a.btn{:href => "#{!(can) ? '#' : '/ecol_app_udtables/' + @ecol_app_udtable.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'unapproved_records/approve', :@record => @ecol_app_udtable
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@ecol_app_udtable.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@ecol_app_udtable)}", :controller => :ecol_app_udtables, :action => :audit_logs, :version_id => audit_count(@ecol_app_udtable), :id => @ecol_app_udtable.id
+          %tr
+            %td.label App Code
+            %td.value
+              = @ecol_app_udtable.app_code
+            %td
+          %tr
+            %td.label
+              = get_humanized_label(@ecol_app_udtable.ecol_app.udf1_name)
+            %td.value
+              = @ecol_app_udtable.udf1
+            %td
+          %tr
+            %td.label
+              = get_humanized_label(@ecol_app_udtable.ecol_app.udf2_name)
+            %td.value
+              = @ecol_app_udtable.udf2
+            %td
+          %tr
+            %td.label
+              = get_humanized_label(@ecol_app_udtable.ecol_app.udf3_name)
+            %td.value
+              = @ecol_app_udtable.udf3
+            %td
+          %tr
+            %td.label
+              = get_humanized_label(@ecol_app_udtable.ecol_app.udf4_name)
+            %td.value
+              = @ecol_app_udtable.udf4
+            %td
+          %tr
+            %td.label
+              = get_humanized_label(@ecol_app_udtable.ecol_app.udf5_name)
+            %td.value
+              = @ecol_app_udtable.udf5
+            %td
+          %tr
+            %td.label Created By
+            %td.value
+              = @ecol_app_udtable.created_user.try(:username)
+            %td
+          %tr
+            %td.label Updated By
+            %td.value
+              = @ecol_app_udtable.updated_user.try(:username)
+            %td
+          %tr
+            %td.label Created At
+            %td.value
+              = @ecol_app_udtable.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_app_udtable.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td

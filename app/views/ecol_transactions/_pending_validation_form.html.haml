@@ -1,0 +1,51 @@
+- if check_pending_validation(@ecol_transaction)
+  %a.btn{"data-toggle" => "modal", :href => "#myModalretry", :role => "button", :class => "btn btn-primary"} APPROVE VALIDATION
+
+  %a.btn{"data-toggle" => "modal", :href => "#myModalreject", :role => "button", :class => "btn btn-primary"} REJECT VALIDATION
+
+  .modal.hide.fade{"id" => "myModalretry", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel  APPROVE TRANSACTION
+      #error_message{:style => 'color:red'}
+    .modal-body
+      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:status=>"pending"), :method=>:put, :html=>{} do |ef|
+        = hidden_field_tag(:state, state)
+        = submit_tag "APPROVE TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
+
+  .modal.hide.fade{"id" => "myModalreject", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel  REJECT TRANSACTION
+      #error_message{:style => 'color:red'}
+    .modal-body
+      = simple_form_for @ecol_transaction,:url=>pending_validation_ecol_transaction_path(:status=>"reject"),:method=>:put, :html=>{} do |ef|
+        = hidden_field_tag(:state, state)
+        = submit_tag "REJECT TRANSACTION", :class=>"btn btn-primary transition_button", :id => "transition_button"
+- else
+  - can = can? :approve, @ecol_transaction
+  - chk_option = can == true ? '' : 'disabled'
+
+  %a.btn{"data-toggle" => "modal", :href => "#myModalapprove", :role => "button", :class => "btn btn-primary #{chk_option}"} APPROVE
+
+  %a.btn{"data-toggle" => "modal", :href => "#myModalrejecttrans", :role => "button", :class => "btn btn-primary #{chk_option}"} REJECT
+  
+  .modal.hide.fade{"id" => "myModalapprove", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel  APPROVE TRANSACTION
+      #error_message{:style => 'color:red'}
+    .modal-body
+      = simple_form_for @ecol_transaction,:url=>approve_ecol_trans_ecol_transaction_path, :method=>:put, :html=>{} do |ef|
+        = hidden_field_tag(:state, state)
+        = submit_tag "APPROVE", :class=>"btn btn-primary transition_button", :id => "transition_button"   
+
+  .modal.hide.fade{"id" => "myModalrejecttrans", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel  APPROVE TRANSACTION
+      #error_message{:style => 'color:red'}
+    .modal-body
+      = simple_form_for @ecol_transaction,:url=>approve_ecol_trans_ecol_transaction_path(:reject=>true), :method=>:put, :html=>{} do |ef|
+        = hidden_field_tag(:state, state)
+        = submit_tag "REJECT", :class=>"btn btn-primary transition_button", :id => "transition_button"         

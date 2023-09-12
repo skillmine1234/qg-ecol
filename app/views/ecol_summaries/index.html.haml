@@ -1,0 +1,51 @@
+%br
+%br
+%h1 E-Collect Transaction Summary
+%br
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead 
+    %th{:style=>'text-align:left; background-color: lightblue; width: 500px;'}
+      Status
+    %th{:style=>'text-align:left; background-color: lightblue; width: 500px;'}
+      Pending Approval
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Total
+  .tbody
+    - @ecol_transaction_statuses.each do |s|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = s 
+        %td{:style=>'text-align:left;'}
+          = link_to txn_summary_count(@ecol_transaction_summary, [s,'Y']), ecol_transactions_path({:status => s, :pending => 'Y', :summary => true})
+        %td{:style=>'text-align:left;'}
+          = link_to txn_summary_count(@ecol_transaction_summary, [s, 'Y']) + txn_summary_count(@ecol_transaction_summary, [s, 'N']) + txn_summary_count(@ecol_transaction_summary, [s, nil]), ecol_transactions_path({:status => s, :summary => true})
+    %tr
+      %td{:style=>'text-align:left;'}
+        = 'ALL'
+      %td{:style=>'text-align:left;'}
+        = link_to @total_pending_records, ecol_transactions_path({:pending => 'Y', :summary => true})
+      %td{:style=>'text-align:left;'}
+        = link_to @total_records, ecol_transactions_path
+				
+%br
+%br
+%h1 Notification Summary
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead 
+    %th{:style=>'text-align:left; background-color: lightblue; width: 500px;'}
+      Notification Status
+    %th{:style=>'text-align:left; background-color: lightblue; width: 500px;'}
+      Pending Approval
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Total
+  .tbody
+    - @ecol_notify_statuses.each do |s|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = s 
+        %td{:style=>'text-align:left;'}
+          = link_to txn_summary_count(@ecol_notify_summary, [s,'Y']), ecol_transactions_path({:notification_status => s, :pending => 'Y', :summary => true})
+        %td{:style=>'text-align:left;'}
+          = link_to txn_summary_count(@ecol_notify_summary, [s, 'Y']) + txn_summary_count(@ecol_notify_summary, [s, 'N']) + txn_summary_count(@ecol_notify_summary, [s, nil]), ecol_transactions_path({:notification_status => s, :summary => true})

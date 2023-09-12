@@ -1,0 +1,51 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;  height:690px;'}
+    #form-details
+      %h3 E-Collect VACD Incoming Record
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px;'}
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        %tr
+          %td.label Version
+          %td.value
+            = link_to "#{audit_count(@ecol_record.incoming_file_record)}", :controller => :cc_incoming_records, :action => :audit_logs, :version_id => audit_count(@ecol_record.incoming_file_record), :id => @ecol_record.incoming_file_record_id
+        %tr
+          %td.label Record Text
+          %td.value
+            - if @ecol_record.incoming_file_record.record_txt.nil?
+              .span{:class =>"has-tooltip", "data-toggle" => 'tooltip',"title" => "No Record Text Available for this record", "data-placement" => 'bottom', "data-html" => true}
+                Show Record Text
+            - else
+              = link_to "Show Record Text", "#", :class => 'show_record_text', :href => "#recordText", data: { record_txt: @ecol_record.incoming_file_record.record_txt} 
+        %tr
+          %td.label File Name 
+          %td.value
+            = @ecol_record.file_name
+        %tr
+          %td.label Account No.
+          %td.value
+            = @ecol_record.account_no
+        %tr
+          %td.label Txn Amount
+          %td.value
+            = @ecol_record.txn_amount
+        %tr
+          %td.label Txn Type
+          %td.value
+            = @ecol_record.txn_type
+        %tr
+          %td.label Txn Description
+          %td.value
+            = @ecol_record.txn_desc
+
+#recordText.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3 Record Text
+    #error_message{:style => 'color:red'}
+  .modal-body{:style => "max-height:450px;"}
+    .demo-area
+      %button#d_clip_button1.my_clip_button1{"data-clipboard-target" => "record_txt"}
+        %b Copy To Clipboard...
+    %pre#record_txt{:style => 'word-wrap: break-word'}
+      .reply{:style => 'word-wrap: break-word'}

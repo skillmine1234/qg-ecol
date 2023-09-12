@@ -1,0 +1,79 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 E-Collect App Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecol_app
+        %a.btn{:href => "#{!(can) ? '#' : '/ecol_apps/' + @ecol_app.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'approve', :@record => @ecol_app
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@ecol_app.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@ecol_app)}", :controller => :ecol_apps, :action => :audit_logs, :version_id => audit_count(@ecol_app), :id => @ecol_app.id
+          %tr
+            %td.label App Code
+            %td.value
+              = @ecol_app.app_code
+            %td#msg-error
+              = error_message_for(@ecol_app, :app_code, :prepend_text => "")
+          %tr
+            %td.label Customer Code
+            %td.value
+              = @ecol_app.customer_code
+            %td#msg-error
+              = error_message_for(@ecol_app, :customer_code, :prepend_text => "")     
+          %tr
+            %td.label Validate URL
+            %td.value
+              = @ecol_app.validate_url
+            %td#msg-error
+              = error_message_for(@ecol_app, :validate_url, :prepend_text => "")
+          %tr
+            %td.label Notify URL
+            %td.value
+              = @ecol_app.notify_url
+            %td#msg-error
+              = error_message_for(@ecol_app, :notify_url, :prepend_text => "")
+          %tr
+            %td.label Username
+            %td.value
+              = @ecol_app.http_username
+            %td#msg-error
+              = error_message_for(@ecol_app, :http_username, :prepend_text => "")
+          %tr
+            %td.label E-Collect UDTable Records
+            %td.value
+              = link_to_unless (@ecol_app.udfs_cnt == 0), @ecol_app.ecol_app_udtables.count, udtables_path(app_code: @ecol_app.app_code)
+            %td
+          %tr
+            %td.label Created At
+            %td.value
+              = @ecol_app.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_app, :created_at, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_app.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_app, :updated_at, :prepend_text => "")
+          %tr
+            - if @ecol_app.settings_cnt.present? and @ecol_app.settings_cnt > 0
+              %table.table.datatable{style: 'width: 50%'}
+                %thead
+                  %tr
+                    %th Setting Name
+                    %th Setting Value
+                %tbody
+                  - (1..@ecol_app.settings_cnt).each do |i|
+                    %tr
+                      %td
+                        = @ecol_app.send("setting#{i}_name")
+                      %td
+                        - if @ecol_app.send("setting#{i}_type") == 'password' && @ecol_app.approval_status == 'A'
+                          = '*****'
+                        - else
+                          = @ecol_app.send("setting#{i}_value")

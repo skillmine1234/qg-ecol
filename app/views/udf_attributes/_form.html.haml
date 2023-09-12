@@ -1,0 +1,70 @@
+= simple_form_for @udf_attribute, :html => {:class=>'form-horizontal', :autocomplete=>"off", :id => "udf_attribute_form"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@udf_attribute, :base, :prepend_text => "")
+  .form-main
+    = f.hidden_field :lock_version
+    = f.hidden_field :approved_id
+    = f.hidden_field :approved_version
+    .control-group
+      = f.label :class_name, "*Class Name", :class => 'control-label'
+      = f.select :class_name, options_for_select([['EcolRemitter','EcolRemitter']], @udf_attribute.class_name), {:include_blank => "Select"}
+      #msg-error
+        = error_message_for(@udf_attribute, :class_name, :prepend_text => "")
+    .control-group
+      = f.label :attribute_name, "*Attribute Name", :class => 'control-label'
+      = f.select :attribute_name, options_for_select(UdfAttribute.options_for_attribute_name(f.object.attribute_name), @udf_attribute.attribute_name), {:include_blank => "Select"}
+      #msg-error
+        = error_message_for(@udf_attribute, :attribute_name, :prepend_text => "")
+    .control-group
+      = f.label :is_enabled, "Is Enabled ?", :class => 'control-label'
+      = f.check_box :is_enabled, {},"Y","N"
+      #msg-error
+        = error_message_for(@udf_attribute, :is_enabled, :prepend_text => "")
+    .control-group
+      = f.label :label_text, "Label Text", :class => 'control-label'
+      = f.text_field :label_text
+      #msg-error
+        = error_message_for(@udf_attribute, :label_text, :prepend_text => "")
+    .control-group
+      = f.label :is_mandatory, "Is Mandatory?", :class => 'control-label'
+      = f.check_box :is_mandatory, {},"Y","N"
+      #msg-error
+        = error_message_for(@udf_attribute, :is_mandatory, :prepend_text => "")
+    .control-group
+      = f.label :control_type, "Control Type", :class => 'control-label'
+      = f.select :control_type, options_for_select(UdfAttribute::CONTROL_TYPES, @udf_attribute.control_type),   :include_blank =>  "Select"
+      #msg-error
+        = error_message_for(@udf_attribute, :control_type, :prepend_text => "")
+    .control-group
+      = f.label :data_type, "Data Type", :class => 'control-label'
+      = f.select :data_type, options_for_select(UdfAttribute::DATA_TYPES, @udf_attribute.data_type),  :include_blank =>  "Select"
+      #msg-error
+        = error_message_for(@udf_attribute, :data_type, :prepend_text => "")
+    - UdfAttribute::TextValidators.each do |k,v|
+      .control-group
+        = f.label k, label_value(k), :class => 'control-label'
+        = f.text_field k, :as => v.first, :input_html => { :style => "width: 250px" }, :class => 'control-group' , :maxlength => 15
+        #msg-error
+          = error_message_for(@udf_attribute, k.to_sym, :prepend_text => "")
+    - UdfAttribute::NumericValidators.each do |k,v|
+      .control-group
+        = f.label k, label_value(k), :class => 'control-label'
+        = f.text_field k, :as => v.first, :input_html => { :style => "width: 250px" }, :class => 'control-group', :maxlength => 15
+        #msg-error
+          = error_message_for(@udf_attribute, k.to_sym, :prepend_text => "")
+    .control-group
+      = f.label :select_options, "Select Options", :class => 'control-label'
+      = f.text_area :select_options,:style => 'height:200px', :value => @udf_attribute.select_options
+      #msg-error
+        = error_message_for(@udf_attribute, :select_options, :prepend_text => "")
+    .control-group
+      = label_tag "", nil, :class => 'control-label'
+      %p{:style => 'color:green;'}
+        = "eg: For Gender the options could be <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Male\": \"01\" <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; \"Female\": \"02\"".html_safe
+  .form-actions
+    - (f.object.new_record? and f.object.class_name.nil?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_udf', :value => label_name + ' UDF Attribute'
+    = link_to :Cancel,'/udf_attributes', :name => 'cancel', :class=>"cancel btn"
+        

@@ -1,0 +1,58 @@
+- if type == 'validation'
+  - if check_pending_validation(@ecol_transaction)
+    .modal.hide.fade{"id" => "myModalOverrideValidation", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h3#myModalLabel Override Validation
+        .modal-body
+        = simple_form_for :ecol_transaction, :url => url_for(:action => 'pending_validation', :controller => 'ecol_transactions'), :method=>:put, :html=>{} do |ef|
+          = label_tag "Status", "Status", :class => 'control-label'
+          = select_tag :status, options_for_select([['VALIDATED: OK','VALIDATED: OK'],['VALIDATED: REJECTED','VALIDATED: REJECTED']],params[:status]),:prompt => 'ANY'
+          %br
+          = label_tag "Remarks", "Remarks", :class => 'control-label'
+          = text_area_tag :remarks
+          %br
+          = submit_tag "Submit", :class=>"btn btn-primary override_button", :id => "override_button"
+  - else
+    - can = can? :approve, @ecol_transaction
+    - chk_option = can == true ? '' : 'hidden'
+    - status = @ecol_transaction.intermidiate_transaction_state == "VALIDATIONFAILED_APPROVAL_PENDING" ?  "VALIDATED: OK" : "VALIDATED: REJECTED"
+    - text = @ecol_transaction.intermidiate_transaction_state == "VALIDATIONFAILED_APPROVAL_PENDING" ? "CREDIT" : "RETURN"
+    %a.btn{"data-toggle" => "modal", :href => "#myModalapprove", :role => "button", :class => "btn btn-primary #{chk_option}"} APPROVE #{text}
+
+    %a.btn{"data-toggle" => "modal", :href => "#myModalrejecttrans", :role => "button", :class => "btn btn-primary #{chk_option}"} REJECT
+    
+    .modal.hide.fade{"id" => "myModalapprove", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h3#myModalLabel  APPROVE REQUEST
+        #error_message{:style => 'color:red'}
+      .modal-body
+        = simple_form_for @ecol_transaction,:url=>override_transaction_ecol_transaction_path, :method=>:put, :html=>{} do |ef|
+          = hidden_field_tag(:status, status)
+          = hidden_field_tag(:remarks, @ecol_transaction.remarks)
+          = submit_tag "APPROVE", :class=>"btn btn-primary transition_button", :id => "transition_button"
+    
+    .modal.hide.fade{"id" => "myModalrejecttrans", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+      .modal-header
+        %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+        %h3#myModalLabel  REJECT REQUEST
+        #error_message{:style => 'color:red'}
+      .modal-body
+        = simple_form_for @ecol_transaction,:url=>override_transaction_ecol_transaction_path(:reject=>true), :method=>:put, :html=>{} do |ef|
+          = submit_tag "REJECT", :class=>"btn btn-primary transition_button", :id => "transition_button"
+
+- elsif type == 'notification'
+  .modal.hide.fade{"id" => "myModalOverrideNotification", "aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+    .modal-header
+      %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+      %h3#myModalLabel Override Notification
+    .modal-body
+      = simple_form_for :ecol_transaction, :url => url_for(:action => 'override_transaction', :controller => 'ecol_transactions'), :method=>:put, :html=>{} do |ef|
+        = label_tag "Status", "Status", :class => 'control-label'
+        = select_tag :status, options_for_select([['NOTIFIED: OK','NOTIFIED: OK'],['NOTIFIED: REJECTED','NOTIFIED: REJECTED']],params[:status]),:prompt => 'ANY'
+        %br
+        = label_tag "Remarks", "Remarks", :class => 'control-label'
+        = text_area_tag :remarks
+        %br
+        = submit_tag "Submit", :class=>"btn btn-primary override_button", :id => "override_button"

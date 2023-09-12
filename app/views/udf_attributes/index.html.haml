@@ -1,0 +1,57 @@
+%br
+= link_to 'New UDF Attribute', new_udf_attribute_path
+%br
+%br
+%h1 Listing UDF Attributes
+%br
+= "Total Count: #{@udf_attributes_count}"
+%br
+= will_paginate @udf_attributes, :page_links => true
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Class Name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Attribute Name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Is Enabled?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Label Text
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Is Mandatory?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Control Type
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Data Type
+
+  .tbody
+    - @udf_attributes.each do |udf_attribute|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', udf_attribute
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_udf_attribute_path(udf_attribute)
+        %td{:style=>'text-align:left;'}
+          - if udf_attribute.approval_status == 'U'
+            = link_to 'Cancel', udf_attribute, :method => :delete, :data => { :confirm => 'Are you sure?' }
+          - else
+            = ""
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.class_name
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.attribute_name
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.is_enabled
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.label_text
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.is_mandatory
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.control_type
+        %td{:style=>'text-align:left;'}
+          = udf_attribute.data_type
+

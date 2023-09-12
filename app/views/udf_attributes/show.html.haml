@@ -1,0 +1,75 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      %h3 UDF Attribute Details
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @udf_attribute
+        %a.btn{:href => "#{!(can) ? '#' : '/udf_attributes/' + @udf_attribute.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'ecol_customers/approve', :@record => @udf_attribute
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@udf_attribute.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@udf_attribute)}", :controller => :udf_attributes, :action => :audit_logs, :version_id => audit_count(@udf_attribute), :id => @udf_attribute.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@udf_attribute, :base, :prepend_text => "")
+          %tr
+            %td.label Class Name
+            %td.value
+              = @udf_attribute.class_name
+            %td#msg-error
+              = error_message_for(@udf_attribute, :class_name, :prepend_text => "")
+          %tr
+            %td.label Attribute Name
+            %td.value
+              = @udf_attribute.attribute_name
+            %td#msg-error
+              = error_message_for(@udf_attribute, :attribute_name, :prepend_text => "")
+          %tr
+            %td.label Is Enabled?
+            %td.value
+              = @udf_attribute.is_enabled
+            %td#msg-error
+              = error_message_for(@udf_attribute, :is_enabled, :prepend_text => "")
+          %tr
+            %td.label Label Text
+            %td.value
+              = @udf_attribute.label_text
+            %td#msg-error
+              = error_message_for(@udf_attribute, :label_text, :prepend_text => "")
+          %tr
+            %td.label Is Mandatory?
+            %td.value
+              = @udf_attribute.is_mandatory
+            %td#msg-error
+              = error_message_for(@udf_attribute, :is_mandatory, :prepend_text => "")
+          %tr
+            %td.label Control Type
+            %td.value
+              = @udf_attribute.control_type
+            %td#msg-error
+              = error_message_for(@udf_attribute, :control_type, :prepend_text => "")
+          %tr
+            %td.label Data Type
+            %td.value
+              = @udf_attribute.data_type
+            %td#msg-error
+              = error_message_for(@udf_attribute, :data_type, :prepend_text => "")
+          %tr
+            %td.label Constraints
+            %td.value
+              = @udf_attribute.constraints              
+            %td#msg-error
+              = error_message_for(@udf_attribute, :constraints, :prepend_text => "")
+          %tr
+            %td.label Select Options
+            %td.value
+              = @udf_attribute.select_options
+            %td#msg-error
+              = error_message_for(@udf_attribute, :select_options, :prepend_text => "")

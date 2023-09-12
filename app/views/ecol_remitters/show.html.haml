@@ -1,0 +1,181 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8; height: 1000px'}
+    #form-details
+      %h3 E-Collect Remitter Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @ecol_remitter
+        %a.btn{:href => "#{!(can) ? '#' : '/ecol_remitters/' + @ecol_remitter.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'ecol_customers/approve', :@record => @ecol_remitter
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@ecol_remitter.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@ecol_remitter)}", :controller => :ecol_remitters, :action => :audit_logs, :version_id => audit_count(@ecol_remitter), :id => @ecol_remitter.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :base, :prepend_text => "")
+          %tr
+            %td.label Enabled?
+            %td
+              = @ecol_remitter.is_enabled
+            %td
+          %tr
+            %td.label Customer Code
+            %td.value
+              = @ecol_remitter.customer_code
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :customer_code, :prepend_text => "")
+    
+          %tr
+            %td.label Customer Sub Code
+            %td.value
+              = @ecol_remitter.customer_subcode
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :customer_subcode, :prepend_text => "")
+          %tr
+            %td.label Remitter Code
+            %td.value
+              = @ecol_remitter.remitter_code
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :remitter_code, :prepend_text => "")
+          %tr
+            %td.label Credit Accout No
+            %td.value
+              = @ecol_remitter.credit_acct_no
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :credit_acct_no, :prepend_text => "")
+          %tr
+            %td.label Customer Sub Code Email
+            %td.value
+              = @ecol_remitter.customer_subcode_email
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :customer_subcode_email, :prepend_text => "")
+          %tr
+            %td.label Customer Sub Code Mobile
+            %td.value
+              = @ecol_remitter.customer_subcode_mobile
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :customer_subcode_mobile, :prepend_text => "")
+          %tr
+            %td.label Remitter Name
+            %td.value
+              = @ecol_remitter.rmtr_name
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :rmtr_name, :prepend_text => "")
+          %tr
+            %td.label Remitter Address
+            %td.value
+              = @ecol_remitter.rmtr_address
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :rmtr_address, :prepend_text => "")
+          %tr
+            %td.label Remitter Account No
+            %td.value
+              = @ecol_remitter.rmtr_acct_no
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :rmtr_acct_no, :prepend_text => "")
+          %tr
+            %td.label Remitter Email
+            %td.value
+              = @ecol_remitter.rmtr_email
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :rmtr_email, :prepend_text => "")
+          %tr
+            %td.label Remitter Mobile
+            %td.value
+              = @ecol_remitter.rmtr_mobile
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :rmtr_mobile, :prepend_text => "")
+          %tr
+            %td.label Invoice No
+            %td.value
+              = @ecol_remitter.invoice_no
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :invoice_no, :prepend_text => "")
+          %tr
+            %td.label Invoice Amount
+            %td.value
+              = number_with_precision(@ecol_remitter.invoice_amt, :precision => 2) || 0
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :invoice_amt, :prepend_text => "")
+          %tr
+            %td.label Invoice Amount Tolerance (%)
+            %td.value
+              = @ecol_remitter.invoice_amt_tol_pct
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :invoice_amt_tol_pct, :prepend_text => "")
+          %tr
+            %td.label Minimum Credit Amount
+            %td.value
+              = number_with_precision(@ecol_remitter.min_credit_amt, :precision => 2) || 0
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :min_credit_amt, :prepend_text => "")
+          %tr
+            %td.label Maximum Credit Amount
+            %td.value
+              = number_with_precision(@ecol_remitter.max_credit_amt, :precision => 2) || 0
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :max_credit_amt, :prepend_text => "")
+          %tr
+            %td.label Invoice Due Date
+            %td.value
+              = @ecol_remitter.due_date
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :due_date, :prepend_text => "")
+          %tr
+            %td.label Invoice Due Date Tolerance (Days)
+            %td.value
+              = @ecol_remitter.due_date_tol_days
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :due_date_tol_days, :prepend_text => "")
+          %tr
+            %td.label Additional Mobile No's
+            %td.value
+              = @ecol_remitter.additional_mobile_nos
+            %td
+          %tr
+            %td.label Additional Email ID's
+            %td.value
+              = @ecol_remitter.additional_email_ids
+            %td
+          - @ecol_remitter.udfs.each do |c|
+            %tr
+              %td.label= c.label_text
+              - if c.control_type == 'DropDown'
+                %td.value
+                  = c.select_options_list.key(@ecol_remitter.send(c.attribute_name)).to_s
+              - else
+                %td.value
+                  = @ecol_remitter.send(c.attribute_name)
+
+              %td#msg-error
+                = error_message_for(@ecol_remitter, c.attribute_name.to_sym, :prepend_text => "")
+          %tr
+            %td.label Created By
+            %td.value
+              = @ecol_remitter.created_user.try(:username)
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :created_by, :prepend_text => "")
+          %tr
+            %td.label Updated By
+            %td.value
+              = @ecol_remitter.updated_user.try(:username)
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :updated_by, :prepend_text => "")
+          %tr
+            %td.label Created At
+            %td.value
+              = @ecol_remitter.created_at.utc.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :created_at, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @ecol_remitter.updated_at.utc.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@ecol_remitter, :updated_at, :prepend_text => "")

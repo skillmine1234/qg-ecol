@@ -1,0 +1,38 @@
+/ %br
+/ = link_to 'New ECollect Response Template', new_ecollect_response_template_path
+/ %br
+%br
+%h1 Listing ECollect Response Template
+/ %h2.collapsible
+/   Advanced Search
+/   %span.caret
+/ .collapsible-content
+/   = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@ecollect_response_templates.count}"
+= will_paginate @ecollect_response_templates, :page_links => true
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Response Template Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Response Code
+        
+  .tbody
+    - @ecollect_response_templates.each do |ecollect_response_template|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', ecollect_response_template_path(ecollect_response_template)
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_ecollect_response_template_path(ecollect_response_template) if ecollect_response_template.approval_status == "A"
+        %td{:style=>'text-align:left;'}
+          = ecollect_response_template.step_name.present? ? "RESP#{ecollect_response_template.step_name}-#{ecollect_response_template.id}" : ""
+        %td{:style=>'text-align:left;'}
+          = ecollect_response_template.client_code
+        %td{:style=>'text-align:left;'}
+          = ecollect_response_template.response_code
