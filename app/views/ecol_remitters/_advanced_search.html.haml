@@ -1,4 +1,4 @@
-= form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+= form_tag '', :method => 'post', :class => 'form-horizontal', :autocomplete=>"off" do
   .control-group
     = label_tag "Customer Code", "Customer Code", :class => 'control-label'
     = text_field_tag :customer_code, params[:customer_code]

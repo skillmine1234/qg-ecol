@@ -1,4 +1,4 @@
-= form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+= form_tag '', :method => 'post', :class => 'form-horizontal', :autocomplete=>"off" do
   = hidden_field_tag :approval_status, params[:approval_status]
   .control-group
     = label_tag "App Code", "App Code", :class => 'control-label'
