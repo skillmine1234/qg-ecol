@@ -93,6 +93,6 @@ class EcolCustomersController < ApplicationController
   {allowed_operations: []}, :rmtr_pass_template_id, :rmtr_return_template_id,
   :autoreturn_validationfailed,:validate_process_by,:notify_process_by,
   :notify_retry_count,:validate_retry_count,
-  :return_on_credit_failed)
+  :return_on_credit_failed,:migrated_to_tph,:migrated_at)
   end
 end
