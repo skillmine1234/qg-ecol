@@ -1,9 +1,22 @@
 Rails.application.routes.draw do  
-  resources :ecol_customers
-  resources :ecol_remitters
+  
+  resources :ecol_customers do
+     collection do
+      patch :index
+     end
+  end
+
+  
+  resources :ecol_remitters do 
+    collection do
+      patch :index
+    end 
+  end
+
   resources :ecol_transactions do
     collection do
       post  'update_multiple'
+      patch :index
     end
     member do
       post :override_transaction_add_to_approval 
@@ -20,7 +33,7 @@ Rails.application.routes.draw do
 
   resources :ecol_apps do
     collection do
-      post :index
+      patch :index
     end
   end
 

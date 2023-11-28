@@ -12,7 +12,7 @@
   = will_paginate @ecol_transactions
   = "Total Count: #{@ecol_transactions_count}"
   %br/
-  = simple_form_for :ecol_transaction, :url => update_multiple_ecol_transactions_path, :html => { :method => :put, :class => 'form-horizontal', :autocomplete=>"off", :id => 'update_transactions', :style=> 'overflow: auto;'} do |f|
+  = simple_form_for :ecol_transaction, :url => update_multiple_ecol_transactions_path, :html => { :method => :post, :class => 'form-horizontal', :autocomplete=>"off", :id => 'update_transactions', :style=> 'overflow: auto;'} do |f|
     %table.table.table-bordered.table-striped.table-hover
       .thead
         %th{:style => "text-align:left; background-color: lightblue;"}

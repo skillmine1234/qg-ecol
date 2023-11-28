@@ -20,8 +20,6 @@ class EcolTransactionsController < ApplicationController
       if (params[:customer_code].present? && params[:status] == "VALIDATION FAILED") || params[:status] == "VALIDATION FAILED"
         @ecol_transactions = ecol_transactions.paginate(:per_page => 500, :page => params[:page]) rescue []
       else
-        p params[:status]
-        p "9999999"
         @ecol_transactions = ecol_transactions.paginate(:per_page => 25, :page => params[:page]) rescue []
       end  
     end
