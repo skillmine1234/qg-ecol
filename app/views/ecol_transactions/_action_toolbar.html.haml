@@ -11,7 +11,7 @@
       %h3#myModalLabel  APPROVE #{state}
       #error_message{:style => 'color:red'}
     .modal-body
-      = simple_form_for :ecol_transaction, :url => url_for(:action => 'approve_transaction', :controller => 'ecol_transactions'), :method=>:put, :html=>{} do |ef|
+      = simple_form_for :ecol_transaction, :url => url_for(:action => 'approve_transaction', :controller => 'ecol_transactions'), :method=>:post, :html=>{} do |ef|
         = hidden_field_tag(:id, @ecol_transaction.id)
         = submit_tag "APPROVE #{state}", :class=>"btn btn-primary transition_button", :id => "transition_button"
 - if @ecol_transaction.settle_status == "SETTLEMENT FAILED" 
