@@ -57,7 +57,7 @@ Rails.application.routes.draw do
   post '/ecol_customer/:id/approve' => "ecol_customers#approve"
   post '/ecol_remitter/:id/approve' => "ecol_remitters#approve"
   post '/ecol_rule/:id/approve' => "ecol_rules#approve"
-  post '/ecol_transactions/:id/ecol_audit_logs/:step_name' => 'ecol_transactions#ecol_audit_logs'
+  get '/ecol_transactions/:id/ecol_audit_logs/:step_name' => 'ecol_transactions#ecol_audit_logs'
   post '/ecol_transactions/:id/approve' => "ecol_transactions#approve_transaction"
   post 'ecol_apps/:app_code/ecol_app_udtables' => 'ecol_apps#ecol_app_udtables', as: :udtables
   post '/ecol_app_udtables/udfs/:app_code' => 'ecol_app_udtables#udfs'

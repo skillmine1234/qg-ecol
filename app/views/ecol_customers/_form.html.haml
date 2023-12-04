@@ -294,7 +294,7 @@
         = error_message_for(@ecol_customer, :return_on_credit_failed, :prepend_text => "") 
     .control-group
       = f.label :migrated_to_tph, "Migrated To TPH", :class => 'control-label'
-      = f.select :migrated_to_tph, [['YES','Y'],['No','N']], {:include_blank => 'Please Select'}
+      = f.select :migrated_to_tph, [['NO','N'],['YES','Y']]
       #msg-error
         = error_message_for(@ecol_customer, :migrated_to_tph, :prepend_text => "")
     .control-group

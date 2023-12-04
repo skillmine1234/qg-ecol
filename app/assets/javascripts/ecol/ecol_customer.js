@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
   $("#ecol_customer_val_method").on("change",function(){
     var val_method =  $(this).val();
     if (val_method === 'N'){
@@ -474,4 +473,23 @@ $(document).ready(function(){
       $("#ecol_customer_sub_member_bank_ifsc").val('');
     }
   }
+//TPH MIGRATION JS
+  if ($("#ecol_customer_migrated_to_tph").val() == 'N')
+    {
+      $('#ecol_customer_migrated_at').prop("disabled", true);
+    }
+
+  $("#ecol_customer_migrated_to_tph").on("change",function(){
+    var val_method =  $(this).val();
+    if (val_method === 'Y'){
+      $('#ecol_customer_migrated_at').prop('disabled',false);
+      
+    }
+    if (val_method === 'N'){
+      $('#ecol_customer_migrated_at').prop('disabled',true);
+       $('#ecol_customer_migrated_at').val('');
+      
+    }
+  });
 });
+
