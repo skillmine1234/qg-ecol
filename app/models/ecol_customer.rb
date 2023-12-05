@@ -40,6 +40,8 @@ class EcolCustomer < ActiveRecord::Base
   validate :conditions_for_val_method
 
   validates_presence_of :allowed_operations, if: "identity_user_id.present?", message: "can't be blank when Identity User ID is present"
+  validates_presence_of :migrated_at, if: "migrated_to_tph == 'Y' ", message: "Please select the Migrated At"
+
   validates_presence_of :identity_user_id, if: "allowed_operations.present?", message: "can't be blank when Allowed Operations is present"
   validate :code_uniqueness_for_6_4_char
   validate :validate_sub_member_bank_ifsc, if: "sub_member_bank == 'Y'"
