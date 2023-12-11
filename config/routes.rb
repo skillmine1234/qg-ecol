@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     collection do
       post  'update_multiple'
       patch :index
+      get :index
     end
     member do
       post :override_transaction_add_to_approval 
